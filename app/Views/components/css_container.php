@@ -12,18 +12,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<!-- JS Poppers-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <style>
-    * {
-        transition: background-color 300ms ease, color 300ms ease;
-    }
-
-    *:focus {
-        background-color: rgba(221, 72, 20, .2);
-        outline: none;
-    }
-
-    body{
+    body {
         font-family: "Poppins", sans-serif;
         font-weight: 500;
         margin: 0;
@@ -39,16 +34,7 @@
         padding-right: 0 !important;
     }
 
-    /* .page-header {
-        grid-area: header;
-        background-color: rgba(247, 248, 249, 1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        padding: .4rem 0 0;
-    } */
-
-    header {
+    .page-header {
         grid-area: header;
         background-color: rgba(247, 248, 249, 1);
         padding: .4rem 0 0;
@@ -126,38 +112,41 @@
                 color: rgba(255, 255, 255, .8);
             }
         }
-
-        /* header 
-
-        header 
-
-        header li
-
-        header li
-
-        header li
-        header li
-        header 
-
-        header 
-
-        header 
-
-        header .menu-toggle button:hover,
-        header .menu-toggle button:focus {
-            background-color: rgba(221, 72, 20, .8);
-            color: rgba(255, 255, 255, .8);
-        } */
     }
 
     .page-main {
         grid-area: main;
-        background-color:rgb(212, 109, 109);
+        background-color: #e7fff7;
+        padding: 2rem;
+
+        .main-content {
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 1px 10px #00000047;
+            height: 100%;
+            padding: 1rem;
+
+            .content-header {
+                /* border: 1px solid black; */
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 10%;
+            }
+
+            .content-body {
+                /* border: 1px solid black; */
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 90%;
+            }
+        }
     }
 
     .page-footer {
         grid-area: footer;
-        background-color: rgba(62, 62, 62, 1);
+        background-color: #17a589;
         text-align: center;
 
         .copyrights {
@@ -205,5 +194,12 @@
             background-color: rgba(221, 72, 20, .7);
             color: rgba(255, 255, 255, .8);
         }
+    }
+
+    .modal {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
     }
 </style>
