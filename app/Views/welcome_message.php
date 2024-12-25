@@ -26,7 +26,7 @@
 </main>
 
 <!-- Create task modal -->
-<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-hidden="true" style="width: 700px;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -35,14 +35,42 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="col-md-12 mb-2 p-0">
-                    <label>Task Title</label>
-                    <input type="text" class="form-control" id="taskTitle">
-                </div>
-                <div class="col-md-12 mb-2 p-0">
-                    <label>Task Description</label>
-                    <input type="text" class="form-control" id="taskDescription">
+            <div class="col-md-12 modal-body">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Task Name</label>
+                        <input type="text" class="form-control" id="taskTitle">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Task Description</label>
+                        <textarea type="text" class="form-control" id="taskTitle"></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Assign To</label>
+                        <select class="form-select"></select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Task Deadline</label>
+                        <input type="date" class="form-control" id="taskTitle">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Task Status</label>
+                        <select class="form-select">
+                            <option value="">Select an Option</option>
+                            <option value="1">Pending</option>
+                            <option value="2">In Progress</option>
+                            <option value="3">Completed</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Task Level</label>
+                        <select class="form-select">
+                            <option value="">Select an Option</option>
+                            <option value="1">Low</option>
+                            <option value="2">Medium</option>
+                            <option value="3">High</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -64,6 +92,12 @@
         $('#btnCreateTask').attr({
             'data-toggle': 'modal',
             'data-target': '#createTaskModal'
+        });
+    });
+
+    $('#btnSubmit').click(function() {
+        axios.get(host_url + 'Home/Testing').then(function(res) {
+            
         });
     });
 </script>

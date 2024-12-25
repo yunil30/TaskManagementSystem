@@ -34,6 +34,7 @@
         padding-right: 0 !important;
     }
 
+    /* Header Portion */
     .page-header {
         grid-area: header;
         background-color: rgba(247, 248, 249, 1);
@@ -114,6 +115,7 @@
         }
     }
 
+    /* Main Portion */
     .page-main {
         grid-area: main;
         background-color: #e7fff7;
@@ -144,6 +146,7 @@
         }
     }
 
+    /* Footer Portion */
     .page-footer {
         grid-area: footer;
         background-color: #17a589;
@@ -160,46 +163,24 @@
             }
         }
     }
-
-    @media (max-width: 629px) {
-        header ul {
-            padding: 0;
-        }
-
-        header .menu-toggle {
-            padding: 0 1rem;
-        }
-
-        header .menu-item {
-            background-color: rgba(244, 245, 246, 1);
-            border-top: 1px solid rgba(242, 242, 242, 1);
-            margin: 0 15px;
-            width: calc(100% - 30px);
-        }
-
-        header .menu-toggle {
-            display: block;
-        }
-
-        header .hidden {
-            display: none;
-        }
-
-        header li.menu-item a {
-            background-color: rgba(221, 72, 20, .1);
-        }
-
-        header li.menu-item a:hover,
-        header li.menu-item a:focus {
-            background-color: rgba(221, 72, 20, .7);
-            color: rgba(255, 255, 255, .8);
-        }
-    }
-
+    
+    /* Modal Portion */
     .modal {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 400px;
+
+        .modal-header {
+            padding: 15px 20px 5px 20px;
+        }
+
+        .modal-body {
+            padding: 15px 20px 15px 20px;
+        }
+
+        .modal-footer {
+            padding: 5px 20px 15px 20px;
+        }
     }
 </style>

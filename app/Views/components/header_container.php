@@ -9,9 +9,6 @@
             <li class="menu-toggle">
                 <button id="menuToggle">&#9776;</button>
             </li>
-            <li class="menu-item hidden">
-                <a href="#">Dashboard</a>
-            </li>
         </ul>
     </div>
 </header>
