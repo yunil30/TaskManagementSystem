@@ -18,7 +18,7 @@
     <div class="main-content">
         <div class="col-md-12 content-header">
             <h3 style="margin: 0;">Tasks</h3>
-            <button type="button" class="btn btn-primary" id="btnCreateTask">Create Task</button>
+            <button type="button" class="btn btn-primary" id="btnCreateTask">New Task</button>
         </div>
         <div class="col-md-12 content-body">
         </div>
@@ -30,7 +30,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Create Task</h4>
+                <h4 class="modal-title">Add Task</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Task Status</label>
-                        <select class="form-select">
+                        <select class="form-select" id="taskStatus">
                             <option value="">Select an Option</option>
                             <option value="1">Pending</option>
                             <option value="2">In Progress</option>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Task Level</label>
-                        <select class="form-select">
+                        <select class="form-select" id="taskLevel">
                             <option value="">Select an Option</option>
                             <option value="1">Low</option>
                             <option value="2">Medium</option>
@@ -77,7 +77,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnCancel" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" id="btnSubmit">Submit</button>
+                <button type="button" class="btn btn-success" id="btnSubmit" onclick="CreateTask()">Submit</button>
             </div>
         </div>
     </div>
@@ -102,6 +102,23 @@
             res.data.forEach(function(row) {
                 $('#taskAssignTo').append(`<option value="${row.UserID}">${row.FullName}</option>`);
             });
+        });
+    }
+
+    function CreateTask() {
+        var data = {
+            taskTitle: $('#taskTitle').val(),
+            taskDescription: $('#taskDescription').val(),
+            taskAssignTo: $('#taskAssignTo').val(),
+            taskDeadline: $('#taskDeadline').val(),
+            taskStatus: $('#taskStatus').val(),
+            taskLevel: $('#taskLevel').val()
+        }
+
+        // console.log(data);
+        
+        axios.post(host_url + 'Home/CreateTask', data).then(function(res) {
+            console.log(res.data);
         });
     }
 
