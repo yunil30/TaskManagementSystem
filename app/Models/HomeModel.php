@@ -23,4 +23,12 @@ class HomeModel extends Model {
 
         return $builder->where($where)->update($data);
     }
+
+    public function GetTaskUsers() {
+        $str = "SELECT UserID, full_name FullName FROM tbl_task_users";
+        
+        $query = $this->db->query($str);
+        
+        return $query->getResultArray();
+    }
 }

@@ -43,15 +43,17 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <label>Task Description</label>
-                        <textarea type="text" class="form-control" id="taskTitle"></textarea>
+                        <textarea type="text" class="form-control" id="taskDescription"></textarea>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Assign To</label>
-                        <select class="form-select"></select>
+                        <select class="form-select" id="taskAssignTo">
+                            <option value="">Select an Option</option>
+                        </select>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Task Deadline</label>
-                        <input type="date" class="form-control" id="taskTitle">
+                        <input type="date" class="form-control" id="taskDeadline">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Task Status</label>
@@ -95,9 +97,15 @@
         });
     });
 
-    $('#btnSubmit').click(function() {
-        axios.get(host_url + 'Home/Testing').then(function(res) {
-            
+    function GetTaskUsers() {
+        axios.get(host_url + 'Home/GetTaskUsers').then(function(res) {
+            res.data.forEach(function(row) {
+                $('#taskAssignTo').append(`<option value="${row.UserID}">${row.FullName}</option>`);
+            });
         });
+    }
+
+    $(document).ready(function() {
+        GetTaskUsers();
     });
 </script>

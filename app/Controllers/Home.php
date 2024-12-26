@@ -19,8 +19,25 @@ class Home extends BaseController {
         return view('welcome_message');
     }
 
-    public function Testing() {
-        var_dump('Hello World');
-        return false;
+    public function GetTaskUsers() {
+        return json_encode($this->HomeModel->GetTaskUsers());
+    }
+
+    public function CreateTask() {
+        $requestJson = $this->postRequest->getJSON();
+
+        $data = [
+
+        ];
+
+        if ($this->HomeModel->InsertData('tbl_task_list', $data)) {
+            return $this->response
+                        ->setStatusCode(200)
+                        ->setJSON(['message' => 'Data insertion success.']);
+        } else {
+            return $this->response
+                        ->setStatusCode(500)
+                        ->setJSON(['error' => 'Data insertion failed.']);
+        }
     }
 }
