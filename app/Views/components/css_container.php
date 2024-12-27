@@ -118,7 +118,7 @@
     /* Main Portion */
     .page-main {
         grid-area: main;
-        background-color: #e7fff7;
+        background-color: #f1fffd;
         padding: 2rem;
 
         .main-content {
@@ -134,6 +134,10 @@
                 justify-content: space-between;
                 align-items: center;
                 height: 10%;
+
+                h3 {
+                    color: #17a589;
+                }
             }
 
             .content-body {

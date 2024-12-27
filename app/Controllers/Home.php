@@ -27,7 +27,7 @@ class Home extends BaseController {
         $requestJson = $this->postRequest->getJSON();
 
         $data = [
-            'task_name'        => $requestJson->taskTitle,
+            'task_name'        => $requestJson->taskName,
             'task_description' => $requestJson->taskDescription,
             'assigned_by'      => '10001',
             'assigned_to'      => $requestJson->taskAssignTo,
