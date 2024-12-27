@@ -23,6 +23,16 @@ class Home extends BaseController {
         return json_encode($this->HomeModel->GetTaskUsers());
     }
 
+    public function GetTaskList() {
+        return json_encode($this->HomeModel->GetTaskList());
+    }
+
+    public function GetTaskDetails() {
+        $requestJson = $this->postRequest->getJSON();
+
+        return json_encode($this->HomeModel->GetTaskDetails($requestJson->taskNo));
+    }
+
     public function CreateTask() {
         $requestJson = $this->postRequest->getJSON();
 

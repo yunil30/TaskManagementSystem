@@ -142,9 +142,10 @@
 
             .content-body {
                 /* border: 1px solid black; */
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+                /* display: flex; */
+                /* justify-content: space-between; */
+                /* align-items: center; */
+                padding: 0 1rem 2rem 1rem;
                 height: 90%;
             }
         }

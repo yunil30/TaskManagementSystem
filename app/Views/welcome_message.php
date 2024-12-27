@@ -21,6 +21,19 @@
             <button type="button" class="btn btn-primary" id="btnCreateTask">New Task</button>
         </div>
         <div class="col-md-12 content-body">
+            <table class="table table-hover table-bordered" id="taskListTable">
+                <thead>
+                    <tr>
+                        <th class="text-left" style="width: 15%">TaskNo.</th>
+                        <th class="text-left" style="width: 20%">Task Name</th>
+                        <th class="text-left" style="width: 20%">Assigned To</th>
+                        <th class="text-left" style="width: 15%">Task Status</th>
+                        <th class="text-left" style="width: 15%">Task Deadline</th>
+                        <th class="text-center" style="width: 15%">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="loadTask"></tbody>
+            </table>
         </div>
     </div>
 </main>
@@ -181,7 +194,58 @@
         });
     }
 
+    function ShowTaskList() {
+        axios.get(host_url + 'Home/GetTaskList').then(function(res) {
+            if ($.fn.DataTable.isDataTable('#taskListTable')) {
+                $('#taskListTable').DataTable().destroy();
+            }
+
+            $('#loadTask').empty();
+
+            res.data.forEach(function(row, index) {
+                $('#loadTask').append(`
+                    <tr>
+                        <td style="vertical-align: middle; text-align: left;">${row.TaskID}</td>
+                        <td style="vertical-align: middle; text-align: left;">${row.task_name}</td>
+                        <td style="vertical-align: middle; text-align: left;">${row.task_member}</td>    
+                        <td style="vertical-align: middle; text-align: left;">
+                            ${row.task_status == 1 ? 'Pending' 
+                            : row.task_status == 2 ? 'In Progress' 
+                            : 'Completed'}
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">${row.task_deadline}</td>    
+                        <td style="vertical-align: middle; text-align: center;">
+                            <button class="btn btn-transparent" onclick="ShowTaskDetails(${row.TaskID})"><span class="fas fa-eye"></span></button>
+                            <button class="btn btn-transparent" onclick=""><span class="fas fa-pencil"></span></button>
+                            <button class="btn btn-transparent" onclick=""><span class="fas fa-trash"></span></button>
+                        </td>
+                    </tr>
+                `);
+            });
+
+            $('#taskListTable').DataTable({
+                searching: true,
+                pageLength: 10,
+                lengthChange: false,
+                ordering: true,
+                columnDefs: [
+                    { type: 'num', targets: 0 }
+                ]
+            });
+        });
+    }
+
+    function ShowTaskDetails(taskNo) {
+        var data = {
+            taskNo: taskNo
+        }
+        
+        axios.post(host_url + 'Home/GetTaskDetails', data).then(function(res) { 
+        });
+    }
+
     $(document).ready(function() {
         GetTaskUsers();
+        ShowTaskList();
     });
 </script>
