@@ -52,25 +52,25 @@
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Task Name</label>
-                        <input type="text" class="form-control" id="taskName">
+                        <input type="text" class="form-control" id="addTaskName">
                     </div>
                     <div class="col-md-12 mb-3">
                         <label>Task Description</label>
-                        <textarea type="text" class="form-control" id="taskDescription"></textarea>
+                        <textarea type="text" class="form-control" id="addTaskDescription"></textarea>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Assign To</label>
-                        <select class="form-select" id="taskAssignTo">
+                        <select class="form-select" id="addTaskAssignTo">
                             <option value="">Select an Option</option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Task Deadline</label>
-                        <input type="date" class="form-control" id="taskDeadline">
+                        <input type="date" class="form-control" id="addTaskDeadline">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Task Status</label>
-                        <select class="form-select" id="taskStatus">
+                        <select class="form-select" id="addTaskStatus">
                             <option value="">Select an Option</option>
                             <option value="1" selected>Pending</option>
                             <option value="2">In Progress</option>
@@ -79,7 +79,65 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Task Level</label>
-                        <select class="form-select" id="taskLevel">
+                        <select class="form-select" id="addTaskLevel">
+                            <option value="">Select an Option</option>
+                            <option value="1">Low</option>
+                            <option value="2">Medium</option>
+                            <option value="3">High</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnCancel" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="btnSubmit" onclick="CreateTask()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Show task modal -->
+<div class="modal fade" id="showTaskModal" tabindex="-1" role="dialog" aria-hidden="true" style="width: 700px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Task</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12 modal-body">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Task Name</label>
+                        <input type="text" class="form-control" id="showTaskName">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Task Description</label>
+                        <textarea type="text" class="form-control" id="showTaskDescription"></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Assign To</label>
+                        <select class="form-select" id="showTaskAssignTo">
+                            <option value="">Select an Option</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Task Deadline</label>
+                        <input type="date" class="form-control" id="showTaskDeadline">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Task Status</label>
+                        <select class="form-select" id="showTaskStatus">
+                            <option value="">Select an Option</option>
+                            <option value="1" selected>Pending</option>
+                            <option value="2">In Progress</option>
+                            <option value="3">Completed</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Task Level</label>
+                        <select class="form-select" id="showTaskLevel">
                             <option value="">Select an Option</option>
                             <option value="1">Low</option>
                             <option value="2">Medium</option>
@@ -128,55 +186,55 @@
     }
 
     function CreateTask() {
-        if ($('#taskName').val() === '') {
+        if ($('#addTaskName').val() === '') {
             ShowMessage('error', 'Task name is required!');
-            $('#taskName').trigger('chosen:activate');
+            $('#addTaskName').trigger('chosen:activate');
 
             return false;
         }
 
-        if ($('#taskDescription').val() === '') {
+        if ($('#addTaskDescription').val() === '') {
             ShowMessage('error', 'Task description is required!');
-            $('#taskDescription').trigger('chosen:activate');
+            $('#addTaskDescription').trigger('chosen:activate');
 
             return false;
         }
 
-        if ($('#taskAssignTo').val() === '') {
+        if ($('#addTaskAssignTo').val() === '') {
             ShowMessage('error', 'Please select a member to assign the task.');
-            $('#taskAssignTo').trigger('chosen:activate');
+            $('#addTaskAssignTo').trigger('chosen:activate');
 
             return false;
         }
 
-        if ($('#taskDeadline').val() === '') {
+        if ($('#addTaskDeadline').val() === '') {
             ShowMessage('error', 'Please select a deadline for the task.');
-            $('#taskDeadline').trigger('chosen:activate');
+            $('#addTaskDeadline').trigger('chosen:activate');
 
             return false;
         }
 
-        if ($('#taskStatus').val() === '') {
+        if ($('#addTaskStatus').val() === '') {
             ShowMessage('error', 'Please select a task status.');
-            $('#taskStatus').trigger('chosen:activate');
+            $('#addTaskStatus').trigger('chosen:activate');
 
             return false;
         }
 
-        if ($('#taskLevel').val() === '') {
+        if ($('#addTaskLevel').val() === '') {
             ShowMessage('error', 'Please select a task level.');
-            $('#taskLevel').trigger('chosen:activate');
+            $('#addTaskLevel').trigger('chosen:activate');
 
             return false;
         }
 
         var data = {
-            taskName: $('#taskName').val(),
-            taskDescription: $('#taskDescription').val(),
-            taskAssignTo: $('#taskAssignTo').val(),
-            taskDeadline: $('#taskDeadline').val(),
-            taskStatus: $('#taskStatus').val(),
-            taskLevel: $('#taskLevel').val()
+            taskName: $('#addTaskName').val(),
+            taskDescription: $('#addTaskDescription').val(),
+            taskAssignTo: $('#addTaskAssignTo').val(),
+            taskDeadline: $('#addTaskDeadline').val(),
+            taskStatus: $('#addTaskStatus').val(),
+            taskLevel: $('#addTaskLevel').val()
         }
 
         console.log(data);
@@ -189,7 +247,7 @@
     function GetTaskUsers() {
         axios.get(host_url + 'Home/GetTaskUsers').then(function(res) {
             res.data.forEach(function(row) {
-                $('#taskAssignTo').append(`<option value="${row.UserID}">${row.FullName}</option>`);
+                $('#addTaskAssignTo, #showTaskAssignTo').append(`<option value="${row.UserID}">${row.FullName}</option>`);
             });
         });
     }
@@ -215,7 +273,7 @@
                         </td>
                         <td style="vertical-align: middle; text-align: left;">${row.task_deadline}</td>    
                         <td style="vertical-align: middle; text-align: center;">
-                            <button class="btn btn-transparent" onclick="ShowTaskDetails(${row.TaskID})"><span class="fas fa-eye"></span></button>
+                            <button class="btn btn-transparent" id="btnShowTask${row.TaskID}" onclick="ShowTaskDetails(${row.TaskID})" ><span class="fas fa-eye"></span></button>
                             <button class="btn btn-transparent" onclick=""><span class="fas fa-pencil"></span></button>
                             <button class="btn btn-transparent" onclick=""><span class="fas fa-trash"></span></button>
                         </td>
@@ -236,11 +294,24 @@
     }
 
     function ShowTaskDetails(taskNo) {
+        $('#btnShowTask' + taskNo).attr({
+            'data-toggle': 'modal',
+            'data-target': '#showTaskModal'
+        });
+
         var data = {
             taskNo: taskNo
         }
         
         axios.post(host_url + 'Home/GetTaskDetails', data).then(function(res) { 
+            var taskDetails = res.data[0];
+
+            $('#showTaskName').val(taskDetails.task_name);
+            $('#showTaskDescription').val(taskDetails.task_description);
+            $('#showTaskAssignTo').val(taskDetails.assigned_to);
+            $('#showTaskDeadline').val(taskDetails.task_deadline);
+            $('#showTaskStatus').val(taskDetails.task_status);
+            $('#showTaskLevel').val(taskDetails.task_level);
         });
     }
 
