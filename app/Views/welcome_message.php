@@ -89,8 +89,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnCancel" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" id="btnSubmit" onclick="CreateTask()">Submit</button>
+                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnSubmitCreateTask" onclick="CreateTask()">Submit</button>
             </div>
         </div>
     </div>
@@ -147,8 +147,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnCancel" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" id="btnSubmit" onclick="CreateTask()">Submit</button>
+                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnSubmitEditTask" onclick="">Submit</button>
             </div>
         </div>
     </div>
@@ -237,8 +237,6 @@
             taskLevel: $('#addTaskLevel').val()
         }
 
-        console.log(data);
-        
         axios.post(host_url + 'Home/CreateTask', data).then(function(res) {
             console.log(res.data);
         });
@@ -273,8 +271,8 @@
                         </td>
                         <td style="vertical-align: middle; text-align: left;">${row.task_deadline}</td>    
                         <td style="vertical-align: middle; text-align: center;">
-                            <button class="btn btn-transparent" id="btnShowTask${row.TaskID}" onclick="ShowTaskDetails(${row.TaskID})" ><span class="fas fa-eye"></span></button>
-                            <button class="btn btn-transparent" onclick=""><span class="fas fa-pencil"></span></button>
+                            <button class="btn btn-transparent" id="btnShowTask${row.TaskID}" onclick="ShowTaskModal(${row.TaskID}, 'Show')" ><span class="fas fa-eye"></span></button>
+                            <button class="btn btn-transparent" id="btnEditTask${row.TaskID}" onclick="ShowTaskModal(${row.TaskID}, 'Edit')"><span class="fas fa-pencil"></span></button>
                             <button class="btn btn-transparent" onclick=""><span class="fas fa-trash"></span></button>
                         </td>
                     </tr>
@@ -293,16 +291,16 @@
         });
     }
 
-    function ShowTaskDetails(taskNo) {
-        $('#btnShowTask' + taskNo).attr({
+    function ShowTaskModal(taskNo, mode) {
+        $('#btn' + mode + 'Task' + taskNo).attr({
             'data-toggle': 'modal',
             'data-target': '#showTaskModal'
         });
 
-        var data = {
-            taskNo: taskNo
-        }
-        
+        var data = { 
+            taskNo: taskNo 
+        };
+
         axios.post(host_url + 'Home/GetTaskDetails', data).then(function(res) { 
             var taskDetails = res.data[0];
 
@@ -312,6 +310,25 @@
             $('#showTaskDeadline').val(taskDetails.task_deadline);
             $('#showTaskStatus').val(taskDetails.task_status);
             $('#showTaskLevel').val(taskDetails.task_level);
+
+            var isDisabled = mode === 'Show';
+            $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', isDisabled);
+        });
+    }
+
+    function EditTask(taskNo) {
+        var data = {
+            taskNo: taskNo,
+            taskName: $('#showTaskName').val(),
+            taskDescription: $('#showTaskDescription').val(),
+            taskAssignTo: $('#showTaskAssignTo').val(),
+            taskDeadline: $('#showTaskDeadline').val(),
+            taskStatus: $('#showTaskStatus').val(),
+            taskLevel: $('#showTaskLevel').val()
+        }
+
+        axios.post(host_url + 'Home/EditTaskDetails', data).then(function(res) {
+
         });
     }
 
