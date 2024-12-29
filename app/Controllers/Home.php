@@ -57,4 +57,53 @@ class Home extends BaseController {
                         ->setJSON(['error' => 'Task could not be added.']);
         }
     }
+
+    public function EditTask() {
+        $requestJson = $this->postRequest->getJSON();
+
+        $fields = [
+            'TaskID' => $requestJson->taskNo,
+        ];
+
+        $data = [
+            'task_name'        => $requestJson->taskName,
+            'task_description' => $requestJson->taskDescription,
+            'assigned_to'      => $requestJson->taskAssignTo,
+            'task_status'      => $requestJson->taskStatus,
+            'task_level'       => $requestJson->taskLevel,
+            'task_deadline '   => $requestJson->taskDeadline
+        ];
+
+        if ($this->HomeModel->UpdateData($fields, 'tbl_task_list', $data)) {
+            return $this->response
+                        ->setStatusCode(200)
+                        ->setJSON(['message' => 'Task successfully updated.']);
+        } else {
+            return $this->response
+                        ->setStatusCode(500)
+                        ->setJSON(['error' => 'Task could not be updated.']);
+        }
+    }
+
+    public function RemoveTask() {
+        $requestJson = $this->postRequest->getJSON();
+
+        $fields = [
+            'TaskID' => $requestJson->taskNo,
+        ];
+
+        $data = [
+            'isAvailable' => 0,
+        ];
+
+        if ($this->HomeModel->UpdateData($fields, 'tbl_task_list', $data)) {
+            return $this->response
+                        ->setStatusCode(200)
+                        ->setJSON(['message' => 'Task successfully removed.']);
+        } else {
+            return $this->response
+                        ->setStatusCode(500)
+                        ->setJSON(['error' => 'Task could not be removed.']);
+        }
+    }
 }

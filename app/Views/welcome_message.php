@@ -154,6 +154,29 @@
     </div>
 </div>
 
+<!-- Remove task modal -->
+<div class="modal fade" id="removeTaskModal" tabindex="-1" role="dialog" aria-hidden="true" style="width: 400px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Action Verification</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12 modal-body">
+                <div class="col-md-12 mb-3 p-0">
+                    <label>Are you sure you want to remove this task?</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnConfirmRemoveTask">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Footer component -->
 <?= show_footer(); ?>
 </body>
@@ -273,7 +296,7 @@
                         <td style="vertical-align: middle; text-align: center;">
                             <button class="btn btn-transparent" id="btnShowTask${row.TaskID}" onclick="ShowTaskModal(${row.TaskID}, 'Show')" ><span class="fas fa-eye"></span></button>
                             <button class="btn btn-transparent" id="btnEditTask${row.TaskID}" onclick="ShowTaskModal(${row.TaskID}, 'Edit')"><span class="fas fa-pencil"></span></button>
-                            <button class="btn btn-transparent" onclick=""><span class="fas fa-trash"></span></button>
+                            <button class="btn btn-transparent" id="btnRemoveTask${row.TaskID}" onclick="ShowRemoveTaskModal(${row.TaskID})"><span class="fas fa-trash"></span></button>
                         </td>
                     </tr>
                 `);
@@ -333,7 +356,25 @@
             taskLevel: $('#showTaskLevel').val()
         }
 
-        axios.post(host_url + 'Home/EditTaskDetails', data).then(function(res) {
+        axios.post(host_url + 'Home/EditTask', data).then(function(res) {
+            console.log(res.data);
+        });
+    }
+    
+    function ShowRemoveTaskModal(taskNo) {
+        $('#btnRemoveTask' + taskNo).attr({
+            'data-toggle': 'modal',
+            'data-target': '#removeTaskModal'
+        });
+        $('#btnConfirmRemoveTask').attr('onclick', `RemoveTask(${taskNo})`);
+    }
+
+    function RemoveTask(taskNo) {
+        var data = {
+            taskNo: taskNo,
+        }
+
+        axios.post(host_url + 'Home/RemoveTask', data).then(function(res) {
 
         });
     }

@@ -38,7 +38,8 @@ class HomeModel extends Model {
                     z.full_name task_leader 
                 FROM tbl_task_list x
                     LEFT JOIN tbl_task_users y ON y.UserID = x.assigned_to
-                    LEFT JOIN tbl_task_users z ON z.UserID = x.assigned_by";
+                    LEFT JOIN tbl_task_users z ON z.UserID = x.assigned_by
+                WHERE x.isAvailable = 1";
         
         $query = $this->db->query($str);
         
