@@ -148,7 +148,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnSubmitEditTask" onclick="">Submit</button>
+                <button type="button" class="btn btn-success" id="btnSubmitEditTask">Submit</button>
             </div>
         </div>
     </div>
@@ -311,8 +311,14 @@
             $('#showTaskStatus').val(taskDetails.task_status);
             $('#showTaskLevel').val(taskDetails.task_level);
 
-            var isDisabled = mode === 'Show';
-            $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', isDisabled);
+            if (mode === 'Show') {
+                $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', true);
+                $('#btnSubmitEditTask').hide();
+            } else {
+                $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', false);
+                $('#btnSubmitEditTask').show();
+                $('#btnSubmitEditTask').attr('onclick', `EditTask(${taskNo})`);
+            }
         });
     }
 
