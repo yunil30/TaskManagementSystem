@@ -197,11 +197,10 @@
             title: title,
             position: position, 
             showConfirmButton: false,
-            timer: 1500, 
             timerProgressBar: true, 
-            heightAuto: false, 
+            confirmButtonText: 'OK'
         }).then((result) => {
-            if (result.isConfirmed && url !== '') {
+            if (result.isConfirmed) {
                 httpGet(url); 
                 history.pushState({ prevUrl: window.location.href }, '', url);
             }
@@ -261,7 +260,59 @@
         }
 
         axios.post(host_url + 'Home/CreateTask', data).then(function(res) {
-            console.log(res.data);
+            Swal.fire({
+                icon: 'success',
+                title: 'Successful!',
+                text: 'Task has been created successfully.',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500)
+                }
+            });
+        });
+    }
+
+    function EditTask(taskNo) {
+        var data = {
+            taskNo: taskNo,
+            taskName: $('#showTaskName').val(),
+            taskDescription: $('#showTaskDescription').val(),
+            taskAssignTo: $('#showTaskAssignTo').val(),
+            taskDeadline: $('#showTaskDeadline').val(),
+            taskStatus: $('#showTaskStatus').val(),
+            taskLevel: $('#showTaskLevel').val()
+        }
+
+        axios.post(host_url + 'Home/EditTask', data).then(function(res) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Successful!',
+                text: 'Task has been edited successfully.',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500)
+                }
+            });
+        });
+    }
+
+    function RemoveTask(taskNo) {
+        var data = {
+            taskNo: taskNo,
+        }
+
+        axios.post(host_url + 'Home/RemoveTask', data)
+        .then((response) => {
+
+        })
+        .catch((error) => {
+
         });
     }
 
@@ -275,6 +326,7 @@
 
     function ShowTaskList() {
         axios.get(host_url + 'Home/GetTaskList').then(function(res) {
+            console.table(res.data);
             if ($.fn.DataTable.isDataTable('#taskListTable')) {
                 $('#taskListTable').DataTable().destroy();
             }
@@ -344,22 +396,6 @@
             }
         });
     }
-
-    function EditTask(taskNo) {
-        var data = {
-            taskNo: taskNo,
-            taskName: $('#showTaskName').val(),
-            taskDescription: $('#showTaskDescription').val(),
-            taskAssignTo: $('#showTaskAssignTo').val(),
-            taskDeadline: $('#showTaskDeadline').val(),
-            taskStatus: $('#showTaskStatus').val(),
-            taskLevel: $('#showTaskLevel').val()
-        }
-
-        axios.post(host_url + 'Home/EditTask', data).then(function(res) {
-            console.log(res.data);
-        });
-    }
     
     function ShowRemoveTaskModal(taskNo) {
         $('#btnRemoveTask' + taskNo).attr({
@@ -369,15 +405,7 @@
         $('#btnConfirmRemoveTask').attr('onclick', `RemoveTask(${taskNo})`);
     }
 
-    function RemoveTask(taskNo) {
-        var data = {
-            taskNo: taskNo,
-        }
 
-        axios.post(host_url + 'Home/RemoveTask', data).then(function(res) {
-
-        });
-    }
 
     $(document).ready(function() {
         GetTaskUsers();
