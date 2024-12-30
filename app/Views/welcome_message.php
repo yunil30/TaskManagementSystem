@@ -196,13 +196,106 @@
             icon: icon,
             title: title,
             position: position, 
-            showConfirmButton: false,
             timerProgressBar: true, 
-            confirmButtonText: 'OK'
+            confirmButtonText: 'OK',
+            heightAuto: false
         }).then((result) => {
             if (result.isConfirmed) {
-                httpGet(url); 
-                history.pushState({ prevUrl: window.location.href }, '', url);
+                window.location.reload();
+            }
+        });
+    }
+
+    function ShowTaskList() {
+        axios.get(host_url + 'Home/GetTaskList').then(function(res) {
+            console.table(res.data);
+            if ($.fn.DataTable.isDataTable('#taskListTable')) {
+                $('#taskListTable').DataTable().destroy();
+            }
+
+            $('#loadTask').empty();
+
+            res.data.forEach(function(row, index) {
+                $('#loadTask').append(`
+                    <tr>
+                        <td style="vertical-align: middle; text-align: left;">${row.TaskID}</td>
+                        <td style="vertical-align: middle; text-align: left;">${row.task_name}</td>
+                        <td style="vertical-align: middle; text-align: left;">${row.task_member}</td>    
+                        <td style="vertical-align: middle; text-align: left;">
+                            ${row.task_status == 1 ? 'Pending' 
+                            : row.task_status == 2 ? 'In Progress' 
+                            : 'Completed'}
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">${row.task_deadline}</td>    
+                        <td style="vertical-align: middle; text-align: center;">
+                            <button class="btn btn-transparent" id="btnShowTask${row.TaskID}" onclick="ShowTaskModal(${row.TaskID}, 'Show')" ><span class="fas fa-eye"></span></button>
+                            <button class="btn btn-transparent" id="btnEditTask${row.TaskID}" onclick="ShowTaskModal(${row.TaskID}, 'Edit')"><span class="fas fa-pencil"></span></button>
+                            <button class="btn btn-transparent" id="btnRemoveTask${row.TaskID}" onclick="ShowRemoveTaskModal(${row.TaskID})"><span class="fas fa-trash"></span></button>
+                        </td>
+                    </tr>
+                `);
+            });
+
+            $('#taskListTable').DataTable({
+                searching: true,
+                pageLength: 10,
+                lengthChange: false,
+                ordering: true,
+                columnDefs: [
+                    { type: 'num', targets: 0 }
+                ]
+            });
+        });
+    }
+
+    function GetTaskUsers() {
+        axios.get(host_url + 'Home/GetTaskUsers')
+        .then((res) => {
+            res.data.forEach((row) => {
+                $('#addTaskAssignTo, #showTaskAssignTo').append(`<option value="${row.UserID}">${row.FullName}</option>`);
+            });
+        })
+        .catch((error) => {
+            ShowMessage('error', 'Failed!');
+        });
+    }
+
+    function ShowRemoveTaskModal(taskNo) {
+        $('#btnRemoveTask' + taskNo).attr({
+            'data-toggle': 'modal',
+            'data-target': '#removeTaskModal'
+        });
+        $('#btnConfirmRemoveTask').attr('onclick', `RemoveTask(${taskNo})`);
+    }
+
+    function ShowTaskModal(taskNo, mode) {
+        $('#btn' + mode + 'Task' + taskNo).attr({
+            'data-toggle': 'modal',
+            'data-target': '#showTaskModal'
+        });
+
+        var data = { 
+            taskNo: taskNo 
+        };
+
+        axios.post(host_url + 'Home/GetTaskDetails', data)
+        .then((res) => { 
+            var taskDetails = res.data[0];
+
+            $('#showTaskName').val(taskDetails.task_name);
+            $('#showTaskDescription').val(taskDetails.task_description);
+            $('#showTaskAssignTo').val(taskDetails.assigned_to);
+            $('#showTaskDeadline').val(taskDetails.task_deadline);
+            $('#showTaskStatus').val(taskDetails.task_status);
+            $('#showTaskLevel').val(taskDetails.task_level);
+
+            if (mode === 'Show') {
+                $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', true);
+                $('#btnSubmitEditTask').hide();
+            } else {
+                $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', false);
+                $('#btnSubmitEditTask').show();
+                $('#btnSubmitEditTask').attr('onclick', `EditTask(${taskNo})`);
             }
         });
     }
@@ -259,19 +352,12 @@
             taskLevel: $('#addTaskLevel').val()
         }
 
-        axios.post(host_url + 'Home/CreateTask', data).then(function(res) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Successful!',
-                text: 'Task has been created successfully.',
-                confirmButtonText: 'OK'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 500)
-                }
-            });
+        axios.post(host_url + 'Home/CreateTask', data)        
+        .then((res) => {
+            ShowMessage('success', 'Successful!');
+        })
+        .catch((error) => {
+            ShowMessage('error', 'Failed!');
         });
     }
 
@@ -286,19 +372,12 @@
             taskLevel: $('#showTaskLevel').val()
         }
 
-        axios.post(host_url + 'Home/EditTask', data).then(function(res) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Successful!',
-                text: 'Task has been edited successfully.',
-                confirmButtonText: 'OK'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 500)
-                }
-            });
+        axios.post(host_url + 'Home/EditTask', data)        
+        .then((res) => {
+            ShowMessage('success', 'Successful!');
+        })
+        .catch((error) => {
+            ShowMessage('error', 'Failed!');
         });
     }
 
@@ -308,104 +387,13 @@
         }
 
         axios.post(host_url + 'Home/RemoveTask', data)
-        .then((response) => {
-
+        .then((res) => {
+            ShowMessage('success', 'Successful!');
         })
         .catch((error) => {
-
+            ShowMessage('error', 'Failed!');
         });
     }
-
-    function GetTaskUsers() {
-        axios.get(host_url + 'Home/GetTaskUsers').then(function(res) {
-            res.data.forEach(function(row) {
-                $('#addTaskAssignTo, #showTaskAssignTo').append(`<option value="${row.UserID}">${row.FullName}</option>`);
-            });
-        });
-    }
-
-    function ShowTaskList() {
-        axios.get(host_url + 'Home/GetTaskList').then(function(res) {
-            console.table(res.data);
-            if ($.fn.DataTable.isDataTable('#taskListTable')) {
-                $('#taskListTable').DataTable().destroy();
-            }
-
-            $('#loadTask').empty();
-
-            res.data.forEach(function(row, index) {
-                $('#loadTask').append(`
-                    <tr>
-                        <td style="vertical-align: middle; text-align: left;">${row.TaskID}</td>
-                        <td style="vertical-align: middle; text-align: left;">${row.task_name}</td>
-                        <td style="vertical-align: middle; text-align: left;">${row.task_member}</td>    
-                        <td style="vertical-align: middle; text-align: left;">
-                            ${row.task_status == 1 ? 'Pending' 
-                            : row.task_status == 2 ? 'In Progress' 
-                            : 'Completed'}
-                        </td>
-                        <td style="vertical-align: middle; text-align: left;">${row.task_deadline}</td>    
-                        <td style="vertical-align: middle; text-align: center;">
-                            <button class="btn btn-transparent" id="btnShowTask${row.TaskID}" onclick="ShowTaskModal(${row.TaskID}, 'Show')" ><span class="fas fa-eye"></span></button>
-                            <button class="btn btn-transparent" id="btnEditTask${row.TaskID}" onclick="ShowTaskModal(${row.TaskID}, 'Edit')"><span class="fas fa-pencil"></span></button>
-                            <button class="btn btn-transparent" id="btnRemoveTask${row.TaskID}" onclick="ShowRemoveTaskModal(${row.TaskID})"><span class="fas fa-trash"></span></button>
-                        </td>
-                    </tr>
-                `);
-            });
-
-            $('#taskListTable').DataTable({
-                searching: true,
-                pageLength: 10,
-                lengthChange: false,
-                ordering: true,
-                columnDefs: [
-                    { type: 'num', targets: 0 }
-                ]
-            });
-        });
-    }
-
-    function ShowTaskModal(taskNo, mode) {
-        $('#btn' + mode + 'Task' + taskNo).attr({
-            'data-toggle': 'modal',
-            'data-target': '#showTaskModal'
-        });
-
-        var data = { 
-            taskNo: taskNo 
-        };
-
-        axios.post(host_url + 'Home/GetTaskDetails', data).then(function(res) { 
-            var taskDetails = res.data[0];
-
-            $('#showTaskName').val(taskDetails.task_name);
-            $('#showTaskDescription').val(taskDetails.task_description);
-            $('#showTaskAssignTo').val(taskDetails.assigned_to);
-            $('#showTaskDeadline').val(taskDetails.task_deadline);
-            $('#showTaskStatus').val(taskDetails.task_status);
-            $('#showTaskLevel').val(taskDetails.task_level);
-
-            if (mode === 'Show') {
-                $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', true);
-                $('#btnSubmitEditTask').hide();
-            } else {
-                $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', false);
-                $('#btnSubmitEditTask').show();
-                $('#btnSubmitEditTask').attr('onclick', `EditTask(${taskNo})`);
-            }
-        });
-    }
-    
-    function ShowRemoveTaskModal(taskNo) {
-        $('#btnRemoveTask' + taskNo).attr({
-            'data-toggle': 'modal',
-            'data-target': '#removeTaskModal'
-        });
-        $('#btnConfirmRemoveTask').attr('onclick', `RemoveTask(${taskNo})`);
-    }
-
-
 
     $(document).ready(function() {
         GetTaskUsers();
