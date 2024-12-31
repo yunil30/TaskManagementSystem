@@ -62,55 +62,12 @@
                     height: 44px;
                     text-decoration: none;
                 }
-
-                .menu-item a {
-                    border-radius: 5px;
-                    margin: 5px 0;
-                    height: 38px;
-                    line-height: 36px;
-                    padding: .4rem .65rem;
-                    text-align: center;
-                }
-
-                .menu-item a:hover,
-                .menu-item a:focus {
-                    background-color: rgba(221, 72, 20, .2);
-                    color: rgba(221, 72, 20, 1);
-                }
             }
 
             .logo {
                 float: left;
                 height: 44px;
                 padding: 0rem;
-            }
-
-            .menu-toggle {
-                display: none;
-                float: right;
-                font-size: 2rem;
-                font-weight: bold;
-            }
-
-            .menu-toggle button {
-                background-color: rgba(221, 72, 20, .6);
-                border: none;
-                border-radius: 3px;
-                color: rgba(255, 255, 255, 1);
-                cursor: pointer;
-                font: inherit;
-                font-size: 1.3rem;
-                height: 36px;
-                padding: 0;
-                margin: 11px 0;
-                overflow: visible;
-                width: 40px;
-            }
-
-            .menu-toggle button:hover,
-            .menu-toggle button:focus {
-                background-color: rgba(221, 72, 20, .8);
-                color: rgba(255, 255, 255, .8);
             }
         }
     }

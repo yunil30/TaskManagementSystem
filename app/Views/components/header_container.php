@@ -7,8 +7,27 @@
                 </a>
             </li>
             <li class="menu-toggle">
-                <button id="menuToggle">&#9776;</button>
+                <button id='btnListOfTasks'>Tasks</button>
+            </li>
+            <li class="menu-toggle">
+                <button id='btnListOfUsers'>Users</button>
             </li>
         </ul>
     </div>
 </header>
+
+<script>
+    var host_url = '<?php echo host_url(); ?>';
+
+    $('#btnListOfTasks').click(function() {
+        var page = host_url + '/Home/ListOfTasks'
+
+        window.location.href = page;
+    });
+
+    $('#btnListOfUsers').click(function() {
+        var page = host_url + '/Home/ListOfUsers'
+
+        window.location.href = page;
+    });
+</script>

@@ -19,6 +19,14 @@ class Home extends BaseController {
         return view('welcome_message');
     }
 
+    public function ListOfTasks() {
+        return view('ListOfTasks');
+    }
+
+    public function ListOfUsers() {
+        return view('ListOfUsers');
+    }
+
     public function GetTaskUsers() {
         return json_encode($this->HomeModel->GetTaskUsers());
     }
