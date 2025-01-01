@@ -114,4 +114,34 @@ class Home extends BaseController {
                         ->setJSON(['error' => 'Task could not be removed.']);
         }
     }
+
+    public function CreateUser() {
+        $requestJson = $this->postRequest->getJSON();
+
+        if (empty($requestJson->UserName) || empty($requestJson->UserEmail) || empty($requestJson->UserPassword)) {
+            return $this->response
+                        ->setStatusCode(400)
+                        ->setJSON(['error' => 'Missing required fields!']);
+        }
+
+        $data = [
+            'first_name'  => $requestJson->FirstName,
+            'middle_name' => $requestJson->MiddleName,
+            'last_name'   => $requestJson->LastName,
+            'user_name'   => $requestJson->UserName,
+            'user_email'  => $requestJson->UserEmail,
+            'password'    => sha1(md5($requestJson->UserPassword)),
+            'user_role '  => $requestJson->UserRole
+        ];
+
+        if ($this->HomeModel->InsertData('tbl_user_access', $data)) {
+            return $this->response
+                        ->setStatusCode(200)
+                        ->setJSON(['message' => 'User access successfully added.']);
+        } else {
+            return $this->response
+                        ->setStatusCode(500)
+                        ->setJSON(['error' => 'User access could not be added.']);
+        }
+    }
 }

@@ -18,7 +18,7 @@
     <div class="main-content">
         <div class="col-md-12 content-header">
             <h3 style="margin: 0;">Tasks</h3>
-            <button type="button" class="btn btn-primary" id="btnCreateTask">New Task</button>
+            <button type="button" class="btn btn-primary" id="btnAddTask">New Task</button>
         </div>
         <div class="col-md-12 content-body">
             <table class="table table-hover table-bordered" id="taskListTable">
@@ -39,8 +39,8 @@
 </main>
 
 <!-- Create task modal -->
-<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-hidden="true" style="width: 700px;">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Add Task</h4>
@@ -97,8 +97,8 @@
 </div>
 
 <!-- Show task modal -->
-<div class="modal fade" id="showTaskModal" tabindex="-1" role="dialog" aria-hidden="true" style="width: 700px;">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="showTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Task</h4>
@@ -155,8 +155,8 @@
 </div>
 
 <!-- Remove task modal -->
-<div class="modal fade" id="removeTaskModal" tabindex="-1" role="dialog" aria-hidden="true" style="width: 400px;">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="removeTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 400px; width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Action Verification</h4>
@@ -184,8 +184,8 @@
 <script>
     var host_url = '<?php echo host_url(); ?>';
 
-    $('#btnCreateTask').click(function() {
-        $('#btnCreateTask').attr({
+    $('#btnAddTask').click(function() {
+        $('#btnAddTask').attr({
             'data-toggle': 'modal',
             'data-target': '#createTaskModal'
         });
