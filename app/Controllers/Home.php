@@ -162,4 +162,10 @@ class Home extends BaseController {
     public function GetUserList() {
         return json_encode($this->HomeModel->GetActiveUsers());
     }
+
+    public function GetUserRecord() {
+        $requestJson = $this->postRequest->getJSON();
+   
+        return json_encode($this->HomeModel->GetUserRecord($requestJson->UserNo));
+    }
 }

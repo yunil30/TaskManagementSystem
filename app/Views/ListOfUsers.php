@@ -91,6 +91,61 @@
         </div>
     </div>
 </div>
+
+<!-- Show user modal -->
+<div class="modal fade" id="showUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
+        <div class="modal-content" style="height: 600px; max-height: 80vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h4 class="modal-title">User</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hi   dden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12 modal-body">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>First Name:</label>
+                        <input type="text" class="form-control" id="showFirstName">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Middle Name:</label>
+                        <input type="text" class="form-control" id="showMiddleName">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Last Name:   </label>
+                        <input type="text" class="form-control" id="showLastName">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Username:</label>
+                        <input type="text" class="form-control" id="showUserName">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Email:</label>
+                        <input type="text" class="form-control" id="showUserEmail">
+                    </div>
+                    <div class="col-md-12 mb-3" hidden>
+                        <label>Password:</label>
+                        <input type="password" class="form-control" id="showUserPassword">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>User role:</label>
+                        <select class="form-control" id="showUserRole">
+                            <option value="">Select an Option</option>
+                            <option value="member" selected>Member</option>
+                            <option value="leader">Leader</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnSubmitEditUser" onclick="">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
     
 <!-- Footer component -->
 <?= show_footer(); ?>
@@ -138,9 +193,9 @@
                         <td style="vertical-align: middle;">${row.FirstName} ${row.MiddleName} ${row.LastName}</td>    
                         <td style="vertical-align: middle;">${row.UserStatus == 1 ? 'Active' : 'Inactive'}</td>
                         <td style="vertical-align: middle; text-align: center;">
-                            <button class="btn btn-transparent" onclick=""><span class="fas fa-eye"></span></button>
-                            <button class="btn btn-transparent" onclick=""><span class="fas fa-pencil"></span></button>
-                            <button class="btn btn-transparent" onclick=""><span class="fas fa-trash"></span></button>
+                            <button class="btn btn-transparent" id="btnShowUser${row.UserID}" onclick="ShowUserModal(${row.UserID}, 'Show')"><span class="fas fa-eye"></span></button>
+                            <button class="btn btn-transparent" id="btnEditUser${row.UserID}" onclick="ShowUserModal(${row.UserID}, 'Edit')"><span class="fas fa-pencil"></span></button>
+                            <button class="btn btn-transparent" id="" onclick=""><span class="fas fa-trash"></span></button>
                         </td>
                     </tr>
                 `);
@@ -158,34 +213,34 @@
         });
     }
 
-    function ShowUserModal(taskNo, mode) {
-        $('#btn' + mode + 'Task' + taskNo).attr({
+    function ShowUserModal(userNo, mode) {
+        $('#btn' + mode + 'User' + userNo).attr({
             'data-toggle': 'modal',
-            'data-target': '#showTaskModal'
+            'data-target': '#showUserModal'
         });
 
         var data = { 
-            taskNo: taskNo 
+            UserNo: userNo 
         };
 
-        axios.post(host_url + 'Home/GetTaskDetails', data)
+        axios.post(host_url + 'Home/GetUserRecord', data)
         .then((res) => { 
-            var taskDetails = res.data[0];
-
-            $('#showTaskName').val(taskDetails.task_name);
-            $('#showTaskDescription').val(taskDetails.task_description);
-            $('#showTaskAssignTo').val(taskDetails.assigned_to);
-            $('#showTaskDeadline').val(taskDetails.task_deadline);
-            $('#showTaskStatus').val(taskDetails.task_status);
-            $('#showTaskLevel').val(taskDetails.task_level);
+            var userDetails = res.data[0];
+            
+            $('#showFirstName').val(userDetails.first_name);
+            $('#showMiddleName').val(userDetails.middle_name);
+            $('#showLastName').val(userDetails.last_name);
+            $('#showUserName').val(userDetails.user_name);
+            $('#showUserEmail').val(userDetails.user_email);
+            $('#showUserRole').val(userDetails.user_role);
 
             if (mode === 'Show') {
-                $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', true);
-                $('#btnSubmitEditTask').hide();
+                $('#showFirstName, #showMiddleName, #showLastName, #showUserName, #showUserEmail, #showUserPassword, #showUserRole').prop('disabled', true);
+                $('#btnSubmitEditUser').hide();
             } else {
-                $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', false);
-                $('#btnSubmitEditTask').show();
-                $('#btnSubmitEditTask').attr('onclick', `EditTask(${taskNo})`);
+                $('#showFirstName, #showMiddleName, #showLastName, #showUserName, #showUserEmail, #showUserPassword, #showUserRole').prop('disabled', false);
+                $('#btnSubmitEditUser').show();
+                $('#btnSubmitEditUser').attr('onclick', `EditTask(${taskNo})`);
             }
         });
     }

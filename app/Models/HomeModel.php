@@ -84,4 +84,13 @@ class HomeModel extends Model {
 
         return $query->getResultArray();
     }
+
+    public function GetUserRecord($UserID) {
+        $str = "SELECT * FROM tbl_user_access WHERE UserID = ?";
+        
+        $query = $this->db->query($str, [$UserID]);
+
+        return $query->getResultArray();
+    }
+
 }
