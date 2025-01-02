@@ -54,4 +54,34 @@ class HomeModel extends Model {
         
         return $query->getResultArray();
     }
+
+    public function ValidateUserName($UserName) {
+        $str = "SELECT COUNT(1) existing FROM tbl_user_access WHERE user_name = ?";
+
+        $query = $this->db->query($str, [$UserName]);
+
+        $row = $query->getRow();
+
+        return $row->existing;
+    }
+
+    public function ValidateUserEmail($UserEmail) {
+        $str = "SELECT COUNT(1) existing FROM tbl_user_access WHERE user_email = ?";
+
+        $query = $this->db->query($str, [$UserEmail]);
+
+        $row = $query->getRow();
+
+        return $row->existing;
+    }
+
+    public function GetActiveUsers() {
+        $str = "SELECT UserID, first_name FirstName, middle_name MiddleName, last_name LastName, user_name UserName, user_status UserStatus 
+                    FROM tbl_user_access 
+                WHERE user_status = 1";
+        
+        $query = $this->db->query($str);
+
+        return $query->getResultArray();
+    }
 }

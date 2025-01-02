@@ -124,6 +124,20 @@ class Home extends BaseController {
                         ->setJSON(['error' => 'Missing required fields!']);
         }
 
+        $ValidateUserName = $this->HomeModel->ValidateUserName($requestJson->UserName);
+        if($ValidateUserName > 0) {
+            return $this->response
+                        ->setStatusCode(400)
+                        ->setJSON(['error' => 'Username Already Exists!']);
+        }
+
+        $ValidateUserEmail = $this->HomeModel->ValidateUserEmail($requestJson->UserEmail);
+        if($ValidateUserEmail > 0) {
+            return $this->response
+                        ->setStatusCode(400)
+                        ->setJSON(['error' => 'Email address Already Exists!']);
+        }
+
         $data = [
             'first_name'  => $requestJson->FirstName,
             'middle_name' => $requestJson->MiddleName,
@@ -143,5 +157,9 @@ class Home extends BaseController {
                         ->setStatusCode(500)
                         ->setJSON(['error' => 'User access could not be added.']);
         }
+    }
+
+    public function GetUserList() {
+        return json_encode($this->HomeModel->GetActiveUsers());
     }
 }
