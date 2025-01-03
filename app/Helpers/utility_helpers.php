@@ -7,6 +7,12 @@
         }
     }
 
+    if (!function_exists('hashPassword')) {
+        function hashPassword($password) {
+            return sha1(md5($password));
+        }
+    }
+
     if (!function_exists('show_header')) {
         function show_header() {
             return view('components/header_container');

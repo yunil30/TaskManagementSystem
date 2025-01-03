@@ -15,8 +15,13 @@ class Home extends BaseController {
         $this->HomeModel = new HomeModel();
     }
 
-    public function index(): string {
-        return view('welcome_message');
+    public function Testing() {
+        var_dump('Hello World');
+        return false;
+    }
+
+    public function index() {
+        return view('LoginForm');
     }
 
     public function ListOfTasks() {
@@ -166,6 +171,62 @@ class Home extends BaseController {
     public function GetUserRecord() {
         $requestJson = $this->postRequest->getJSON();
    
-        return json_encode($this->HomeModel->GetUserRecord($requestJson->UserNo));
+        return json_encode($this->HomeModel->GetUserRecord($requestJson->userNo));
+    }
+
+    public function EditUser() {
+        $requestJson = $this->postRequest->getJSON();
+
+        if (empty($requestJson->UserName) || empty($requestJson->UserEmail)) {
+            return $this->response
+                        ->setStatusCode(400)
+                        ->setJSON(['error' => 'Missing required fields!']);
+        }
+
+        $fields = [
+            'UserID' => $requestJson->userNo,
+        ];
+
+        $data = [
+            'first_name'    => $requestJson->FirstName,
+            'middle_name'   => $requestJson->MiddleName,
+            'last_name'     => $requestJson->LastName,
+            'user_name'     => $requestJson->UserName,
+            'user_email'    => $requestJson->UserEmail,
+            'user_role '    => $requestJson->UserRole,
+            'date_modified' => date('Y-m-d H:i:s')
+        ];
+
+        if ($this->HomeModel->UpdateData($fields, 'tbl_user_access', $data)) {
+            return $this->response
+                        ->setStatusCode(200)
+                        ->setJSON(['message' => 'User access successfully updated.']);
+        } else {
+            return $this->response
+                        ->setStatusCode(500)
+                        ->setJSON(['error' => 'User access could not be updated.']);
+        }
+    }
+
+    public function RemoveUser() {
+        $requestJson = $this->postRequest->getJSON();
+
+        $fields = [
+            'UserID' => $requestJson->userNo,
+        ];
+
+        $data = [
+            'user_status' => 0,
+        ];
+
+        if ($this->HomeModel->UpdateData($fields, 'tbl_user_access', $data)) {
+            return $this->response
+                        ->setStatusCode(200)
+                        ->setJSON(['message' => 'User successfully removed.']);
+        } else {
+            return $this->response
+                        ->setStatusCode(500)
+                        ->setJSON(['error' => 'User could not be removed.']);
+        }
     }
 }

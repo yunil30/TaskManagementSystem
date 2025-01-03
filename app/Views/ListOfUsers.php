@@ -97,7 +97,7 @@
     <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
         <div class="modal-content" style="height: 600px; max-height: 80vh; overflow-y: auto;">
             <div class="modal-header">
-                <h4 class="modal-title">User</h4>
+                <h4 class="modal-title" id="titleUserModal">User</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hi   dden="true">&times;</span>
                 </button>
@@ -142,6 +142,29 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-success" id="btnSubmitEditUser" onclick="">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Remove user modal -->
+<div class="modal fade" id="removeUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 400px; width: 100%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Action Verification</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12 modal-body">
+                <div class="col-md-12 mb-3 p-0">
+                    <label>Are you sure you want to remove this user?</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnConfirmRemoveUser">Confirm</button>
             </div>
         </div>
     </div>
@@ -195,7 +218,7 @@
                         <td style="vertical-align: middle; text-align: center;">
                             <button class="btn btn-transparent" id="btnShowUser${row.UserID}" onclick="ShowUserModal(${row.UserID}, 'Show')"><span class="fas fa-eye"></span></button>
                             <button class="btn btn-transparent" id="btnEditUser${row.UserID}" onclick="ShowUserModal(${row.UserID}, 'Edit')"><span class="fas fa-pencil"></span></button>
-                            <button class="btn btn-transparent" id="" onclick=""><span class="fas fa-trash"></span></button>
+                            <button class="btn btn-transparent" id="btnRemoveUser${row.UserID}" onclick="ShowRemoveUserModal(${row.UserID})"><span class="fas fa-trash"></span></button>
                         </td>
                     </tr>
                 `);
@@ -213,6 +236,14 @@
         });
     }
 
+    function ShowRemoveUserModal(userNo) {
+        $('#btnRemoveUser' + userNo).attr({
+            'data-toggle': 'modal',
+            'data-target': '#removeUserModal'
+        });
+        $('#btnConfirmRemoveUser').attr('onclick', `RemoveUser(${userNo})`);
+    }
+
     function ShowUserModal(userNo, mode) {
         $('#btn' + mode + 'User' + userNo).attr({
             'data-toggle': 'modal',
@@ -220,7 +251,7 @@
         });
 
         var data = { 
-            UserNo: userNo 
+            userNo: userNo 
         };
 
         axios.post(host_url + 'Home/GetUserRecord', data)
@@ -236,11 +267,13 @@
 
             if (mode === 'Show') {
                 $('#showFirstName, #showMiddleName, #showLastName, #showUserName, #showUserEmail, #showUserPassword, #showUserRole').prop('disabled', true);
+                $('#titleUserModal').text('User');
                 $('#btnSubmitEditUser').hide();
             } else {
                 $('#showFirstName, #showMiddleName, #showLastName, #showUserName, #showUserEmail, #showUserPassword, #showUserRole').prop('disabled', false);
+                $('#titleUserModal').text('Edit User');
                 $('#btnSubmitEditUser').show();
-                $('#btnSubmitEditUser').attr('onclick', `EditTask(${taskNo})`);
+                $('#btnSubmitEditUser').attr('onclick', `EditUser(${userNo})`);
             }
         });
     }
@@ -262,6 +295,40 @@
         })
         .catch((error) => {
             ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while saving data.');
+        });
+    }
+
+    function EditUser(userNo) {
+        var data = {
+            userNo: userNo,
+            FirstName: $('#showFirstName').val(),
+            MiddleName: $('#showMiddleName').val(),
+            LastName: $('#showLastName').val(),
+            UserName: $('#showUserName').val(),
+            UserEmail: $('#showUserEmail').val(),
+            UserRole: $('#showUserRole').val()
+        }
+        
+        axios.post(host_url + 'Home/EditUser', data)        
+        .then((res) => {
+            ShowMessage('success', 'Successful!', res.response);
+        })
+        .catch((error) => {
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while saving data.');
+        }); 
+    }
+
+    function RemoveUser(userNo) {
+        var data = {
+            userNo: userNo,
+        }
+
+        axios.post(host_url + 'Home/RemoveUser', data)
+        .then((res) => {
+            ShowMessage('success', 'Successful!');
+        })
+        .catch((error) => {
+            ShowMessage('error', 'Failed!');
         });
     }
 

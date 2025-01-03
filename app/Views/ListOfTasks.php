@@ -101,7 +101,7 @@
     <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Task</h4>
+                <h4 class="modal-title" id="titleTaskModal">Task</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -290,9 +290,11 @@
 
             if (mode === 'Show') {
                 $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', true);
+                $('#titleTaskModal').text('Task');
                 $('#btnSubmitEditTask').hide();
             } else {
                 $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', false);
+                $('#titleTaskModal').text('Edit Task');
                 $('#btnSubmitEditTask').show();
                 $('#btnSubmitEditTask').attr('onclick', `EditTask(${taskNo})`);
             }
