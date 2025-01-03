@@ -5,14 +5,14 @@ use App\Models\LoginModel;
 
 class Login extends BaseController {
     private $postRequest;
-    private $encrypter;
+    // private $encrypter;
     private $session;
     private $LoginModel;
 
 	public function __construct() {
         helper('utility_helpers');
         $this->postRequest = \Config\Services::request();
-        $this->encrypter = \Config\Services::encrypter();
+        // $this->encrypter = \Config\Services::encrypter();
         $this->session = \Config\Services::session();
 		$this->LoginModel = new LoginModel();
 	}
