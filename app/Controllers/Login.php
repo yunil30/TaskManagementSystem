@@ -5,30 +5,25 @@ use App\Models\LoginModel;
 
 class Login extends BaseController {
     private $postRequest;
-    // private $encrypter;
+    private $encrypter;
     private $session;
     private $LoginModel;
 
 	public function __construct() {
         helper('utility_helpers');
         $this->postRequest = \Config\Services::request();
-        // $this->encrypter = \Config\Services::encrypter();
+        $this->encrypter = \Config\Services::encrypter();
         $this->session = \Config\Services::session();
 		$this->LoginModel = new LoginModel();
 	}
 
-    public function Testing() {
-        var_dump('Hello World');
-        return false;
-    }
-
     public function Authenticate() {
         $requestJson = $this->postRequest->getJSON();
 
-        $this->Username = $requestJson->UserName;
-        $this->Password = hashPassword($requestJson->PassWord);
+        $Username = $requestJson->UserName;
+        $Password = hashPassword($requestJson->PassWord);
 
-        $result = $this->LoginModel->LoginUser($this->Username, $this->Password);
+        $result = $this->LoginModel->LoginUser($Username, $Password);
         $count = count($result);
 
         if ($count == 0) {

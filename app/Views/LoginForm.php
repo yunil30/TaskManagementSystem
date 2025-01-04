@@ -157,6 +157,22 @@
         }
     }
 </style>
+<style>
+    /* Custom styling for title */
+    .swal-title {
+        font-size: 24px; /* Adjust title size */
+        font-weight: bold; /* Make title bold */
+        color: #333; /* Optional color */
+    }
+
+    /* Custom styling for text */
+    .swal-text {
+        font-size: 18px; /* Adjust text size */
+        font-weight: normal; /* Make text normal */
+        color: #555; /* Optional color */
+    }
+</style>
+
 <body>
     <div class="container">
         <form action="" class="loginForm" id="loginForm" method="POST">
@@ -193,31 +209,34 @@
             PassWord: $('#password').val()
         }
 
-        axios.post(host_url + 'Login/Testing', data)
-        .then(function(res) {
-            console.log('Hello');
-            
-            // Swal.fire({
-            //     icon: 'success',
-            //     title: 'Successful!',
-            //     text: 'Your data has been saved successfully.',
-            //     confirmButtonText: 'OK'
-            // }).then((result) => {
-            //     if (result.isConfirmed) {
-            //         setTimeout(() => {
-            //             var index = host_url + 'Home/ListOfTasks';
-            //             window.location.href = index;
-            //         }, 1000)
-            //     }
-            // });
+        axios.post(host_url + 'Login/Authenticate', data)
+        .then((res) => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Successful!',
+                text: 'You have logged in successfully.',
+                customClass: {
+                    title: 'swal-title',
+                    text: 'swal-text'
+                },
+                showConfirmButton: false,
+                timer: 1000
+            }).then(() => {
+                window.location.href = host_url + 'Home/ListOfTasks';
+            });
         })
-        // .catch(function(error) {
-        //     Swal.fire({
-        //         icon: 'error',
-        //         title: 'Failed!',
-        //         text: error.response?.data?.error || 'An error occurred while saving data.',
-        //         confirmButtonText: 'OK'
-        //     });
-        // });
+        .catch((error) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed!',
+                text: error.response?.data?.error || 'An error occurred during login. Please try again.',
+                customClass: {
+                    title: 'swal-title',
+                    text: 'swal-text'
+                },
+                showConfirmButton: false,
+                timer: 1000
+            });
+        });
     });
 </script>

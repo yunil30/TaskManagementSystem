@@ -15,21 +15,25 @@ class Home extends BaseController {
         $this->HomeModel = new HomeModel();
     }
 
-    public function Testing() {
-        var_dump('Hello World');
-        return false;
-    }
-
     public function index() {
+        if($this->session->has('session_username')) {
+            return view('index');
+        }
         return view('LoginForm');
     }
 
     public function ListOfTasks() {
-        return view('ListOfTasks');
+        if($this->session->has('session_username')) {
+            return view('ListOfTasks');
+        }
+        return view('LoginForm');
     }
 
     public function ListOfUsers() {
-        return view('ListOfUsers');
+        if($this->session->has('session_username')) {
+            return view('ListOfUsers');
+        }
+        return view('LoginForm');
     }
 
     public function GetTaskUsers() {

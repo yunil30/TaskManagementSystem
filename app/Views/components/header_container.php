@@ -12,22 +12,58 @@
             <li class="menu-toggle">
                 <button id='btnListOfUsers'>Users</button>
             </li>
+            <li class="menu-toggle">
+                <button id='btnLogOutModal'>Logout</button>
+            </li>
         </ul>
     </div>
 </header>
 
+<!-- Remove user modal -->
+<div class="modal fade" id="logoutUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 400px; width: 100%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Action Verification</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12 modal-body">
+                <div class="col-md-12 mb-3 p-0">
+                    <label>Are you sure you want to log out?</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnLogOut">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     var host_url = '<?php echo host_url(); ?>';
 
-    $('#btnListOfTasks').click(function() {
-        var page = host_url + '/Home/ListOfTasks'
+    $('#btnLogOutModal').click(function() {
+        $('#btnLogOutModal').attr({
+            'data-toggle': 'modal',
+            'data-target': '#logoutUserModal'
+        });
+    });
 
-        window.location.href = page;
+    $('#btnListOfTasks').click(function() {
+        window.location.href = host_url + 'Home/ListOfTasks';
     });
 
     $('#btnListOfUsers').click(function() {
-        var page = host_url + '/Home/ListOfUsers'
+        window.location.href = host_url + 'Home/ListOfUsers';
+    });
 
-        window.location.href = page;
+    $('#btnLogOut').click(function () {
+        axios.post(host_url + 'Login/Logout')
+        .then(() => {
+            window.location.href = host_url;
+        })
     });
 </script>
