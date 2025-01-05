@@ -40,32 +40,6 @@
 <script>
     var host_url = '<?php echo host_url(); ?>';
 
-    $('#btnLogOutModal').click(function() {
-        $('#btnLogOutModal').attr({
-            'data-toggle': 'modal',
-            'data-target': '#logoutUserModal'
-        });
-    });
-
-    $('#btnDashBoard').click(() => {
-        window.location.href = host_url + 'Home/index';
-    })
-
-    $('#btnListOfTasks').click(function() {
-        window.location.href = host_url + 'Home/ListOfTasks';
-    });
-
-    $('#btnListOfUsers').click(function() {
-        window.location.href = host_url + 'Home/ListOfUsers';
-    });
-
-    $('#btnLogOut').click(function () {
-        axios.post(host_url + 'Login/Logout')
-        .then(() => {
-            window.location.href = host_url;
-        })
-    });
-
     function GetUserMenu() {
         axios.get(host_url + 'Login/GetUserMenu').then(function(res) {
             let menus = {};  // To store parent menus and their children

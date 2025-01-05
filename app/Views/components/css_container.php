@@ -39,6 +39,7 @@
         grid-area: header;
         background-color: rgba(247, 248, 249, 1);
         padding: .4rem 0 0;
+        border-bottom: 1px solid rgba(150, 150, 150, 0.28);
 
         .menu {
             padding: .4rem 2rem;
@@ -75,8 +76,9 @@
     /* Sidebar Portion */
     .page-sidebar {
         grid-area: sidebar;
-        background-color:rgb(226, 255, 219);
+        background-color:rgb(255, 255, 255);
         padding: 1rem 1rem 1rem 1rem;
+        border-right: 1px solid rgba(150, 150, 150, 0.28);
 
         .menu-header {
             font-family: "Poppins", sans-serif;
