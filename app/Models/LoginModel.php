@@ -13,8 +13,8 @@ class LoginModel extends Model {
     }
 
     public function LoginUser($username, $password) {
-        $this->Username = $username;
-        $this->Password = $password;
+        $Username = $username;
+        $Password = $password;
 
         $this->str = "SELECT UserID UserNo, 
                             first_name FirstName,   
@@ -27,12 +27,36 @@ class LoginModel extends Model {
                         FROM tbl_user_access 
                     WHERE user_name = :username: AND password = :password: AND user_status = 1";
 
-        $this->KeyBindings = [
-            'username' => $this->Username,
-            'password' => $this->Password
+        $KeyBindings = [
+            'username' => $Username,
+            'password' => $Password
         ];
 
-        $query = $this->db->query($this->str, $this->KeyBindings);
+        $query = $this->db->query($this->str, $KeyBindings);
+
+        return $query->getResultArray();
+    }
+
+    public function GetUserMenu() {
+        $this->str =  "SELECT 
+                            parent.RecID AS parent_id,
+                            parent.menu_name AS parent_menu,
+                            parent.menu_page AS parent_page,
+                            child.RecID AS child_id,
+                            child.menu_name AS child_menu,
+                            child.menu_page AS child_page,
+                            child.menu_index AS child_index
+                        FROM 
+                            tbl_user_menu AS parent
+                        LEFT JOIN 
+                            tbl_user_menu AS child 
+                            ON parent.RecID = child.parent_menu
+                        WHERE 
+                            parent.menu_type = 'parent'
+                        ORDER BY 
+                            parent.RecID, child.menu_name, child.menu_index ASC";
+
+        $query = $this->db->query($this->str);
 
         return $query->getResultArray();
     }

@@ -17,7 +17,7 @@ class Home extends BaseController {
 
     public function index() {
         if($this->session->has('session_username')) {
-            return view('index');
+            return view('MyDashboard');
         }
         return view('LoginForm');
     }

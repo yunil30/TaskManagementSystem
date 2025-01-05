@@ -59,4 +59,8 @@ class Login extends BaseController {
 
         return view('LoginForm');
     }
+
+    public function GetUserMenu() {
+        return $this->response->setJSON($this->LoginModel->GetUserMenu());
+    }
 }

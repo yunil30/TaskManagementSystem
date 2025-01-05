@@ -28,7 +28,7 @@
         grid-template-rows: 3.5rem 1fr auto;
         grid-template-areas: 
             "header header"
-            "main main"
+            "sidebar main"
             "footer footer";
         transition: all 1s ease;
         padding-right: 0 !important;
@@ -68,6 +68,74 @@
                 float: left;
                 height: 44px;
                 padding: 0rem;
+            }
+        }
+    }
+
+    /* Sidebar Portion */
+    .page-sidebar {
+        grid-area: sidebar;
+        background-color:rgb(226, 255, 219);
+        padding: 1rem 1rem 1rem 1rem;
+
+        .menu-header {
+            font-family: "Poppins", sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.1rem;
+            padding: 0rem 0.5rem 0.5rem 0.5rem;
+            margin: 0rem;
+        }
+        
+        .menu-ul {
+            cursor: pointer; 
+            font-family: "Poppins", sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.1rem;
+            padding: 1rem 0.5rem 1rem 0.5rem;
+            margin: 0rem;
+            list-style-type: none;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &:hover {
+                background-color: #ffffff;
+                border-radius: 0.3rem;
+                font-size: 1.01rem;
+            }
+
+            &:active {
+                font-size: 1.05rem;
+            }
+        }
+
+        .submenu_ul {
+            list-style-type: none;
+            text-align: left;
+            padding: 0rem;
+            margin: 0rem;
+            
+            li {
+                cursor: pointer;
+                font-family: "Poppins", sans-serif;
+                font-size: 1rem;
+                font-weight: 500;
+                letter-spacing: 0.1rem;
+                padding: 1rem 0.5rem 1rem 1.1rem;
+                margin: 0rem;
+
+                &:hover {
+                    background-color: #ffffff;
+                    border-radius: 0.3rem;
+                    font-size: 1.01rem;
+                }
+
+                &:active {
+                    font-size: 1.05rem;
+                }
             }
         }
     }
