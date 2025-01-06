@@ -42,10 +42,12 @@ class LoginModel extends Model {
                             parent.RecID AS parent_id,
                             parent.menu_name AS parent_menu,
                             parent.menu_page AS parent_page,
+                            parent.menu_icon AS parent_icon,
                             child.RecID AS child_id,
                             child.menu_name AS child_menu,
                             child.menu_page AS child_page,
-                            child.menu_index AS child_index
+                            child.menu_index AS child_index,
+                            child.menu_icon AS child_icon
                         FROM 
                             tbl_user_menu AS parent
                         LEFT JOIN 

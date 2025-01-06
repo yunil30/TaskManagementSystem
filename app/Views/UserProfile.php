@@ -17,8 +17,8 @@
 <main class="page-main">
     <div class="main-content">
         <div class="col-md-12 content-header">
-            <h3 style="margin: 0;">Dashboard</h3>
-            <!-- <button type="button" class="btn btn-primary" id="btnAddTask">New Task</button> -->
+            <h3 style="margin: 0;">User Profile</h3>
+            <button type="button" class="btn btn-primary" id="btnAddTask">New Task</button>
         </div>
         <div class="col-md-12 content-body">
         </div>

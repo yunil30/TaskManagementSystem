@@ -36,6 +36,13 @@ class Home extends BaseController {
         return view('LoginForm');
     }
 
+    public function UserProfile() {
+        if($this->session->has('session_username')) {
+            return view('UserProfile');
+        }
+        return view('LoginForm');
+    }
+
     public function GetTaskUsers() {
         return json_encode($this->HomeModel->GetTaskUsers());
     }

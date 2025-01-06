@@ -50,6 +50,7 @@
                     menus[row.parent_id] = {
                         parent_menu: row.parent_menu,
                         parent_page: row.parent_page,
+                        parent_icon: row.parent_icon,
                         children: []
                     };
                 }
@@ -60,7 +61,8 @@
                         child_id: row.child_id,
                         child_menu: row.child_menu,
                         child_page: row.child_page,
-                        child_index: row.child_index
+                        child_index: row.child_index,
+                        child_icon: row.child_icon
                     });
                 }
             });
@@ -76,7 +78,7 @@
 
                 // Create the parent menu item
                 let parentHtml = `
-                    <ul class="menu-ul" id="menu${parentId}" onclick="BtnShowPage('${parent.parent_page}', ${parentId})">${parent.parent_menu}</ul>
+                    <ul class="menu-ul" id="menu${parentId}" onclick="BtnShowPage('${parent.parent_page}', ${parentId})"><i class="fas ${parent.parent_icon} menu-icon"></i>${parent.parent_menu}</ul>
                     <ul class="submenu_ul" id="submenu${parentId}">
                 `;
     
@@ -85,7 +87,7 @@
                     parentHtml += ``;
                     parent.children.forEach(function(child) {
                         parentHtml += `
-                            <li onclick="BtnShowPage('${child.child_page}', ${child.child_id})" id="child-menu${child.child_id}" data-index="${child.child_index}">${child.child_menu}</li>
+                            <li onclick="BtnShowPage('${child.child_page}', ${child.child_id})" id="child-menu${child.child_id}" data-index="${child.child_index}"><i class="fas ${child.child_icon} menu-icon"></i>${child.child_menu}</li>
                         `;
                     });
                 }
@@ -99,6 +101,10 @@
     }
 
     function BtnShowPage(path, id) {
+        if (path == '#') {
+            $('#submenu' + id).slideToggle(500);
+        }
+
         if (id == 4) {
             var $MenuButton = $('#menu4');
             var $btnLogOut = $('#btnLogOut');

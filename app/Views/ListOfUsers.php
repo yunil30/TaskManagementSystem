@@ -226,7 +226,7 @@
 
             $('#userListTable').DataTable({
                 searching: true,
-                pageLength: 6,
+                pageLength: 10,
                 lengthChange: false,
                 ordering: true,
                 columnDefs: [

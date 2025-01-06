@@ -38,11 +38,15 @@
     .page-header {
         grid-area: header;
         background-color: rgba(247, 248, 249, 1);
-        padding: .4rem 0 0;
+        padding: 5px 0;
+        position: sticky;
         border-bottom: 1px solid rgba(150, 150, 150, 0.28);
+        box-shadow: 0px 1px 10px  #00000047;
+        top: 0;
+        z-index: 10;
 
         .menu {
-            padding: .4rem 2rem;
+            padding: 0px 1rem;
 
             ul {
                 border-bottom: 1px solid rgba(242, 242, 242, 1);
@@ -68,7 +72,7 @@
             .logo {
                 float: left;
                 height: 44px;
-                padding: 0rem;
+                padding: 0px;
             }
         }
     }
@@ -77,19 +81,22 @@
     .page-sidebar {
         grid-area: sidebar;
         background-color:rgb(255, 255, 255);
-        padding: 1rem 1rem 1rem 1rem;
-        border-right: 1px solid rgba(150, 150, 150, 0.28);
-
+        padding: 2rem 0rem 2rem 0rem;
+        box-shadow: 1px 0px 10px  #00000047;
+        z-index: 9;
+        
         .menu-header {
+            color: #17a589;
             font-family: "Poppins", sans-serif;
             font-size: 1rem;
             font-weight: 500;
             letter-spacing: 0.1rem;
-            padding: 0rem 0.5rem 0.5rem 0.5rem;
+            padding: 0rem 0.5rem 0.7rem 1.5rem;
             margin: 0rem;
         }
         
         .menu-ul {
+            color: #17a589;
             cursor: pointer; 
             font-family: "Poppins", sans-serif;
             font-size: 1rem;
@@ -99,14 +106,14 @@
             margin: 0rem;
             list-style-type: none;
             text-decoration: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+            .menu-icon{
+                padding: 0rem 1rem 0rem 1rem;
+            }
 
             &:hover {
-                background-color: #ffffff;
-                border-radius: 0.3rem;
-                font-size: 1.01rem;
+                background-color: #c4fff7;
+                font-size: 1.05rem;
             }
 
             &:active {
@@ -115,6 +122,7 @@
         }
 
         .submenu_ul {
+            color: #17a589;
             list-style-type: none;
             text-align: left;
             padding: 0rem;
@@ -126,13 +134,16 @@
                 font-size: 1rem;
                 font-weight: 500;
                 letter-spacing: 0.1rem;
-                padding: 1rem 0.5rem 1rem 1.1rem;
+                padding: 1rem 0.5rem 1rem 0.5rem;
                 margin: 0rem;
 
+                .menu-icon{
+                    padding: 0rem 1rem 0rem 3rem;
+                }
+
                 &:hover {
-                    background-color: #ffffff;
-                    border-radius: 0.3rem;
-                    font-size: 1.01rem;
+                    background-color: #c4fff7;
+                    font-size: 1.05rem;
                 }
 
                 &:active {
@@ -147,6 +158,7 @@
         grid-area: main;
         background-color: #f1fffd;
         padding: 2rem;
+        z-index: 8;
 
         .main-content {
             background-color: #ffffff;
@@ -156,7 +168,6 @@
             padding: 1rem;
 
             .content-header {
-                /* border: 1px solid black; */
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -168,10 +179,6 @@
             }
 
             .content-body {
-                /* border: 1px solid black; */
-                /* display: flex; */
-                /* justify-content: space-between; */
-                /* align-items: center; */
                 padding: 0 1rem 2rem 1rem;
                 height: 90%;
             }
@@ -183,6 +190,7 @@
         grid-area: footer;
         background-color: #17a589;
         text-align: center;
+        z-index: 10;
 
         .copyrights {
             padding: 16px;
