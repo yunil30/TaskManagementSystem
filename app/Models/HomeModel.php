@@ -93,4 +93,13 @@ class HomeModel extends Model {
         return $query->getResultArray();
     }
 
+    public function GetTaskStatusCount($TaskStatus) {
+        $str = "SELECT COUNT(TaskID) AS taskCount FROM tbl_task_list WHERE task_status = ?";
+
+        $query = $this->db->query($str, [$TaskStatus]);
+
+        $row = $query->getRow();
+
+        return $row->taskCount;
+    }
 }

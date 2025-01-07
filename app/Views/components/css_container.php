@@ -82,7 +82,7 @@
         grid-area: sidebar;
         background-color:rgb(255, 255, 255);
         padding: 2rem 0rem 2rem 0rem;
-        box-shadow: 1px 0px 10px  #00000047;
+        box-shadow: 0px 0px 10px #00000047;
         z-index: 9;
         
         .menu-header {
@@ -163,7 +163,7 @@
         .main-content {
             background-color: #ffffff;
             border-radius: 5px;
-            box-shadow: 0px 1px 10px #00000047;
+            box-shadow: 0px 0px 10px #00000047;
             height: 100%;
             padding: 1rem;
 
@@ -221,6 +221,20 @@
 
         .modal-footer {
             padding: 5px 20px 15px 20px;
+        }
+    }
+
+    #grid-container {
+        .card {
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #00000047;
+            padding: 1rem;
+            text-align: center;
+
+            .card-icon {
+                font-size: 1.3rem;
+            }
         }
     }
 </style>
