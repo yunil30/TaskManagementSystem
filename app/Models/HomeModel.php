@@ -94,12 +94,15 @@ class HomeModel extends Model {
     }
 
     public function GetTaskStatusCount($TaskStatus) {
-        $str = "SELECT COUNT(TaskID) AS taskCount FROM tbl_task_list WHERE task_status = ?";
+        $str = "SELECT
+                    SUM(CASE WHEN task_level = 1 THEN 1 ELSE 0 END) AS low,
+                    SUM(CASE WHEN task_level = 2 THEN 1 ELSE 0 END) AS medium,
+                    SUM(CASE WHEN task_level = 3 THEN 1 ELSE 0 END) AS high,
+                    COUNT(*) AS total
+                FROM tbl_task_list WHERE task_status = ? AND isAvailable = 1";
 
         $query = $this->db->query($str, [$TaskStatus]);
 
-        $row = $query->getRow();
-
-        return $row->taskCount;
+        return $query->getResultArray();
     }
 }

@@ -59,10 +59,8 @@ class Home extends BaseController {
 
     public function GetTaskStatusCount() {
         $requestJson = $this->postRequest->getJSON();
-    
-        $count = $this->HomeModel->GetTaskStatusCount($requestJson->taskStatus);
-        
-        return $this->response->setJSON(['count' => $count]);
+
+        return json_encode($this->HomeModel->GetTaskStatusCount($requestJson->taskStatus));
     }
     
 
