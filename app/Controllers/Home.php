@@ -43,6 +43,13 @@ class Home extends BaseController {
         return view('LoginForm');
     }
 
+    public function ListOfMenus() {
+        if($this->session->has('session_username')) {
+            return view('ListOfMenus');
+        }
+        return view('LoginForm');
+    }
+
     public function GetTaskUsers() {
         return json_encode($this->HomeModel->GetTaskUsers());
     }
@@ -62,7 +69,6 @@ class Home extends BaseController {
 
         return json_encode($this->HomeModel->GetTaskStatusCount($requestJson->taskStatus));
     }
-    
 
     public function CreateTask() {
         $requestJson = $this->postRequest->getJSON();

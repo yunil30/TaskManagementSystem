@@ -9,54 +9,8 @@
     <!-- Style component -->
     <?= css_container(); ?>
     <style>
-        .priority-bar {
-            display: flex;
-            height: 16px;
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
 
-        .priority-level {
-            height: 100%;
-            display: inline-block;
-        }
 
-        .priority-level.low {
-            background-color: #6c757d; /* Grey for Low */
-        }
-
-        .priority-level.medium {
-            background-color: #ffc107; /* Yellow for Medium */
-        }
-
-        .priority-level.high {
-            background-color: #dc3545; /* Red for High */
-        }
-
-        .priority-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-        }
-
-        .priority-labels label {
-            font-size: 14px;
-            font-weight: 500;
-
-        }
-
-        .priority-labels .low {
-            color: #6c757d;
-        }
-
-        .priority-labels .medium {
-            color: #ffc107;
-        }
-
-        .priority-labels .high {
-            color: #dc3545;
-        }
     </style>
 </head>
 <body>
@@ -67,7 +21,7 @@
 <main class="page-main">
     <div class="main-content">
         <div class="col-md-12 content-header">
-            <h3 style="margin: 0;">Dashboard</h3>
+            <h3 style="margin: 0;">Home</h3>
         </div>
         <div class="col-md-12 content-body">
             <div class="row" id="grid-container">

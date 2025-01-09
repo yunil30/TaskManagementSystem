@@ -102,13 +102,16 @@
             font-size: 1rem;
             font-weight: 500;
             letter-spacing: 0.1rem;
-            padding: 1rem 0.5rem 1rem 0.5rem;
+            padding: 1rem 1rem 1rem 1rem;
             margin: 0rem;
             list-style-type: none;
             text-decoration: none;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             .menu-icon{
-                padding: 0rem 1rem 0rem 1rem;
+                padding: 0rem 0.5rem 0rem 0.5rem;
             }
 
             &:hover {
@@ -127,6 +130,9 @@
             text-align: left;
             padding: 0rem;
             margin: 0rem;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
             
             li {
                 cursor: pointer;
@@ -134,11 +140,11 @@
                 font-size: 1rem;
                 font-weight: 500;
                 letter-spacing: 0.1rem;
-                padding: 1rem 0.5rem 1rem 0.5rem;
+                padding: 1rem 0.5rem 1rem 2.5rem;
                 margin: 0rem;
 
                 .menu-icon{
-                    padding: 0rem 1rem 0rem 3rem;
+                    padding: 0rem 0.5rem 0rem 0.5rem;
                 }
 
                 &:hover {
@@ -224,16 +230,63 @@
         }
     }
 
-    #grid-container {
-        .card {
-            background-color: #f4f4f4;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px #00000047;
-            padding: 1rem;
-            text-align: center;
+    /* Card Dashboard Portion */
+    .card {
+        background-color: #f4f4f4;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px #00000047;
+        padding: 1rem;
+        text-align: center;
 
-            .card-icon {
-                font-size: 1.3rem;
+        .card-icon {
+            font-size: 1.3rem;
+        }
+
+        .priority-bar {
+            display: flex;
+            height: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 10px 0;
+
+            .priority-level {
+                height: 100%;
+                display: inline-block;
+            }
+
+            .priority-level.low {
+                background-color: #FFD65A;
+            }
+
+            .priority-level.medium {
+                background-color: #FF9D23;
+            }
+
+            .priority-level.high {
+                background-color: #F93827;
+            }
+        }
+
+        .priority-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+
+            label {
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            .low {
+                color: #FFD65A;
+            }
+
+            .medium {
+                color: #FF9D23;
+            }
+
+            .high {
+                color: #F93827;
             }
         }
     }
