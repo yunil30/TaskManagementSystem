@@ -77,7 +77,7 @@
                         <label>User role:</label>
                         <select class="form-control" id="addUserRole">
                             <option value="">Select an Option</option>
-                            <option value="member" selected>Member</option>
+                            <option value="user" selected>User</option>
                             <option value="leader">Leader</option>
                             <option value="admin">Admin</option>
                         </select>
@@ -132,7 +132,7 @@
                         <label>User role:</label>
                         <select class="form-control" id="showUserRole">
                             <option value="">Select an Option</option>
-                            <option value="member" selected>Member</option>
+                            <option value="user" selected>User</option>
                             <option value="leader">Leader</option>
                             <option value="admin">Admin</option>
                         </select>
