@@ -14,4 +14,8 @@ class Menu extends BaseController {
         $this->session = \Config\Services::session();
         $this->MenuModel = new MenuModel();
     }
+
+    public function GetActiveMenu() {
+        return json_encode($this->MenuModel->GetActiveMenu());
+    }
 }

@@ -12,4 +12,11 @@ class MenuModel extends Model {
         $this->db = \Config\Database::connect();
     }
 
+    public function GetActiveMenu() {
+        $str = "SELECT RecID, menu_name FROM tbl_user_menu";
+
+        $query = $this->db->query($str);
+
+        return $query->getResultArray();
+    }
 }

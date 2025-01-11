@@ -51,14 +51,14 @@
                         <label>User role:</label>
                         <select class="form-control" id="userRoles">
                             <option value="">Select an Option</option>
-                            <option value="user" selected>User</option>
+                            <option value="user">User</option>
                             <option value="leader">Leader</option>
                             <option value="admin">Admin</option>
                         </select>
                     </div>
                     <div class="col-md-12 mb-3">
                         <label>User menus:</label>
-                        <select class="form-control" id="userMenus" multiple>
+                        <select class="form-control chosen-select" id="userMenus" multiple>
                         </select>
                     </div>
                 </div>
@@ -82,5 +82,24 @@
             'data-toggle': 'modal',
             'data-target': '#menuMappingModal'
         });
+
+        GetActiveMenu();
     });
+
+    function GetActiveMenu() {
+        $('#userMenus').empty();
+
+        axios.get(host_url + 'Menu/GetActiveMenu')
+        .then((res) => {
+            res.data.forEach((row) => {
+                $('#userMenus').append(`<option value="${row.menu_name}">${row.menu_name}</option>`)
+            });
+            $('#userMenus').trigger('chosen:updated');
+        })
+        .catch((res) => {
+            res.data.forEach((error) => {
+                $('#userMenus').append(`<option value="">No Data</option>`)
+            });
+        });
+    }
 </script>
