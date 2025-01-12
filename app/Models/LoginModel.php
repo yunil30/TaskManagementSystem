@@ -37,29 +37,53 @@ class LoginModel extends Model {
         return $query->getResultArray();
     }
 
-    public function GetUserMenu() {
-        $this->str =  "SELECT 
-                            parent.RecID AS parent_id,
-                            parent.menu_name AS parent_menu,
-                            parent.menu_page AS parent_page,
-                            parent.menu_icon AS parent_icon,
-                            child.RecID AS child_id,
-                            child.menu_name AS child_menu,
-                            child.menu_page AS child_page,
-                            child.menu_index AS child_index,
-                            child.menu_icon AS child_icon
-                        FROM 
-                            tbl_user_menu AS parent
-                        LEFT JOIN 
-                            tbl_user_menu AS child 
-                            ON parent.RecID = child.parent_menu
-                        WHERE 
-                            parent.menu_type = 'parent'
-                        ORDER BY 
-                            parent.RecID, child.menu_name, child.menu_index ASC";
-
-        $query = $this->db->query($this->str);
-
+    public function GetUserMenu($userRole) {
+        if ($userRole == 'admin') {
+            $this->str =  "SELECT 
+                                parent.MenuID AS parent_id,
+                                parent.menu_name AS parent_menu,
+                                parent.menu_page AS parent_page,
+                                parent.menu_icon AS parent_icon,
+                                child.MenuID AS child_id,
+                                child.menu_name AS child_menu,
+                                child.menu_page AS child_page,
+                                child.menu_index AS child_index,
+                                child.menu_icon AS child_icon
+                            FROM 
+                                tbl_user_menu AS parent
+                            LEFT JOIN 
+                                tbl_user_menu AS child ON parent.MenuID = child.parent_menu
+                            WHERE 
+                                parent.menu_type = 'parent'
+                            ORDER BY 
+                                parent.MenuID, child.menu_name, child.menu_index ASC";
+        } else {
+            $this->str =  "SELECT 
+                                parent.MenuID AS parent_id,
+                                parent.menu_name AS parent_menu,
+                                parent.menu_page AS parent_page,
+                                parent.menu_icon AS parent_icon,
+                                child.MenuID AS child_id,
+                                child.menu_name AS child_menu,
+                                child.menu_page AS child_page,
+                                child.menu_index AS child_index,
+                                child.menu_icon AS child_icon
+                            FROM 
+                                tbl_user_menu AS parent
+                            LEFT JOIN 
+                                tbl_user_menu AS child ON parent.MenuID = child.parent_menu
+                            LEFT JOIN
+                                tbl_menu_mapping AS mapping ON parent.MenuID = mapping.MenuID
+                            WHERE 
+                                parent.menu_type = 'parent' 
+                                AND mapping.user_role = ? 
+                                AND mapping.is_visible = 1
+                            ORDER BY 
+                                parent.MenuID, child.menu_name, child.menu_index ASC";
+        }
+    
+        $query = $this->db->query($this->str, [$userRole]);
+        
         return $query->getResultArray();
     }
 }

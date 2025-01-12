@@ -11,8 +11,21 @@
 
 <script>
     $(document).ready(function() {
+        const originalAddEventListener = EventTarget.prototype.addEventListener;
+
+        EventTarget.prototype.addEventListener = function(type, listener, options) {
+            const isTouchEvent = ['touchstart', 'touchmove', 'mousewheel', 'wheel'].includes(type);
+
+            if (isTouchEvent && (!options || typeof options !== 'object')) {
+                options = options || {};
+                options.passive = true;
+            }
+
+            originalAddEventListener.call(this, type, listener, options);
+        };
+
         $(".chosen-select").chosen({
-            width: "100%" // Optional, adjusts the width of the dropdown
+            width: "100%"
         });
     });
 </script>
