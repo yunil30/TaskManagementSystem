@@ -41,11 +41,11 @@
 </main>
 
 <!-- Mapping menu modal -->
-<div class="modal fade" id="menuMappingModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="showMenuMappingModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Menu Mapping</h4>
+                <h4 class="modal-title">Add Mapping</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -76,6 +76,43 @@
     </div>
 </div>
 
+<!-- Edit mapped menu modal -->
+<div class="modal fade" id="editMenuMappingModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Mapping</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12 modal-body">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>User role:</label>
+                        <select class="form-control" id="editUserRole">
+                            <option value="">Select an Option</option>
+                            <option value="user">User</option>
+                            <option value="leader">Leader</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>User menus:</label>
+                        <select class="form-control chosen-select" id="editRoleMenus" multiple>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnSubmitMenuMapping" onclick="EditMenuMapping()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Footer component -->
 <?= show_footer(); ?>
 </body>
@@ -86,7 +123,7 @@
     $('#btnMapMenus').click(function() {
         $('#btnMapMenus').attr({
             'data-toggle': 'modal',
-            'data-target': '#menuMappingModal'
+            'data-target': '#showMenuMappingModal'
         });
 
         GetActiveMenu();
@@ -114,18 +151,19 @@
 
             $('#loadMenus').empty();
 
-            const groupedData = res.data.reduce((acc, { user_role, menu_name }) => {
+            const groupedData = res.data.reduce((acc, { user_role, menu_name, MenuID }) => {
                 acc[user_role] = [...(acc[user_role] || []), menu_name];
                 return acc;
             }, {});
 
             Object.entries(groupedData).forEach(([role, menus]) => {
+                
                 $('#loadMenus').append(`
                     <tr>
                         <td style="vertical-align: middle;">${role.charAt(0).toUpperCase() + role.slice(1)}</td>
                         <td style="vertical-align: middle;">${menus.join(', ')}</td>
                         <td class="text-center" style="vertical-align: middle;">
-                            <button class="btn btn-transparent"><span class="fas fa-pencil"></span></button>
+                            <button class="btn btn-transparent" id="btnEditMenuMapping${role}" onclick="EditMenuMappingModal('${role}')"><span class="fas fa-pencil"></span></button>
                             <button class="btn btn-transparent"><span class="fas fa-trash"></span></button>
                         </td>
                     </tr>
@@ -138,6 +176,13 @@
                 lengthChange: false,
                 ordering: true
             });
+        });
+    }
+
+    function EditMenuMappingModal(btnRole) {
+        $('#btnEditMenuMapping' + btnRole).attr({
+            'data-toggle': 'modal',
+            'data-target': '#editMenuMappingModal'
         });
     }
 
