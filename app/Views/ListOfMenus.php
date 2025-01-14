@@ -106,12 +106,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnSubmitMenuMapping" onclick="EditMenuMapping()">Submit</button>
+                <button type="button" class="btn btn-success" id="btnEditMenuMapping">Submit</button>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- Footer component -->
 <?= show_footer(); ?>
@@ -163,7 +162,7 @@
                         <td style="vertical-align: middle;">${role.charAt(0).toUpperCase() + role.slice(1)}</td>
                         <td style="vertical-align: middle;">${menus.join(', ')}</td>
                         <td class="text-center" style="vertical-align: middle;">
-                            <button class="btn btn-transparent" id="btnEditMenuMapping${role}" onclick="EditMenuMappingModal('${role}')"><span class="fas fa-pencil"></span></button>
+                            <button class="btn btn-transparent" id="btnShowEditMenuMapping${role}" onclick="EditMenuMappingModal('${role}')"><span class="fas fa-pencil"></span></button>
                             <button class="btn btn-transparent"><span class="fas fa-trash"></span></button>
                         </td>
                     </tr>
@@ -180,13 +179,14 @@
     }
 
     function EditMenuMappingModal(role) {
-        $('#btnEditMenuMapping' + role).attr({
+        $('#btnShowEditMenuMapping' + role).attr({
             'data-toggle': 'modal',
             'data-target': '#editMenuMappingModal'
         });
 
         GetMappedMenuByRole(role);
         GetActiveMenu('editRoleMenus');
+        $('#btnEditMenuMapping').attr('onclick', `EditMenuMapping()`);
     }
 
     function GetMappedMenuByRole(userRole) {
@@ -206,6 +206,21 @@
             $('#editUserRole').val(consolidatedMenu.user_role);
             $('#editRoleMenus').val(menuIDs).trigger("chosen:updated");
         })
+    }
+
+    function EditMenuMapping() {
+        var data = {
+            userRole: $('#editUserRole').val(),
+            roleMenus: $('#editRoleMenus').val().join(',')
+        }
+
+        axios.post(host_url + 'Menu/EditMenuMapping', data)
+        .then((res) => {
+            ShowMessage('success', 'Successful!', res.response);
+        })
+        .catch((error) => {
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while editing data.');
+        });
     }
 
     function GetActiveMenu(selectMenus) {
