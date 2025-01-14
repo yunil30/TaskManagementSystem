@@ -37,6 +37,21 @@ class MenuModel extends Model {
         return $query->getResultArray();
     }
 
+    public function GetMappedMenuByRole($UserRole) {
+        $str = "SELECT 
+                    x.MenuID, 
+                    x.user_role, 
+                    y.menu_name, 
+                    y.menu_type
+                FROM tbl_menu_mapping AS x
+                    LEFT JOIN tbl_user_menu AS y ON x.MenuID = y.MenuID
+                WHERE x.user_role = ?";
+    
+        $query = $this->db->query($str, [$UserRole]);
+        
+        return $query->getResultArray();
+    }
+
     public function GetActiveMenu() {
         $str = "SELECT MenuID, menu_name FROM tbl_user_menu";
 

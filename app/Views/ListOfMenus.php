@@ -126,7 +126,7 @@
             'data-target': '#showMenuMappingModal'
         });
 
-        GetActiveMenu();
+        GetActiveMenu('roleMenus');
     });
 
     function ShowMessage(icon, title, text, position = 'center') {
@@ -151,7 +151,7 @@
 
             $('#loadMenus').empty();
 
-            const groupedData = res.data.reduce((acc, { user_role, menu_name, MenuID }) => {
+            const groupedData = res.data.reduce((acc, { user_role, menu_name}) => {
                 acc[user_role] = [...(acc[user_role] || []), menu_name];
                 return acc;
             }, {});
@@ -179,22 +179,44 @@
         });
     }
 
-    function EditMenuMappingModal(btnRole) {
-        $('#btnEditMenuMapping' + btnRole).attr({
+    function EditMenuMappingModal(role) {
+        $('#btnEditMenuMapping' + role).attr({
             'data-toggle': 'modal',
             'data-target': '#editMenuMappingModal'
         });
+
+        GetMappedMenuByRole(role);
+        GetActiveMenu('editRoleMenus');
     }
 
-    function GetActiveMenu() {
-        $('#roleMenus').empty();
+    function GetMappedMenuByRole(userRole) {
+        var data = {
+            userRole: userRole
+        }
+   
+        axios.post(host_url + 'Menu/GetMappedMenuByRole', data)
+        .then((res) => {
+            const consolidatedMenu = {
+                MenuID: res.data.map(item => item.MenuID).join(", "), 
+                menu_name: res.data.map(item => item.menu_name).join(", "), 
+                user_role: res.data.find(item => item.user_role).user_role
+            };
+
+            const menuIDs = consolidatedMenu.MenuID.split(", ");
+            $('#editUserRole').val(consolidatedMenu.user_role);
+            $('#editRoleMenus').val(menuIDs).trigger("chosen:updated");
+        })
+    }
+
+    function GetActiveMenu(selectMenus) {
+        $('#'+selectMenus).empty();
 
         axios.get(host_url + 'Menu/GetActiveMenu')
         .then((res) => {
             res.data.forEach((row) => {
-                $('#roleMenus').append(`<option value="${row.MenuID}">${row.menu_name}</option>`)
+                $('#'+selectMenus).append(`<option value="${row.MenuID}">${row.menu_name}</option>`)
             });
-            $('#roleMenus').trigger('chosen:updated');
+            $('#'+selectMenus).trigger('chosen:updated');
         })
         .catch((error) => {
             ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while loading data.');

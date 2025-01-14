@@ -41,4 +41,9 @@ class Menu extends BaseController {
                     ->setJSON(['message' => 'Menu successfully added.']);
     }
 
+    public function GetMappedMenuByRole() {
+        $requestJson = $this->postRequest->getJSON();
+
+        return json_encode($this->MenuModel->GetMappedMenuByRole($requestJson->userRole));
+    }
 }
