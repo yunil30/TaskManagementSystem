@@ -23,45 +23,70 @@ class Menu extends BaseController {
         return json_encode($this->MenuModel->GetActiveMenu());
     }
 
-    public function SaveMenuMapping() {
-        $requestJson = $this->postRequest->getJSON();
-        $menus = explode(',', $requestJson->roleMenus);
-
-        foreach ($menus as $menu) {
-            $data = [
-                'MenuID'    => $menu,
-                'user_role' => $requestJson->userRole
-            ];
-
-            $this->MenuModel->InsertData('tbl_menu_mapping', $data);
-        }
-
-        return $this->response
-                    ->setStatusCode(200)
-                    ->setJSON(['message' => 'Menu successfully added.']);
-    }
-
-    public function EditMenuMapping() {
-        $requestJson = $this->postRequest->getJSON();
-        $menus = explode(',', $requestJson->roleMenus);
-
-        foreach ($menus as $menu) {
-            $fields = [
-                'MenuID' => $menu,
-            ];
-
-            $data = [
-                'MenuID'    => $menu,
-                'user_role' => $requestJson->userRole
-            ];
-
-            $this->MenuModel->UpdateData($fields, 'tbl_menu_mapping', $data);
-        }
-    }
-
     public function GetMappedMenuByRole() {
         $requestJson = $this->postRequest->getJSON();
 
         return json_encode($this->MenuModel->GetMappedMenuByRole($requestJson->userRole));
+    }
+
+    public function SaveMenuMapping() {
+        $requestJson = $this->postRequest->getJSON();
+
+        $ValidateRoleMappedMenu = $this->MenuModel->ValidateRoleMappedMenu($requestJson->userRole);
+        if($ValidateRoleMappedMenu > 0) {
+            return $this->response
+                        ->setStatusCode(400)
+                        ->setJSON(['error' => 'User role already mapped!']);
+        }
+
+        if (is_string($requestJson->roleMenus)) {
+            $menus = explode(',', $requestJson->roleMenus); 
+        }
+        
+        $menusJson = json_encode($menus);
+    
+        $data = [
+            'MenuID'    => $menusJson,  
+            'user_role' => $requestJson->userRole
+        ];
+
+        if ($this->MenuModel->InsertData('tbl_menu_mapping', $data)) {
+            return $this->response
+                        ->setStatusCode(200)
+                        ->setJSON(['message' => 'Menu successfully mapped.']);
+        } else {
+            return $this->response
+                        ->setStatusCode(500)
+                        ->setJSON(['error' => 'Menu could not be mapped.']);
+        }
+    }
+
+    public function EditMenuMapping() {
+        $requestJson = $this->postRequest->getJSON();
+
+        if (is_string($requestJson->roleMenus)) {
+            $menus = explode(',', $requestJson->roleMenus); 
+        }
+
+        $menusJson = json_encode($menus);
+
+        $fields = [
+            'user_role' => $requestJson->userRole
+        ];
+
+        $data = [
+            'MenuID'    => $menusJson,  
+            'user_role' => $requestJson->userRole
+        ];
+
+        if ($this->MenuModel->UpdateData($fields, 'tbl_menu_mapping', $data)) {
+            return $this->response
+                        ->setStatusCode(200)
+                        ->setJSON(['message' => 'Menu successfully updated.']);
+        } else {
+            return $this->response
+                        ->setStatusCode(500)
+                        ->setJSON(['error' => 'Menu could not be updated.']);
+        }
     }
 }

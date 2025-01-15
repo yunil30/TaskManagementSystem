@@ -25,12 +25,16 @@ class MenuModel extends Model {
     }
 
     public function GetListOfMappedMenu() {
-        $str = "SELECT x.MenuID, 
-                            x.user_role, 
-                            y.menu_name, 
-                            y.menu_type
-                        FROM tbl_menu_mapping AS x
-                            LEFT JOIN tbl_user_menu AS y ON x.MenuID = y.MenuID";
+        $str = "SELECT 
+            y.MenuID,
+            y.menu_name,
+            x.user_role
+        FROM 
+            tbl_menu_mapping AS x
+        JOIN 
+            tbl_user_menu AS y 
+        ON 
+            JSON_CONTAINS(CAST(x.MenuID AS JSON), JSON_ARRAY(CAST(y.MenuID AS CHAR)), '$')";
     
         $query = $this->db->query($str);
         
@@ -39,12 +43,15 @@ class MenuModel extends Model {
 
     public function GetMappedMenuByRole($UserRole) {
         $str = "SELECT 
-                    x.MenuID, 
-                    x.user_role, 
-                    y.menu_name, 
-                    y.menu_type
-                FROM tbl_menu_mapping AS x
-                    LEFT JOIN tbl_user_menu AS y ON x.MenuID = y.MenuID
+                    y.MenuID,
+                    y.menu_name,
+                    x.user_role
+                FROM 
+                    tbl_menu_mapping AS x
+                JOIN 
+                    tbl_user_menu AS y 
+                ON 
+                    JSON_CONTAINS(CAST(x.MenuID AS JSON), JSON_ARRAY(CAST(y.MenuID AS CHAR)), '$')
                 WHERE x.user_role = ?";
     
         $query = $this->db->query($str, [$UserRole]);
@@ -58,5 +65,15 @@ class MenuModel extends Model {
         $query = $this->db->query($str);
 
         return $query->getResultArray();
+    }
+
+    public function ValidateRoleMappedMenu($UserRole) {
+        $str = "SELECT COUNT(1) existing FROM tbl_menu_mapping WHERE user_role = ?";
+
+        $query = $this->db->query($str, [$UserRole]);
+
+        $row = $query->getRow();
+
+        return $row->existing;
     }
 }

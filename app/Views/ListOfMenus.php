@@ -193,10 +193,13 @@
         var data = {
             userRole: userRole
         }
+
+        $('#editRoleMenus').empty();
    
         axios.post(host_url + 'Menu/GetMappedMenuByRole', data)
         .then((res) => {
             const consolidatedMenu = {
+                RecID: res.data.map(item => item.RecID).join(", "), 
                 MenuID: res.data.map(item => item.MenuID).join(", "), 
                 menu_name: res.data.map(item => item.menu_name).join(", "), 
                 user_role: res.data.find(item => item.user_role).user_role
