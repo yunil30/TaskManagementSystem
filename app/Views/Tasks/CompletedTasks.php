@@ -160,6 +160,7 @@
         axios.post(host_url + 'Task/GetTaskDetails', data)
         .then((res) => {
             var taskDetails = res.data[0];
+            $('#showTaskName, #showTaskDescription, #showTaskAssignBy, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', true);
             $('#showTaskName').val(taskDetails.task_name);
             $('#showTaskDescription').val(taskDetails.task_description);
             $('#showTaskAssignBy').val(taskDetails.team_leader);

@@ -23,12 +23,11 @@
             <table class="table table-hover table-bordered" id="taskListTable">
                 <thead>
                     <tr>
-                        <th class="text-left" style="width: 15%">TaskNo.</th>
-                        <th class="text-left" style="width: 20%">Task Name</th>
-                        <th class="text-left" style="width: 20%">Assigned To</th>
-                        <th class="text-left" style="width: 15%">Task Status</th>
-                        <th class="text-left" style="width: 15%">Task Deadline</th>
-                        <th class="text-center" style="width: 15%">Action</th>
+                        <th class="text-left" style="width: 20%">TaskNo.</th>
+                        <th class="text-left" style="width: 25%">Task Name</th>
+                        <th class="text-left" style="width: 25%">Assigned By</th>
+                        <th class="text-left" style="width: 20%">Task Deadline</th>
+                        <th class="text-center" style="width: 10%">Action</th>
                     </tr>
                 </thead>
                 <tbody id="loadTask"></tbody>
@@ -58,10 +57,8 @@
                         <textarea type="text" class="form-control" id="showTaskDescription"></textarea>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label>Assign To</label>
-                        <select class="form-select" id="showTaskAssignTo">
-                            <option value="">Select an Option</option>
-                        </select>
+                        <label>Assign By</label>
+                        <input type="text" class="form-control" id="showTaskAssignBy">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Task Deadline</label>
@@ -89,7 +86,41 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnSubmitEditTask">Submit</button>
+                <button type="button" class="btn btn-success" id="btnRespond" data-dismiss="modal" onclick="showRepondTaskModal()">Respond</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Show respond task modal -->
+<div class="modal fade" id="showRepondTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="titleTaskModal">Task</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12 modal-body">
+                <div class="row">
+                    <div class="col-md-12 mb-3" hidden>
+                        <label>TaskNo.</label>
+                        <input type="text" class="form-control" id="showTaskNo">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Task Description</label>
+                        <textarea class="form-control" id="responseMessage" rows="8"></textarea>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Supporting Documents</label>
+                        <input type="file" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnBack" data-dismiss="modal">Back</button>
+                <button type="button" class="btn btn-success" id="btnSubmit">Submit</button>
             </div>
         </div>
     </div>
@@ -101,13 +132,6 @@
 </html>
 <script>
     var host_url = '<?php echo host_url(); ?>';
-
-    $('#btnAddTask').click(function() {
-        $('#btnAddTask').attr({
-            'data-toggle': 'modal',
-            'data-target': '#createTaskModal'
-        });
-    });
 
     function ShowMessage(icon, title, position = 'center') {
         Swal.fire({
@@ -124,8 +148,8 @@
         });
     }
 
-    function ShowTaskList() {
-        axios.get(host_url + 'Home/GetTaskList').then(function(res) {
+    function ShowCompletedTaskList() {
+        axios.get(host_url + 'Task/GetCompletedTaskList').then(function(res) {
             if ($.fn.DataTable.isDataTable('#taskListTable')) {
                 $('#taskListTable').DataTable().destroy();
             }
@@ -137,15 +161,10 @@
                     <tr>
                         <td style="vertical-align: middle; text-align: left;">${row.TaskID}</td>
                         <td style="vertical-align: middle; text-align: left;">${row.task_name}</td>
-                        <td style="vertical-align: middle; text-align: left;">${row.task_member}</td>    
-                        <td style="vertical-align: middle; text-align: left;">
-                            ${row.task_status == 1 ? 'Pending' 
-                            : row.task_status == 2 ? 'In Progress' 
-                            : 'Completed'}
-                        </td>
-                        <td style="vertical-align: middle; text-align: left;">${row.task_deadline}</td>    
+                        <td style="vertical-align: middle; text-align: left;">${row.team_leader}</td>   
+                        <td style="vertical-align: middle; text-align: left;">${row.task_deadline}</td>  
                         <td style="vertical-align: middle; text-align: center;">
-                            <button class="btn btn-transparent" id="btnShowTask${row.TaskID}" onclick="ShowTaskModal(${row.TaskID}, 'Show')" ><span class="fas fa-eye"></span></button>
+                            <button class="btn btn-transparent" id="btnShowTask${row.TaskID}" onclick="ShowTaskModal(${row.TaskID})"><span class="fas fa-eye"></span></button>
                         </td>
                     </tr>
                 `);
@@ -163,7 +182,43 @@
         });
     }
 
+    function ShowTaskModal(taskNo) {
+        $('#btnShowTask' + taskNo).attr({
+            'data-toggle': 'modal',
+            'data-target': '#showTaskModal'
+        });
+
+        var data = { 
+            taskNo: taskNo 
+        };
+
+        axios.post(host_url + 'Task/GetTaskDetails', data)
+        .then((res) => {
+            var taskDetails = res.data[0];
+            $('#showTaskName, #showTaskDescription, #showTaskAssignBy, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', true);
+            $('#showTaskName').val(taskDetails.task_name);
+            $('#showTaskDescription').val(taskDetails.task_description);
+            $('#showTaskAssignBy').val(taskDetails.team_leader);
+            $('#showTaskDeadline').val(taskDetails.task_deadline);
+            $('#showTaskStatus').val(taskDetails.task_status);
+            $('#showTaskLevel').val(taskDetails.task_level);
+            $('#showTaskNo').val(taskDetails.TaskID);
+        });
+    }
+
+    function showRepondTaskModal() {
+        $('#btnRespond').attr({
+            'data-toggle': 'modal',
+            'data-target': '#showRepondTaskModal' 
+        });
+
+        $('#btnBack').attr({
+            'data-toggle': 'modal',
+            'data-target': '#showTaskModal'
+        });
+    }
+
     $(document).ready(function() {
-        ShowTaskList();
+        ShowCompletedTaskList();
     });
 </script>
