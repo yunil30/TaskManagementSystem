@@ -60,7 +60,7 @@ class MenuModel extends Model {
     }
 
     public function GetActiveMenu() {
-        $str = "SELECT MenuID, menu_name FROM tbl_user_menu";
+        $str = "SELECT * FROM tbl_user_menu";
 
         $query = $this->db->query($str);
 

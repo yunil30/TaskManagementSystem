@@ -32,7 +32,7 @@ class HomeModel extends Model {
         return $query->getResultArray();
     }
 
-    public function GetTaskList() {
+    public function GetTaskList($UserRole) {
         $str = "SELECT x.*, 
                     y.full_name task_member, 
                     z.full_name task_leader 

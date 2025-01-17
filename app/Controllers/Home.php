@@ -50,12 +50,35 @@ class Home extends BaseController {
         return view('LoginForm');
     }
 
+    public function ViewListOfTasks() {
+        if($this->session->has('session_username')) {
+            return view('Tasks/ListOfTasks');
+        }
+        return view('LoginForm');
+    }
+
+    public function ViewPendingTasks() {
+        if($this->session->has('session_username')) {
+            return view('Tasks/PendingTasks');
+        }
+        return view('LoginForm');
+    }
+
+    public function ViewCompletedTasks() {
+        if($this->session->has('session_username')) {
+            return view('Tasks/CompletedTasks');
+        }
+        return view('LoginForm');
+    }
+
     public function GetTaskUsers() {
         return json_encode($this->HomeModel->GetTaskUsers());
     }
 
     public function GetTaskList() {
-        return json_encode($this->HomeModel->GetTaskList());
+        $UserRole = $this->session->has('session_username');
+
+        return json_encode($this->HomeModel->GetTaskList($UserRole));
     }
 
     public function GetTaskDetails() {

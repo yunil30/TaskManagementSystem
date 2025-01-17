@@ -163,7 +163,6 @@
                         <td style="vertical-align: middle;">${menus.join(', ')}</td>
                         <td class="text-center" style="vertical-align: middle;">
                             <button class="btn btn-transparent" id="btnShowEditMenuMapping${role}" onclick="EditMenuMappingModal('${role}')"><span class="fas fa-pencil"></span></button>
-                            <button class="btn btn-transparent"><span class="fas fa-trash"></span></button>
                         </td>
                     </tr>
                 `);
