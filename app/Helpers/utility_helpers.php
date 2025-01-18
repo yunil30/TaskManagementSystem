@@ -36,4 +36,13 @@
             return view('components/js_container');
         }
     }
+
+    if (!function_exists('create_folder')) {
+        function create_folder() {
+            $Year = date('Y');
+            $Num = rand(1,100).time();
+   
+            return $Year.'-'.$Num;
+        }
+    }
 ?>
