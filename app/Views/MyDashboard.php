@@ -8,10 +8,6 @@
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <!-- Style component -->
     <?= css_container(); ?>
-    <style>
-
-
-    </style>
 </head>
 <body>
 <!-- Header component -->
@@ -28,42 +24,39 @@
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Pending</h5>
+                            <h5 class="card-title">Low Priority</h5>
                         </div>
-                        <div class="priority-bar">
-                            <div class="priority-level low" id="lowBar1"></div>
-                            <div class="priority-level medium" id="mediumBar1"></div>
-                            <div class="priority-level high" id="highBar1"></div>
+                        <div class="task-bar">
+                            <div class="task-status pending" id="pendingBar1"></div>
+                            <div class="task-status completed" id="completedBar1"></div>
                         </div>
-                        <div class="priority-labels" id="barLabels1"></div>
+                        <div class="task-labels" id="barLabels1"></div>
                     </div>
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Ongoing</h5>
+                            <h5 class="card-title">Mid Priority</h5>
                         </div>
-                        <div class="priority-bar">
-                            <div class="priority-level low" id="lowBar2"></div>
-                            <div class="priority-level medium" id="mediumBar2"></div>
-                            <div class="priority-level high" id="highBar2"></div>
+                        <div class="task-bar">
+                            <div class="task-status pending" id="pendingBar2"></div>
+                            <div class="task-status completed" id="completedBar2"></div>
                         </div>
-                        <div class="priority-labels" id="barLabels2"></div>
+                        <div class="task-labels" id="barLabels2"></div>
                     </div>
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Completed</h5>
+                            <h5 class="card-title">High Priority</h5>
                         </div>
-                        <div class="priority-bar">
-                            <div class="priority-level low" id="lowBar3"></div>
-                            <div class="priority-level medium" id="mediumBar3"></div>
-                            <div class="priority-level high" id="highBar3"></div>
+                        <div class="task-bar">
+                            <div class="task-status pending" id="pendingBar3"></div>
+                            <div class="task-status completed" id="completedBar3"></div>
                         </div>
-                        <div class="priority-labels" id="barLabels3"></div>
+                        <div class="task-labels" id="barLabels3"></div>
                     </div>
                 </div>
             </div>
@@ -78,103 +71,91 @@
 <script>
     var host_url = '<?php echo host_url(); ?>';
 
-    function GetPendingTasks() {
+    function GetLowLevelTasks() {
         var data = {
-            taskStatus: 1
+            taskPrioLevel: 1
         }
 
-        axios.post(host_url + 'Home/GetTaskStatusCount', data)
+        axios.post(host_url + 'Home/GetTaskPrioLevelCount', data)
         .then((res) => {
+            console.log(res.data);
+            
             res.data.forEach((row) => {
                 $('#countPendingTask').text(row.total);
-                updatePriorityBar(1, row.total, row.low, row.medium, row.high);
+                updatePriorityBar(1, row.total, row.pending, row.completed);
                 $('#barLabels1').append(`
                     <div>
-                        <label class="low">Low:</label>
-                        <label class="low">${row.low}</label>
+                        <label class="pending">Pending:</label>
+                        <label class="pending">${row.pending}</label>
                     </div>
                     <div>
-                        <label class="medium">Medium:</label>
-                        <label class="medium">${row.medium}</label>
-                    </div>
-                    <div>
-                        <label class="high">High:</label>
-                        <label class="high">${row.high}</label>
+                        <label class="completed">Completed:</label>
+                        <label class="completed">${row.completed}</label>
                     </div>
                 `);
             });
         });
     }
 
-    function GetOngoingTasks() {
+    function GetMidTasks() {
         var data = {
-            taskStatus: 2
+            taskPrioLevel: 2
         }
 
-        axios.post(host_url + 'Home/GetTaskStatusCount', data)
+        axios.post(host_url + 'Home/GetTaskPrioLevelCount', data)
         .then((res) => {
             res.data.forEach((row) => {
                 $('#countOngoingTask').text(row.total);
-                updatePriorityBar(2, row.total, row.low, row.medium, row.high);
+                updatePriorityBar(2, row.total, row.pending, row.completed);
                 $('#barLabels2').append(`
                     <div>
-                        <label class="low">Low:</label>
-                        <label class="low">${row.low}</label>
+                        <label class="pending">Pending:</label>
+                        <label class="pending">${row.pending}</label>
                     </div>
                     <div>
-                        <label class="medium">Medium:</label>
-                        <label class="medium">${row.medium}</label>
-                    </div>
-                    <div>
-                        <label class="high">High:</label>
-                        <label class="high">${row.high}</label>
+                        <label class="completed">Completed:</label>
+                        <label class="completed">${row.completed}</label>
                     </div>
                 `);
             });
         });
     }
 
-    function GetCompletedTasks() {
+    function GetHighTasks() {
         var data = {
-            taskStatus: 3
+            taskPrioLevel: 3
         }
 
-        axios.post(host_url + 'Home/GetTaskStatusCount', data)
+        axios.post(host_url + 'Home/GetTaskPrioLevelCount', data)
         .then((res) => {
             res.data.forEach((row) => {
                 $('#countCompletedTask').text(row.total);
-                updatePriorityBar(3, row.total, row.low, row.medium, row.high);
+                updatePriorityBar(3, row.total, row.pending, row.completed);
                 $('#barLabels3').append(`
                     <div>
-                        <label class="low">Low:</label>
-                        <label class="low">${row.low}</label>
+                        <label class="pending">Pending:</label>
+                        <label class="pending">${row.pending}</label>
                     </div>
                     <div>
-                        <label class="medium">Medium:</label>
-                        <label class="medium">${row.medium}</label>
-                    </div>
-                    <div>
-                        <label class="high">High:</label>
-                        <label class="high">${row.high}</label>
+                        <label class="completed">Completed:</label>
+                        <label class="completed">${row.completed}</label>
                     </div>
                 `);
             });
         });
     }
 
-    function updatePriorityBar(barNo, totalCount, lowCount, mediumCount, highCount) {
-        const lowPercentage = (lowCount / totalCount) * 100;
-        const mediumPercentage = (mediumCount / totalCount) * 100;
-        const highPercentage = (highCount / totalCount) * 100;
+    function updatePriorityBar(barNo, totalCount, pendingCount, completedCount) {
+        const pendingPercentage = (pendingCount / totalCount) * 100;
+        const completedPercentage = (completedCount / totalCount) * 100;
 
-        $('#lowBar' + barNo).css('width', `${lowPercentage}%`);
-        $('#mediumBar' + barNo).css('width', `${mediumPercentage}%`);
-        $('#highBar' + barNo).css('width', `${highPercentage}%`);
+        $('#pendingBar' + barNo).css('width', `${pendingPercentage}%`);
+        $('#completedBar' + barNo).css('width', `${completedPercentage}%`);
     }
 
     $('document').ready(function() {
-        GetPendingTasks();
-        GetOngoingTasks();
-        GetCompletedTasks();
+        GetLowLevelTasks();
+        GetMidTasks();
+        GetHighTasks();
     });
 </script>

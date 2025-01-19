@@ -99,6 +99,18 @@ class HomeModel extends Model {
         return $query->getResultArray();
     }
 
+    public function GetTaskPrioLevelCount($TaskPrioLevel) {
+        $str = "SELECT
+                    SUM(CASE WHEN task_status = 1 THEN 1 ELSE 0 END) AS pending,
+                    SUM(CASE WHEN task_status = 2 THEN 1 ELSE 0 END) AS completed,
+                    COUNT(*) AS total
+                FROM tbl_task_list WHERE task_level = ? AND isAvailable = 1";
+
+        $query = $this->db->query($str, [$TaskPrioLevel]);
+
+        return $query->getResultArray();
+    }
+
     public function GetTaskStatusCount($TaskStatus) {
         $str = "SELECT
                     SUM(CASE WHEN task_level = 1 THEN 1 ELSE 0 END) AS low,

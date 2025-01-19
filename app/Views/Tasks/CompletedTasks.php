@@ -69,8 +69,7 @@
                         <select class="form-select" id="showTaskStatus">
                             <option value="">Select an Option</option>
                             <option value="1" selected>Pending</option>
-                            <option value="2">In Progress</option>
-                            <option value="3">Completed</option>
+                            <option value="2">Completed</option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">
@@ -78,7 +77,7 @@
                         <select class="form-select" id="showTaskLevel">
                             <option value="">Select an Option</option>
                             <option value="1">Low</option>
-                            <option value="2">Medium</option>
+                            <option value="2">Mid</option>
                             <option value="3">High</option>
                         </select>
                     </div>
@@ -86,6 +85,42 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnResponse" data-dismiss="modal" onclick="ShowReponseTaskModal()">Response</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Show respond task modal -->
+<div class="modal fade" id="ShowReponseTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="titleTaskModal">Task</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12 modal-body">
+                <div class="row">
+                    <div class="col-md-12 mb-3" hidden>
+                        <label>TaskNo.</label>
+                        <input type="text" class="form-control" id="taskNo">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Task Response</label>
+                        <textarea class="form-control" id="taskResponse" rows="8"></textarea>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Supporting Documents</label><br>
+                        <a id="DownloadAttachment" href="#" class="btn btn-primary" target="_blank">
+                            View Document
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnBack" data-dismiss="modal">Back</button>
             </div>
         </div>
     </div>
@@ -160,13 +195,34 @@
         axios.post(host_url + 'Task/GetTaskDetails', data)
         .then((res) => {
             var taskDetails = res.data[0];
-            $('#showTaskName, #showTaskDescription, #showTaskAssignBy, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', true);
+            $('#showTaskName, #showTaskDescription, #showTaskAssignBy, #showTaskDeadline, #showTaskStatus, #showTaskLevel, #taskResponse').prop('disabled', true);
             $('#showTaskName').val(taskDetails.task_name);
             $('#showTaskDescription').val(taskDetails.task_description);
             $('#showTaskAssignBy').val(taskDetails.team_leader);
             $('#showTaskDeadline').val(taskDetails.task_deadline);
             $('#showTaskStatus').val(taskDetails.task_status);
             $('#showTaskLevel').val(taskDetails.task_level);
+            $('#taskResponse').val(taskDetails.task_response);
+            ShowTaskDocument(taskDetails.doc_folder, taskDetails.doc_name);
+        });
+    }
+
+    function ShowTaskDocument(docFolder, docName) {
+        let url = '<?php echo TaskDocuments_url(); ?>';
+        let path = url + docFolder + '/' + docName;
+        
+        $('#DownloadAttachment').attr('href', path);
+    }
+
+    function ShowReponseTaskModal() {
+        $('#btnResponse').attr({
+            'data-toggle': 'modal',
+            'data-target': '#ShowReponseTaskModal' 
+        });
+
+        $('#btnBack').attr({
+            'data-toggle': 'modal',
+            'data-target': '#showTaskModal'
         });
     }
 

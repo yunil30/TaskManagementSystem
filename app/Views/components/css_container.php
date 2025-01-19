@@ -242,32 +242,28 @@
             font-size: 1.3rem;
         }
 
-        .priority-bar {
+        .task-bar {
             display: flex;
             height: 16px;
             border-radius: 8px;
             overflow: hidden;
             margin: 10px 0;
 
-            .priority-level {
+            .task-status {
                 height: 100%;
                 display: inline-block;
             }
 
-            .priority-level.low {
-                background-color: #FFD65A;
+            .task-status.pending {
+                background-color: #e74c3c;
             }
 
-            .priority-level.medium {
-                background-color: #FF9D23;
-            }
-
-            .priority-level.high {
-                background-color: #F93827;
+            .task-status.completed {
+                background-color: #2ecc71;
             }
         }
 
-        .priority-labels {
+        .task-labels {
             display: flex;
             justify-content: space-between;
             margin-top: 8px;
@@ -277,16 +273,12 @@
                 font-weight: 500;
             }
 
-            .low {
-                color: #FFD65A;
+            .pending {
+                color: #e74c3c;
             }
 
-            .medium {
-                color: #FF9D23;
-            }
-
-            .high {
-                color: #F93827;
+            .completed {
+                color: #2ecc71;
             }
         }
     }

@@ -41,7 +41,7 @@ class TaskModel extends Model {
     public function GetCompletedTaskList($UserID) {
         $str = "SELECT x.*, y.full_name AS team_leader FROM tbl_task_list x
                     LEFT JOIN tbl_task_users y on y.UserID = x.assigned_by
-                WHERE x.isAvailable = 1 AND x.task_status = 3 AND x.assigned_to = ?";
+                WHERE x.isAvailable = 1 AND x.task_status = 2 AND x.assigned_to = ?";
         
         $query = $this->db->query($str, [$UserID]);
         
@@ -49,8 +49,14 @@ class TaskModel extends Model {
     }
 
     public function GetTaskDetails($TaskID) {
-        $str = "SELECT x.*, y.full_name AS team_leader FROM tbl_task_list x
+        $str = "SELECT x.*, 
+                    y.full_name AS team_leader, 
+                    z.task_response, 
+                    z.doc_folder, 
+                    z.doc_name 
+                FROM tbl_task_list x
                     LEFT JOIN tbl_task_users y on y.UserID = x.assigned_by
+                    LEFT JOIN tbl_task_response z on z.TaskID = x.TaskID
                 WHERE x.TaskID = ?";
 
         $query = $this->db->query($str, [$TaskID]);

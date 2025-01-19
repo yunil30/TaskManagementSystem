@@ -73,8 +73,7 @@
                         <select class="form-select" id="addTaskStatus">
                             <option value="">Select an Option</option>
                             <option value="1" selected>Pending</option>
-                            <option value="2">In Progress</option>
-                            <option value="3">Completed</option>
+                            <option value="2">Completed</option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">
@@ -82,7 +81,7 @@
                         <select class="form-select" id="addTaskLevel">
                             <option value="">Select an Option</option>
                             <option value="1">Low</option>
-                            <option value="2">Medium</option>
+                            <option value="2">Mid</option>
                             <option value="3">High</option>
                         </select>
                     </div>
@@ -131,8 +130,7 @@
                         <select class="form-select" id="showTaskStatus">
                             <option value="">Select an Option</option>
                             <option value="1" selected>Pending</option>
-                            <option value="2">In Progress</option>
-                            <option value="3">Completed</option>
+                            <option value="2">Completed</option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">
@@ -140,7 +138,7 @@
                         <select class="form-select" id="showTaskLevel">
                             <option value="">Select an Option</option>
                             <option value="1">Low</option>
-                            <option value="2">Medium</option>
+                            <option value="2">Mid</option>
                             <option value="3">High</option>
                         </select>
                     </div>
@@ -222,7 +220,6 @@
                         <td style="vertical-align: middle; text-align: left;">${row.task_member}</td>    
                         <td style="vertical-align: middle; text-align: left;">
                             ${row.task_status == 1 ? 'Pending' 
-                            : row.task_status == 2 ? 'In Progress' 
                             : 'Completed'}
                         </td>
                         <td style="vertical-align: middle; text-align: left;">${row.task_deadline}</td>    

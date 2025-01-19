@@ -45,4 +45,11 @@
             return $Year.'-'.$Num;
         }
     }
+
+    if (!function_exists('TaskDocuments_url')) {
+        function TaskDocuments_url() {
+            return BASE_URL . 'TaskDocuments/';
+        }    
+    }
+
 ?>

@@ -87,6 +87,12 @@ class Home extends BaseController {
         return json_encode($this->HomeModel->GetTaskDetails($requestJson->taskNo));
     }
 
+    public function GetTaskPrioLevelCount() {
+        $requestJson = $this->postRequest->getJSON();
+
+        return json_encode($this->HomeModel->GetTaskPrioLevelCount($requestJson->taskPrioLevel));
+    }
+
     public function GetTaskStatusCount() {
         $requestJson = $this->postRequest->getJSON();
 

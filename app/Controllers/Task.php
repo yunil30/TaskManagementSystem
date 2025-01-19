@@ -26,21 +26,21 @@ class Task extends BaseController {
         $insertedID = $this->Taskmodel->InsertData('tbl_task_response', $data);
 
         if ($insertedID) {
+            $this->Taskmodel->UpdateData(['TaskID' => $requestJson->taskNo], 'tbl_task_list', ['task_status' => 3]);
             return $this->response
                         ->setStatusCode(200)
-                        ->setJSON(['message' => 'Task successfully added.',
+                        ->setJSON(['message' => 'Task response successfully added.',
                                     'RecID'  => $insertedID]);
         } else {
             return $this->response
                         ->setStatusCode(500)
-                        ->setJSON(['error' => 'Task could not be added.']);
+                        ->setJSON(['error' => 'Task response could not be added.']);
         }
     }
 
     public function UploadTaskDocument() {
-        $UserID = $this->session->get('session_userno');
         $folder = create_folder();
-        $path = './ProfilePictures/' . $folder;
+        $path = './TaskDocuments/' . $folder;
 
         $fileFields = [
             'Document'
@@ -49,6 +49,7 @@ class Task extends BaseController {
         if (!is_dir($path)) {
             if (mkdir($path, 0777, true)) {
                 foreach ($fileFields as $field) {
+
                     $file = $this->postRequest->getFile($field);
 
                     if ($file && $file->getSize() > 0) {
@@ -57,16 +58,24 @@ class Task extends BaseController {
                     } 
                 }
 
+                $fields = [
+                    'RecID' => $this->request->getPost('RecID')
+                ];
+                
                 $data = [
                     'doc_folder' => $folder,
                     'doc_name' => $fileName
                 ];
 
-                if ($this->Taskmodel->InsertData('tbl_task_response', $data)) {
+                if ($this->Taskmodel->UpdateData($fields, 'tbl_task_response', $data)) {
                     return $this->response
                                 ->setStatusCode(200)
-                                ->setJSON(['message' => 'Success']);
-                } 
+                                ->setJSON(['message' => 'Task response successfully added.']);
+                } else {
+                    return $this->response
+                                ->setStatusCode(500)
+                                ->setJSON(['error' => 'Task response could not be added.']);
+                }
             }
         }
     }
