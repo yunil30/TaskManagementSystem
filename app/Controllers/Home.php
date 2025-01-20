@@ -76,9 +76,10 @@ class Home extends BaseController {
     }
 
     public function GetTaskList() {
-        $UserRole = $this->session->has('session_username');
+        $UserID = $this->session->get('session_userno'); 
+        $UserRole = $this->session->get('session_userrole'); 
 
-        return json_encode($this->HomeModel->GetTaskList($UserRole));
+        return json_encode($this->HomeModel->GetTaskList($UserID, $UserRole));
     }
 
     public function GetTaskDetails() {
@@ -89,8 +90,10 @@ class Home extends BaseController {
 
     public function GetTaskPrioLevelCount() {
         $requestJson = $this->postRequest->getJSON();
+        $UserID = $this->session->get('session_userno'); 
+        $UserRole = $this->session->get('session_userrole'); 
 
-        return json_encode($this->HomeModel->GetTaskPrioLevelCount($requestJson->taskPrioLevel));
+        return json_encode($this->HomeModel->GetTaskPrioLevelCount($requestJson->taskPrioLevel, $UserID, $UserRole));
     }
 
     public function GetTaskStatusCount() {
@@ -101,11 +104,12 @@ class Home extends BaseController {
 
     public function CreateTask() {
         $requestJson = $this->postRequest->getJSON();
+        $UserID = $this->session->get('session_userno'); 
 
         $data = [
             'task_name'        => $requestJson->taskName,
             'task_description' => $requestJson->taskDescription,
-            'assigned_by'      => '10001',
+            'assigned_by'      => $UserID,
             'assigned_to'      => $requestJson->taskAssignTo,
             'task_status'      => $requestJson->taskStatus,
             'task_level'       => $requestJson->taskLevel,

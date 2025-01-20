@@ -26,7 +26,7 @@ class Task extends BaseController {
         $insertedID = $this->Taskmodel->InsertData('tbl_task_response', $data);
 
         if ($insertedID) {
-            $this->Taskmodel->UpdateData(['TaskID' => $requestJson->taskNo], 'tbl_task_list', ['task_status' => 3]);
+            $this->Taskmodel->UpdateData(['TaskID' => $requestJson->taskNo], 'tbl_task_list', ['task_status' => 2]);
             return $this->response
                         ->setStatusCode(200)
                         ->setJSON(['message' => 'Task response successfully added.',

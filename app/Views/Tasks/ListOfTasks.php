@@ -24,11 +24,11 @@
             <table class="table table-hover table-bordered" id="taskListTable">
                 <thead>
                     <tr>
-                        <th class="text-left" style="width: 15%">TaskNo.</th>
+                        <th class="text-left" style="width: 10%">TaskNo.</th>
                         <th class="text-left" style="width: 20%">Task Name</th>
                         <th class="text-left" style="width: 20%">Assigned To</th>
                         <th class="text-left" style="width: 15%">Task Status</th>
-                        <th class="text-left" style="width: 15%">Task Deadline</th>
+                        <th class="text-left" style="width: 20%">Task Deadline</th>
                         <th class="text-center" style="width: 15%">Action</th>
                     </tr>
                 </thead>

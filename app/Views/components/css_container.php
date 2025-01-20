@@ -87,7 +87,7 @@
         z-index: 9;
         
         .menu-header {
-            color: #17a589;
+            color: #1f2328;
             font-family: "Poppins", sans-serif;
             font-size: 1rem;
             font-weight: 500;
@@ -97,7 +97,7 @@
         }
         
         .menu-ul {
-            color: #17a589;
+            color: #1f2328;
             cursor: pointer; 
             font-family: "Poppins", sans-serif;
             font-size: 1rem;
@@ -116,17 +116,17 @@
             }
 
             &:hover {
-                background-color: #c4fff7;
-                font-size: 1.05rem;
+                background-color: #d5d8dc;
+                font-size: 1rem;
             }
 
             &:active {
-                font-size: 1.05rem;
+                font-size: 1rem;
             }
         }
 
         .submenu_ul {
-            color: #17a589;
+            color: #1f2328;
             list-style-type: none;
             text-align: left;
             padding: 0rem;
@@ -149,12 +149,12 @@
                 }
 
                 &:hover {
-                    background-color: #c4fff7;
-                    font-size: 1.05rem;
+                    background-color: #d5d8dc;
+                    font-size: 1rem;
                 }
 
                 &:active {
-                    font-size: 1.05rem;
+                    font-size: 1rem;
                 }
             }
         }
@@ -163,7 +163,7 @@
     /* Main Portion */
     .page-main {
         grid-area: main;
-        background-color: #f1fffd;
+        background-color: #f3f3f3;
         padding: 2rem;
         z-index: 8;
 
@@ -181,13 +181,42 @@
                 height: 10%;
 
                 h3 {
-                    color: #17a589;
+                    font-family: "Poppins", sans-serif;
+                    font-weight: 500;
+                    letter-spacing: 1px;
+                    color: #1f2328;
                 }
             }
 
             .content-body {
                 padding: 0 1rem 2rem 1rem;
                 height: 90%;
+
+                .dt-layout-row {
+                    font-family: "Poppins", sans-serif;
+                    letter-spacing: 1px;
+
+                    table {
+                        font-weight: 400;
+                    }
+
+                    label{
+                        margin-right: 0.5rem;
+                        font-weight: 500;
+                        font-size: 16px;
+                    }
+
+                    input {
+                        margin-bottom: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 3px;
+                    }
+
+                    .dt-info {
+                        font-weight: 500;
+                        font-size: 16px;
+                    }
+                }
             }
         }
     }
@@ -195,7 +224,7 @@
     /* Footer Portion */
     .page-footer {
         grid-area: footer;
-        background-color: #17a589;
+        background-color: #1f2328;
         text-align: center;
         z-index: 10;
 
@@ -204,7 +233,9 @@
 
             p {
                 font-family: "Poppins", sans-serif;
-                font-size: 1rem;
+                font-weight: 400;
+                font-size: 0.9rem;
+                letter-spacing: 1px;
                 color: #ffffff;
                 margin: 0;
             }
@@ -213,9 +244,17 @@
     
     /* Modal Portion */
     .modal {
+        font-family: "Poppins", sans-serif;
+        letter-spacing: 1px;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+
+        input,
+        textarea, 
+        select{
+            letter-spacing: 1px;
+        }
 
         .modal-header {
             padding: 15px 20px 5px 20px;

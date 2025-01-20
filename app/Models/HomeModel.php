@@ -32,16 +32,26 @@ class HomeModel extends Model {
         return $query->getResultArray();
     }
 
-    public function GetTaskList($UserRole) {
-        $str = "SELECT x.*, 
+    public function GetTaskList($UserID, $UserRole) {
+        if ($UserRole == 'admin') { 
+            $str = "SELECT x.*, 
                     y.full_name task_member, 
                     z.full_name task_leader 
                 FROM tbl_task_list x
                     LEFT JOIN tbl_task_users y ON y.UserID = x.assigned_to
                     LEFT JOIN tbl_task_users z ON z.UserID = x.assigned_by
                 WHERE x.isAvailable = 1";
+        } else {
+            $str = "SELECT x.*, 
+                    y.full_name task_member, 
+                    z.full_name task_leader 
+                FROM tbl_task_list x
+                    LEFT JOIN tbl_task_users y ON y.UserID = x.assigned_to
+                    LEFT JOIN tbl_task_users z ON z.UserID = x.assigned_by
+                WHERE x.isAvailable = 1 AND x.assigned_by = ?";
+        }
         
-        $query = $this->db->query($str);
+        $query = $this->db->query($str, [$UserID]);
         
         return $query->getResultArray();
     }
@@ -99,14 +109,24 @@ class HomeModel extends Model {
         return $query->getResultArray();
     }
 
-    public function GetTaskPrioLevelCount($TaskPrioLevel) {
-        $str = "SELECT
+    public function GetTaskPrioLevelCount($TaskPrioLevel, $UserID, $UserRole) {
+        if ($UserRole == 'admin') {
+            $str = "SELECT
                     SUM(CASE WHEN task_status = 1 THEN 1 ELSE 0 END) AS pending,
                     SUM(CASE WHEN task_status = 2 THEN 1 ELSE 0 END) AS completed,
                     COUNT(*) AS total
                 FROM tbl_task_list WHERE task_level = ? AND isAvailable = 1";
 
-        $query = $this->db->query($str, [$TaskPrioLevel]);
+            $query = $this->db->query($str, [$TaskPrioLevel]);
+        } else {
+            $str = "SELECT
+                    SUM(CASE WHEN task_status = 1 THEN 1 ELSE 0 END) AS pending,
+                    SUM(CASE WHEN task_status = 2 THEN 1 ELSE 0 END) AS completed,
+                    COUNT(*) AS total
+                FROM tbl_task_list WHERE task_level = ? AND isAvailable = 1 AND (assigned_by = ? OR assigned_to = ?)";
+
+            $query = $this->db->query($str, [$TaskPrioLevel, $UserID, $UserID]);
+        }
 
         return $query->getResultArray();
     }

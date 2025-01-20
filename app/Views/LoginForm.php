@@ -20,6 +20,7 @@
 
 <style>
     body {
+        background-color: #f3f3f3;
         font-family: "Poppins", sans-serif;
         font-weight: 500;
         letter-spacing: 1px;
@@ -46,11 +47,12 @@
     }
 
     form {
-        background-color: #e7e7e7;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px #00000047;
         width: 450px;
         height: 420px; 
         padding: 30px;
-        border: 1px solid #d9d9d9;
         border-radius: 5px;
     }
 
@@ -156,20 +158,17 @@
             transform: translateY(2px);
         }
     }
-</style>
-<style>
-    /* Custom styling for title */
+
     .swal-title {
-        font-size: 24px; /* Adjust title size */
-        font-weight: bold; /* Make title bold */
-        color: #333; /* Optional color */
+        font-size: 24px; 
+        font-weight: bold; 
+        color: #333; 
     }
 
-    /* Custom styling for text */
     .swal-text {
-        font-size: 18px; /* Adjust text size */
-        font-weight: normal; /* Make text normal */
-        color: #555; /* Optional color */
+        font-size: 18px; 
+        font-weight: normal; 
+        color: #555; 
     }
 </style>
 
@@ -184,7 +183,7 @@
             </div>
             <div id="div-username">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" autocomplete="username" value="Uneal">
+                <input type="text" id="username" name="username" placeholder="Enter your username" autocomplete="username">
             </div>
             <div id="div-password">
                 <label for="password">Password</label>

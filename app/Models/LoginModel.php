@@ -76,13 +76,11 @@ class LoginModel extends Model {
                         LEFT JOIN 
                             tbl_menu_mapping AS mapping 
                             ON JSON_CONTAINS(CAST(mapping.MenuID AS JSON), CAST(CONCAT('\"', parent.MenuID, '\"') AS JSON), '$')
-                        LEFT JOIN 
-                            tbl_menu_mapping AS child_mapping 
-                            ON JSON_CONTAINS(CAST(child_mapping.MenuID AS JSON), CAST(CONCAT('\"', child.MenuID, '\"') AS JSON), '$')
                         WHERE 
                             parent.menu_type = 'parent'
                             AND mapping.user_role = ?
-                            AND (child.MenuID IS NULL OR JSON_CONTAINS(CAST(mapping.MenuID AS JSON), CAST(CONCAT('\"', child.MenuID, '\"') AS JSON), '$'))
+                            AND (child.MenuID IS NULL OR 
+                                JSON_CONTAINS(CAST(mapping.MenuID AS JSON), CAST(CONCAT('\"', child.MenuID, '\"') AS JSON), '$'))
                         ORDER BY 
                             parent.MenuID, child.menu_name, child.menu_index ASC";
         }
