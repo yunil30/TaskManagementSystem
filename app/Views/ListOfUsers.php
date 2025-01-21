@@ -47,7 +47,7 @@
                     <span aria-hi   dden="true">&times;</span>
                 </button>
             </div>
-            <div class="col-md-12 modal-body">
+            <div class="col-md-12 modal-body" style="max-height: 60vh; overflow-y: auto;">
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>First Name:</label>
@@ -102,7 +102,7 @@
                     <span aria-hi   dden="true">&times;</span>
                 </button>
             </div>
-            <div class="col-md-12 modal-body">
+            <div class="col-md-12 modal-body" style="max-height: 60vh; overflow-y: auto;">
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>First Name:</label>

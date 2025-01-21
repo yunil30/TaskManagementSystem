@@ -261,7 +261,22 @@
         }
 
         .modal-body {
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
             padding: 15px 20px 15px 20px;
+
+            .modal-body::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .modal-body::-webkit-scrollbar-thumb {
+                background-color: #888;
+                border-radius: 10px;
+            }
+
+            .modal-body::-webkit-scrollbar-track {
+                background-color: #f1f1f1;
+            }
         }
 
         .modal-footer {
