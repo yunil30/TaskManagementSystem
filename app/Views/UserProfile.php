@@ -10,74 +10,87 @@
     <?= css_container(); ?>
 </head>
 <style>
-    .userProfileDiv {
+    .accountSettingDiv {
+        font-family: "Poppins", sans-serif;
+        letter-spacing: 1px;
         margin: 0;
         padding: 0;
         height: 100%;
         display: grid;
-        grid-template-columns: 14rem 1fr;
-        grid-template-areas: "leftSide rightSide";
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-areas: 
+            "accSettingDiv1"
+            "accSettingDiv2"
+            "accSettingDiv3";
         padding-right: 0 !important;
 
-        .leftSideDiv {
+        input {
             font-family: "Poppins", sans-serif;
+            font-weight: 400;
             letter-spacing: 1px;
-            /* border: 1px solid black; */
-            grid-area: leftSide;
-            padding: 0;
+        }
 
+        .accHeadingDiv {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-            #userPictureDiv {
-                display: flex;
+            h5 {
+                margin: 0;
+            }
+
+            .edit-button {
+                display: inline-flex;
+                align-items: center;
                 justify-content: center;
-                padding: 0.5rem;
-
-                img {
-                    height: 150px;
-                    width: 150px;
-                    border-radius: 50%;
-                    object-fit: cover;
-                    background-color: #dfdfdf;
-                }
-            }
-                    
-            #userFullName {
-                text-align: center;
-                font-size: 14px
-            }
-
-            #userPosition {
-                text-align: center;
+                background-color: white;
+                color: #1f2328;
+                box-shadow: 0px 1px 5px #00000047;
+                border: none;
+                border-radius: 3px;
+                padding: 5px 18px;
                 font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            }
+
+            .edit-button i {
+                margin-right: 12px; 
+            }
+
+            .edit-button:hover {
+                background-color: #f0f8ff;
+                color: #0056b3;
             }
         }
 
-        .rightSideDiv {
-            /* border: 1px solid black; */
-            grid-area: rightSide;
-            padding: 0;
+        .accHeadingDescription {
+            color: #1f2328;
+            font-weight: 400;
+            font-size: 14px;
+            margin-bottom: 2rem;
+        }
+
+        .accSettingDiv1 {
+            box-shadow: 0px 1px 5px #00000047;
+            grid-area: accSettingDiv1;
+            padding: 1rem;
+        }
+
+        .accSettingDiv2 {
+            box-shadow: 0px 1px 5px #00000047;
+            grid-area: accSettingDiv2;
+            padding: 1rem;
+        }
+
+        .accSettingDiv3 {
+            box-shadow: 0px 1px 5px #00000047;
+            grid-area: accSettingDiv3;
+            padding: 1rem;
         }
     }
 
-    .custom-file-upload, 
-    .custom-file-delete{
-        padding: 12px 20px;
-        border-radius: 5px;
-        text-align: center;
-        font-size: 1rem;
-        cursor: pointer;
-        border: 2px solid #007bff;
-        transition: all 0.3s ease;
-    }
-
-    .custom-file-upload:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-    }
-
-    .custom-file-upload i {
-        margin-right: 8px;
-    }
 </style>
 <body>
 <!-- Header component -->
@@ -88,45 +101,77 @@
     <div class="main-content">
         <div class="col-md-12 content-header">
             <h3 style="margin: 0;">User Profile</h3>
-            <button type="button" class="btn btn-primary" id="btnShowUserModal">Update</button>
         </div>
-        <div class="col-md-12 content-body">
-            <div class="col-md-12 userProfileDiv">
-                <div class="col-md-12 leftSideDiv">
-                    <div class="col-md-12 mb-3" id="userPictureDiv">
-                        <img id="ProfilePic">
+        <div class="col-md-12 p-0 content-body">
+            <div class="col-md-12 accountSettingDiv">
+                <div class="col-md-12 mb-4 accSettingDiv1">
+                    <div class="col-md-12 mb-0 p-0 accHeadingDiv">
+                        <h5>Fullname</h5>
+                        <button type="button" class="edit-button" id="btnShowUserInfoModal"><i class="fas fa-edit"></i>Edit Information</button>
                     </div>
-                    <h6 id="userFullName"></h6>
-                    <h6 id="userPosition"></h6>
-                </div>
-                
-                <div class="col-md-12 rightSideDiv">
+                    <label class="accHeadingDescription">View and update your accounts name and username.</label>
                     <div class="row">
-                        <div class="col-md-12 mb-3">
-                            <label>First Name:</label>
-                            <label>Uneal Cabrera Dungo</label>
+                        <div class="col-md-4 mb-3">
+                            <label>First name</label>
+                            <input type="text" class="form-control" id="accFirstName" disabled>
                         </div>
-                        <div class="col-md-12 mb-3">
-                            <label>Username:</label>
-                            <label>Uneal</label>
+                        <div class="col-md-4 mb-3">
+                            <label>Middle name</label>
+                            <input type="text" class="form-control" id="accMiddleName" disabled>
                         </div>
-                        <div class="col-md-12 mb-3">
-                            <label>Email:</label>
-                            <label>ucdungo@gmail.com</label>
+                        <div class="col-md-4 mb-3">
+                            <label>Last name</label>
+                            <input type="text" class="form-control" id="accLastName" disabled>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Username</label>
+                            <input type="text" class="form-control" id="accUserName" disabled>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-md-12 mb-4 accSettingDiv2">
+                    <div class="col-md-12 mb-0 p-0 accHeadingDiv">
+                        <h5>Contacts</h5>
+                        <button type="button" class="edit-button" id="btnShowUserContactModal"><i class="fas fa-edit"></i>Edit Contacts</button>
+                    </div>
+                    <label class="accHeadingDescription">Manage your accounts email address and contact number.</label>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label>Contact email</label>
+                            <input type="text" class="form-control" id="accContactEmail" disabled>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Contact number</label>
+                            <input type="text" class="form-control" id="accContactNumber" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-4 accSettingDiv3">
+                    <div class="col-md-12 mb-0 p-0 accHeadingDiv">
+                        <h5>Password</h5>
+                        <button type="button" class="edit-button" id="btnShowChangePassModal"><i class="fas fa-edit"></i>Change Password</button>
+                    </div>
+                    <label class="accHeadingDescription">Modify your currend password</label>
+                    <!-- <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Current Password</label>
+                            <input type="password" class="form-control" id="accPassword">
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
     </div>
 </main>
 
-<!-- Show update user modal -->
-<div class="modal fade" id="showUserModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
+<!-- Show edit information modal -->
+<div class="modal fade" id="showUserInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 450px; width: 100%;">
         <div class="modal-content" style="height: auto; max-height: 80vh;">
             <div class="modal-header">
-                <h4 class="modal-title" id="titleUserModal">Update User</h4>
+                <h4 class="modal-title" id="titleUserModal">Edit Information</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -149,24 +194,71 @@
                         <label>Username:</label>
                         <input type="text" class="form-control" id="showUserName">
                     </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnUpdateUserData">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Show edit contacts modal -->
+<div class="modal fade" id="showUserContactModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 400px; width: 100%;">
+        <div class="modal-content" style="height: auto; max-height: 80vh;">
+            <div class="modal-header">
+                <h4 class="modal-title" id="titleUserModal">Edit Contacts</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12 modal-body" style="max-height: 60vh; overflow-y: auto;">
+                <div class="row">
                     <div class="col-md-12 mb-3">
-                        <label>Email:</label>
-                        <input type="text" class="form-control" id="showUserEmail">
+                        <label>Contact email:</label>
+                        <input type="text" class="form-control" id="showUserContactEmail">
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label>User role:</label>
-                        <select class="form-control" id="showUserRole" disabled>
-                            <option value="">Select an Option</option>
-                            <option value="user">User</option>
-                            <option value="leader">Leader</option>
-                            <option value="admin">Admin</option>
-                        </select>
+                        <label>Contact number:</label>
+                        <input type="text" class="form-control" id="showUserContactNumber">
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnUpdateUserData" onclick="UpdateUserData()">Submit</button>
+                <button type="button" class="btn btn-success" id="btnUpdateUserData">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Show change password modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 400px; width: 100%;">
+        <div class="modal-content" style="height: auto; max-height: 80vh;">
+            <div class="modal-header">
+                <h4 class="modal-title" id="titleUserModal">Change Password</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12 modal-body" style="max-height: 60vh; overflow-y: auto;">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>New Password:</label>
+                        <input type="password" class="form-control" id="NewUserPassword">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Confirm Password:</label>
+                        <input type="password" class="form-control" id="ConfirmUserPassword">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnUpdateUserData">Submit</button>
             </div>
         </div>
     </div>
@@ -179,14 +271,27 @@
 <script>
     var host_url = '<?php echo host_url(); ?>';
 
-    $('#btnShowUserModal').click(function() {
-        $('#btnShowUserModal').attr({
+    $('#btnShowUserInfoModal').click(function() {
+        $('#btnShowUserInfoModal').attr({
             'data-toggle': 'modal',
-            'data-target': '#showUserModal'
+            'data-target': '#showUserInfoModal'
         });
-
-        ShowUserDataToUpdate();
     });
+
+    $('#btnShowUserContactModal').click(function() {
+        $('#btnShowUserContactModal').attr({
+            'data-toggle': 'modal',
+            'data-target': '#showUserContactModal'
+        });
+    });
+
+    $('#btnShowChangePassModal').click(function() {
+        $('#btnShowChangePassModal').attr({
+            'data-toggle': 'modal',
+            'data-target': '#changePasswordModal'
+        });
+    });
+
 
     function ShowMessage(icon, title, text, position = 'center') {
         Swal.fire({
@@ -221,11 +326,12 @@
         axios.get(host_url + 'User/GetUserInfo')
         .then((res) => {
             var userData = res.data[0];
-            let fullName = `${userData.first_name} ${userData.middle_name} ${userData.last_name}`;
-            let userName = userData.user_role.charAt(0).toUpperCase() + userData.user_role.slice(1).toLowerCase();
-
-            $('#userFullName').text(fullName);
-            $('#userPosition').text(userName);
+            $('#accFirstName').val(userData.first_name);
+            $('#accMiddleName').val(userData.middle_name);
+            $('#accLastName').val(userData.last_name);
+            $('#accUserName').val(userData.user_name);
+            $('#accContactEmail').val(userData.user_email);
+            $('#accPassword').val(userData.password);
         });
     }
 
