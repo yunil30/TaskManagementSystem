@@ -17,7 +17,7 @@
         padding: 0;
         height: 100%;
         display: grid;
-        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr auto;
         grid-template-areas: 
             "accSettingDiv1"
             "accSettingDiv2"
@@ -106,7 +106,7 @@
             <div class="col-md-12 accountSettingDiv">
                 <div class="col-md-12 mb-4 accSettingDiv1">
                     <div class="col-md-12 mb-0 p-0 accHeadingDiv">
-                        <h5>Fullname</h5>
+                        <h5>Personal Information</h5>
                         <button type="button" class="edit-button" id="btnShowUserInfoModal"><i class="fas fa-edit"></i>Edit Information</button>
                     </div>
                     <label class="accHeadingDescription">View and update your accounts name and username.</label>
@@ -132,7 +132,7 @@
 
                 <div class="col-md-12 mb-4 accSettingDiv2">
                     <div class="col-md-12 mb-0 p-0 accHeadingDiv">
-                        <h5>Contacts</h5>
+                        <h5>Contact Information</h5>
                         <button type="button" class="edit-button" id="btnShowUserContactModal"><i class="fas fa-edit"></i>Edit Contacts</button>
                     </div>
                     <label class="accHeadingDescription">Manage your accounts email address and contact number.</label>
@@ -148,9 +148,9 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 mb-4 accSettingDiv3">
+                <div class="col-md-12 mb-3 accSettingDiv3">
                     <div class="col-md-12 mb-0 p-0 accHeadingDiv">
-                        <h5>Password</h5>
+                        <h5>User Password</h5>
                         <button type="button" class="edit-button" id="btnShowChangePassModal"><i class="fas fa-edit"></i>Change Password</button>
                     </div>
                     <label class="accHeadingDescription">Modify your currend password</label>
@@ -198,7 +198,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnUpdateUserData">Submit</button>
+                <button type="button" class="btn btn-success" id="btnEditInfo">Submit</button>
             </div>
         </div>
     </div>
@@ -228,7 +228,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnUpdateUserData">Submit</button>
+                <button type="button" class="btn btn-success" id="btnEditContacts">Submit</button>
             </div>
         </div>
     </div>
@@ -258,7 +258,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnUpdateUserData">Submit</button>
+                <button type="button" class="btn btn-success" id="btnChangePassword">Submit</button>
             </div>
         </div>
     </div>
@@ -276,6 +276,9 @@
             'data-toggle': 'modal',
             'data-target': '#showUserInfoModal'
         });
+
+        ShowUserDataToEdit();
+        $('#btnEditInfo').attr('onclick', `EditUserInfo()`);
     });
 
     $('#btnShowUserContactModal').click(function() {
@@ -283,6 +286,9 @@
             'data-toggle': 'modal',
             'data-target': '#showUserContactModal'
         });
+
+        ShowUserDataToEdit();
+        $('#btnEditContacts').attr('onclick', `EditUserContacts()`);
     });
 
     $('#btnShowChangePassModal').click(function() {
@@ -290,8 +296,9 @@
             'data-toggle': 'modal',
             'data-target': '#changePasswordModal'
         });
-    });
 
+        $('#btnChangePassword').attr('onclick', `ChangePassword()`);
+    });
 
     function ShowMessage(icon, title, text, position = 'center') {
         Swal.fire({
@@ -303,13 +310,13 @@
             confirmButtonText: 'OK',
             heightAuto: false
         }).then((result) => {
-            if (result.isConfirmed) {
+            if (result.isConfirmed && icon !== 'error') {
                 window.location.reload();
             }
         });
     }
 
-    function ShowUserDataToUpdate() {
+    function ShowUserDataToEdit() {
         axios.get(host_url + 'User/GetUserInfo')
         .then((res) => {
             var userData = res.data[0];
@@ -317,8 +324,8 @@
             $('#showMiddleName').val(userData.middle_name);
             $('#showLastName').val(userData.last_name);
             $('#showUserName').val(userData.user_name);
-            $('#showUserEmail').val(userData.user_email);
-            $('#showUserRole').val(userData.user_role);
+            $('#showUserContactEmail').val(userData.user_email);
+            $('#showUserContactNumber').val(userData.contact_number);
         });
     }
 
@@ -331,25 +338,53 @@
             $('#accLastName').val(userData.last_name);
             $('#accUserName').val(userData.user_name);
             $('#accContactEmail').val(userData.user_email);
-            $('#accPassword').val(userData.password);
+            $('#accContactNumber').val(userData.contact_number);
         });
     }
 
-    function UpdateUserData() {
+    function EditUserInfo() {
         var data = {
             FirstName: $('#showFirstName').val(),
             MiddleName: $('#showMiddleName').val(),
             LastName: $('#showLastName').val(),
-            UserName: $('#showUserName').val(),
-            UserEmail: $('#showUserEmail').val()
+            UserName: $('#showUserName').val()
         }
 
-        axios.post(host_url + 'User/UpdateUserInfo', data)
+        axios.post(host_url + 'User/EditUserInfo', data)
         .then((res) => {
-            ShowMessage('success', 'Successful!', res.response);
+            ShowMessage('success', 'Successful!', res.data.message);
         })
         .catch((error) => {
             ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while updating data.');
+        }); 
+    }
+
+    function EditUserContacts() {
+        var data = {
+            UserEmail: $('#showUserContactEmail').val(),
+            UserNumber: $('#showUserContactNumber').val()
+        }
+
+        axios.post(host_url + 'User/EditUserContacts', data)
+        .then((res) => {
+            ShowMessage('success', 'Successful!', res.data.message);
+        })
+        .catch((error) => {
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while updating data.');
+        }); 
+    }
+
+    function ChangePassword() {
+        var data = {
+            NewPassword: $('#NewUserPassword').val(),
+        };
+
+        axios.post(host_url + 'User/ChangePassword', data)
+        .then((res) => {
+            ShowMessage('success', 'Successful!', res.data.message);
+        })
+        .catch((error) => {
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while changing the password.');
         }); 
     }
     

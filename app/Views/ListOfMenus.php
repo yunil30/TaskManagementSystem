@@ -218,7 +218,7 @@
 
         axios.post(host_url + 'Menu/EditMenuMapping', data)
         .then((res) => {
-            ShowMessage('success', 'Successful!', res.response);
+            ShowMessage('success', 'Successful!', res.data.message);
         })
         .catch((error) => {
             ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while editing data.');
@@ -248,7 +248,7 @@
 
         axios.post(host_url + 'Menu/SaveMenuMapping', data)
         .then((res) => {
-            ShowMessage('success', 'Successful!', res.response);
+            ShowMessage('success', 'Successful!', res.data.message);
         })
         .catch((error) => {
             ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while saving data.');

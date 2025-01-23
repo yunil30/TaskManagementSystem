@@ -35,4 +35,34 @@ class UserModel extends Model {
         
         return $query->getResultArray();
     }
+
+    public function ValidateUserName($UserName) {
+        $str = "SELECT COUNT(1) existing FROM tbl_user_access WHERE user_name = ?";
+
+        $query = $this->db->query($str, [$UserName]);
+
+        $row = $query->getRow();
+
+        return $row->existing;
+    }
+
+    public function ValidateUserEmail($UserEmail) {
+        $str = "SELECT COUNT(1) existing FROM tbl_user_access WHERE user_email = ?";
+
+        $query = $this->db->query($str, [$UserEmail]);
+
+        $row = $query->getRow();
+
+        return $row->existing;
+    }
+
+    public function ValidateUserNumber($UserNumber) {
+        $str = "SELECT COUNT(1) existing FROM tbl_user_access WHERE contact_number = ?";
+
+        $query = $this->db->query($str, [$UserNumber]);
+
+        $row = $query->getRow();
+
+        return $row->existing;
+    }
 }

@@ -291,7 +291,7 @@
 
         axios.post(host_url + 'Home/CreateUser', data)        
         .then((res) => {
-            ShowMessage('success', 'Successful!', res.response);
+            ShowMessage('success', 'Successful!', res.data.message);
         })
         .catch((error) => {
             ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while saving data.');
@@ -311,7 +311,7 @@
         
         axios.post(host_url + 'Home/EditUser', data)        
         .then((res) => {
-            ShowMessage('success', 'Successful!', res.response);
+            ShowMessage('success', 'Successful!', res.data.message);
         })
         .catch((error) => {
             ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while saving data.');
