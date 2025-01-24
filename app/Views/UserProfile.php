@@ -47,7 +47,7 @@
                 color: #1f2328;
                 box-shadow: 0px 1px 5px #00000047;
                 border: none;
-                border-radius: 3px;
+                border-radius: 50px;
                 padding: 5px 18px;
                 font-size: 14px;
                 font-weight: 500;
@@ -73,24 +73,33 @@
         }
 
         .accSettingDiv1 {
-            box-shadow: 0px 1px 5px #00000047;
+            /* box-shadow: 0px 1px 5px #00000047; */
             grid-area: accSettingDiv1;
             padding: 1rem;
         }
 
         .accSettingDiv2 {
-            box-shadow: 0px 1px 5px #00000047;
+            /* box-shadow: 0px 1px 5px #00000047; */
             grid-area: accSettingDiv2;
             padding: 1rem;
         }
 
         .accSettingDiv3 {
-            box-shadow: 0px 1px 5px #00000047;
+            /* box-shadow: 0px 1px 5px #00000047; */
             grid-area: accSettingDiv3;
             padding: 1rem;
         }
     }
 
+    .input-correct {
+        border: 0.1rem solid #2ecc71;
+        box-shadow: 0px 0px 7px #2ecc71;
+    }
+
+    .input-error {
+        border: 0.1rem solid #e74c3c;
+        box-shadow: 0px 0px 7px  #e74c3c;
+    }
 </style>
 <body>
 <!-- Header component -->
@@ -154,12 +163,6 @@
                         <button type="button" class="edit-button" id="btnShowChangePassModal"><i class="fas fa-edit"></i>Change Password</button>
                     </div>
                     <label class="accHeadingDescription">Modify your currend password</label>
-                    <!-- <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label>Current Password</label>
-                            <input type="password" class="form-control" id="accPassword">
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -300,6 +303,32 @@
         $('#btnChangePassword').attr('onclick', `ChangePassword()`);
     });
 
+    $('#ConfirmUserPassword').on('input', function() {
+        var NewUserPassword = $('#NewUserPassword').val();
+        var ConfirmUserPassword = $('#ConfirmUserPassword').val();
+
+        $('#NewUserPassword, #ConfirmUserPassword').removeClass('input-error input-correct');
+
+        if (NewUserPassword === ConfirmUserPassword && ConfirmUserPassword !== "") {
+            $('#NewUserPassword, #ConfirmUserPassword').addClass('input-correct');
+        } else if (ConfirmUserPassword !== "") {
+            $('#NewUserPassword, #ConfirmUserPassword').addClass('input-error');
+        }
+    });
+
+    $('#NewUserPassword').on('input', function() {
+        var NewUserPassword = $('#NewUserPassword').val();
+        var ConfirmUserPassword = $('#ConfirmUserPassword').val();
+
+        $('#NewUserPassword, #ConfirmUserPassword').removeClass('input-error input-correct');
+
+        if (NewUserPassword !== "" || NewUserPassword === "") {
+            $('#NewUserPassword, #ConfirmUserPassword').removeClass('input-error input-correct');
+        } else if (NewUserPassword !== ConfirmUserPassword) {
+            $('#NewUserPassword, #ConfirmUserPassword').addClass('input-error');
+        }
+    });
+
     function ShowMessage(icon, title, text, position = 'center') {
         Swal.fire({
             icon: icon,
@@ -375,6 +404,27 @@
     }
 
     function ChangePassword() {
+        if ($('#NewUserPassword').val() === '') {
+            ShowMessage('error', 'Failed!', 'Please enter a new password!');
+            $('#NewUserPassword').trigger('chosen:activate');
+
+            return false;
+        }
+
+        if ($('#ConfirmUserPassword').val() === '') {
+            ShowMessage('error', 'Failed!', 'Please confirm your new password!');
+            $('#ConfirmUserPassword').trigger('chosen:activate');
+
+            return false;
+        }
+
+        if ($('#NewUserPassword').val() !== $('#ConfirmUserPassword').val()) {
+            ShowMessage('error', 'Failed!', 'Passwords do not match. Please try again.');
+            $('#NewUserPassword').trigger('chosen:activate');
+
+            return false;
+        }
+
         var data = {
             NewPassword: $('#NewUserPassword').val(),
         };

@@ -28,53 +28,34 @@
         grid-template-columns: 14rem 1fr;
         grid-template-rows: 3.5rem 1fr auto;
         grid-template-areas: 
-            "header header"
+            "sidebar header"
             "sidebar main"
             "footer footer";
         transition: all 1s ease;
         padding-right: 0 !important;
     }
 
+    body.sidebar-minimize {
+        grid-template-columns: 0rem 1fr;
+    }
+
     /* Header Portion */
     .page-header {
+        display: flex;
+        align-items: center;
         grid-area: header;
-        background-color: rgba(247, 248, 249, 1);
-        padding: 5px 0;
+        background-color:rgb(255, 255, 255);
+        padding: 0rem 2rem;
         position: sticky;
-        border-bottom: 1px solid rgba(150, 150, 150, 0.28);
-        box-shadow: 0px 1px 10px  #00000047;
+        box-shadow: 0px 1px 5px #00000047;
         top: 0;
-        z-index: 10;
+        z-index: 11;
 
-        .menu {
-            padding: 0px 1rem;
-
-            ul {
-                border-bottom: 1px solid rgba(242, 242, 242, 1);
-                list-style-type: none;
-                margin: 0;
-                overflow: hidden;
-                padding: 0;
-                text-align: right;
-            }
-
-            li {
-                display: inline-block;
-
-                a {
-                    border-radius: 5px;
-                    color: rgba(0, 0, 0, .5);
-                    display: block;
-                    height: 44px;
-                    text-decoration: none;
-                }
-            }
-
-            .logo {
-                float: left;
-                height: 44px;
-                padding: 0px;
-            }
+        .header-container {
+            display: grid;
+            grid-template-columns: 3rem 1fr auto;
+            align-items: center;
+            width: 100%;
         }
     }
 
@@ -83,7 +64,8 @@
         grid-area: sidebar;
         background-color:rgb(255, 255, 255);
         padding: 2rem 0rem 2rem 0rem;
-        box-shadow: 0px 0px 10px #00000047;
+        /* border: 1px solid rgba(150, 150, 150, 0.35); */
+        /* box-shadow: 0px 0px 10px #00000047; */
         z-index: 9;
         
         .menu-header {
@@ -163,14 +145,17 @@
     /* Main Portion */
     .page-main {
         grid-area: main;
-        background-color: #f3f3f3;
+        background-color: #f8f8f8;
+        border-left: 1px solid rgba(150, 150, 150, 0.35);
+        border-right: 1px solid rgba(150, 150, 150, 0.35);
         padding: 2rem;
-        z-index: 8;
+        z-index: 10;
 
         .main-content {
             background-color: #ffffff;
             border-radius: 5px;
-            box-shadow: 0px 0px 10px #00000047;
+            border: 1px solid rgba(150, 150, 150, 0.35);
+            box-shadow: 0px 0px 5px #00000047;
             height: 100%;
             padding: 1rem;
 
