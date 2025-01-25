@@ -28,7 +28,7 @@
         grid-template-columns: 14rem 1fr;
         grid-template-rows: 3.5rem 1fr auto;
         grid-template-areas: 
-            "sidebar header"
+            "header header"
             "sidebar main"
             "footer footer";
         transition: all 1s ease;
@@ -56,6 +56,71 @@
             grid-template-columns: 3rem 1fr auto;
             align-items: center;
             width: 100%;
+
+            .header-icon-div {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+
+                #menu-icon {
+                    color: #1f2328;
+                }
+
+                #menu-icon:hover {
+                    color: #0056b3;
+                }
+            }
+
+            .header-logo-div {
+                display: flex;
+                justify-content: left;
+                align-items: center;
+
+                a {
+                    font-family: "Poppins", sans-serif;
+                    font-size: 20px;
+                    font-weight: 500;
+                    letter-spacing: 1px;
+                    text-decoration: none; 
+                    color: inherit; 
+
+                    i {
+                        font-size: 24px; 
+                        font-weight: 500;
+                    }
+
+                    span {
+                        font-weight: 600;
+                    }
+                }
+
+                a:hover {
+                    text-decoration: none; 
+                    color: inherit;   
+                }
+            }
+
+            .header-fname-div {
+                box-shadow: 0px 1px 5px #00000035;
+                border: 1px solid rgb(215, 215, 215);
+                border-radius: 50px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background-color: white;
+                padding: 8px 15px 8px 45px;
+                cursor: pointer;
+
+                #header-fname {
+                    color: #1f2328;
+                    font-family: "Poppins", sans-serif;
+                    font-size: 16px;
+                    font-weight: 600;
+                    letter-spacing: 1px;
+                    padding: 0;
+                    margin: 0;
+                }
+            }
         }
     }
 
@@ -64,15 +129,13 @@
         grid-area: sidebar;
         background-color:rgb(255, 255, 255);
         padding: 2rem 0rem 2rem 0rem;
-        /* border: 1px solid rgba(150, 150, 150, 0.35); */
-        /* box-shadow: 0px 0px 10px #00000047; */
         z-index: 9;
         
         .menu-header {
             color: #1f2328;
             font-family: "Poppins", sans-serif;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: 0.1rem;
             padding: 0rem 0.5rem 0.7rem 1.5rem;
             margin: 0rem;
@@ -83,7 +146,7 @@
             cursor: pointer; 
             font-family: "Poppins", sans-serif;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: 0.1rem;
             padding: 1rem 1rem 1rem 1rem;
             margin: 0rem;
@@ -121,7 +184,7 @@
                 cursor: pointer;
                 font-family: "Poppins", sans-serif;
                 font-size: 1rem;
-                font-weight: 500;
+                font-weight: 600;
                 letter-spacing: 0.1rem;
                 padding: 1rem 0.5rem 1rem 2.5rem;
                 margin: 0rem;
@@ -153,9 +216,8 @@
 
         .main-content {
             background-color: #ffffff;
-            border-radius: 5px;
-            border: 1px solid rgba(150, 150, 150, 0.35);
-            box-shadow: 0px 0px 5px #00000047;
+            /* border-radius: 5px; */
+            border: 1px solid rgb(215, 215, 215);
             height: 100%;
             padding: 1rem;
 
@@ -170,6 +232,27 @@
                     font-weight: 500;
                     letter-spacing: 1px;
                     color: #1f2328;
+                }
+
+                .btnHeader {
+                    background-color: white;
+                    border: 1px solid #0056b3;
+                    color: #0056b3;
+                    font-family: "Poppins", sans-serif;
+                    letter-spacing: 1px;
+                    font-weight: 700;
+                    font-size: 16px;
+                    border-radius: 50px;
+                    padding: 8px 20px 8px 20px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .btnHeader:hover {
+                    background-color: #0056b3;
+                    border: 1px solid #0056b3;
+                    color: white;
                 }
             }
 

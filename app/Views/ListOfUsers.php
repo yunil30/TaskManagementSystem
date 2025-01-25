@@ -18,7 +18,7 @@
     <div class="main-content">
         <div class="col-md-12 content-header">
             <h3 style="margin: 0;">Users</h3>
-            <button type="button" class="btn btn-primary" id="btnAddUser">New User</button>
+            <button type="button" class="btn btn-primary btnHeader" id="btnAddUser">New User</button>
         </div>
         <div class="col-md-12 content-body">
             <table class="table table-hover table-bordered" id="userListTable">

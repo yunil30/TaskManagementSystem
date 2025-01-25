@@ -23,7 +23,7 @@
     <div class="main-content">
         <div class="col-md-12 content-header">
             <h3 style="margin: 0;">Menus</h3>
-            <button type="button" class="btn btn-primary" id="btnMapMenus">Map Menus</button>
+            <button type="button" class="btn btn-primary btnHeader" id="btnMapMenus">Map Menus</button>
         </div>
         <div class="col-md-12 content-body">
             <table class="table table-hover table-bordered" id="menuTable">

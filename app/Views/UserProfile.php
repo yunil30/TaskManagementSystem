@@ -45,22 +45,23 @@
                 justify-content: center;
                 background-color: white;
                 color: #1f2328;
-                box-shadow: 0px 1px 5px #00000047;
-                border: none;
+                box-shadow: 0px 1px 5px #00000035;
+                border: 1px solid rgb(215, 215, 215);
                 border-radius: 50px;
                 padding: 5px 18px;
                 font-size: 14px;
                 font-weight: 500;
                 cursor: pointer;
                 transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-            }
 
-            .edit-button i {
-                margin-right: 12px; 
+                i {
+                    margin-right: 0.5rem; 
+                }
             }
 
             .edit-button:hover {
                 background-color: #f0f8ff;
+                border: 0.1px solid #0056b3;
                 color: #0056b3;
             }
         }

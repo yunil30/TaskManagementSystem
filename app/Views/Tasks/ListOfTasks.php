@@ -18,7 +18,7 @@
     <div class="main-content">
         <div class="col-md-12 content-header">
             <h3 style="margin: 0;">Tasks</h3>
-            <button type="button" class="btn btn-primary" id="btnAddTask">New Task</button>
+            <button type="button" class="btn btn-primary btnHeader" id="btnAddTask">Create Task</button>
         </div>
         <div class="col-md-12 content-body">
             <table class="table table-hover table-bordered" id="taskListTable">
