@@ -1,6 +1,3 @@
-<style>
- 
-</style>
 <header class="page-header">
     <div class="header-container">
         <div class="header-icon-div">
@@ -10,13 +7,13 @@
             <a href="http://localhost:8030/"><i class="fas fa-edit"></i>Task<span>MAKER</span></a>
         </div>
         <div class="header-fname-div">
-            <label id="header-fname"></label>
+            <i class="fas fa-user" id="header-pic"></i><label id="header-fname"></label>
         </div>
     </div>
 </header>
 
 <aside class="page-sidebar">
-    <label class="menu-header">Menu</label>
+    <!-- <label class="menu-header">Menu</label> -->
 </aside>
 
 <!-- Logout user modal -->

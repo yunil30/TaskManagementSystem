@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Task Management System</title>
+    <title>TaskMaker</title>
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
@@ -74,6 +74,10 @@
                         <input type="password" class="form-control" id="addUserPassword">
                     </div>
                     <div class="col-md-12 mb-3">
+                        <label>Team Leader:</label>
+                        <select class="form-control" id="addTeamLeader"></select>
+                    </div>
+                    <div class="col-md-12 mb-3">
                         <label>User role:</label>
                         <select class="form-control" id="addUserRole">
                             <option value="">Select an Option</option>
@@ -129,6 +133,10 @@
                         <input type="password" class="form-control" id="showUserPassword">
                     </div>
                     <div class="col-md-12 mb-3">
+                        <label>Team Leader:</label>
+                        <select class="form-control" id="showTeamLeader"></select>
+                    </div>
+                    <div class="col-md-12 mb-3">
                         <label>User role:</label>
                         <select class="form-control" id="showUserRole">
                             <option value="">Select an Option</option>
@@ -182,6 +190,8 @@
             'data-toggle': 'modal',
             'data-target': '#createUserModal'
         });
+
+        GetTaskLeaders();
     });
 
     function ShowMessage(icon, title, text, position = 'center') {
@@ -194,7 +204,7 @@
             confirmButtonText: 'OK',
             heightAuto: false
         }).then((result) => {
-            if (result.isConfirmed) {
+            if (result.isConfirmed && icon !== 'error') {
                 window.location.reload();
             }
         });
@@ -250,6 +260,8 @@
             'data-target': '#showUserModal'
         });
 
+        GetTaskLeaders();
+
         var data = { 
             userNo: userNo 
         };
@@ -264,6 +276,7 @@
             $('#showUserName').val(userDetails.user_name);
             $('#showUserEmail').val(userDetails.user_email);
             $('#showUserRole').val(userDetails.user_role);
+            $('#showTeamLeader').val(userDetails.team_leader);
 
             if (mode === 'Show') {
                 $('#showFirstName, #showMiddleName, #showLastName, #showUserName, #showUserEmail, #showUserPassword, #showUserRole').prop('disabled', true);
@@ -286,7 +299,8 @@
             UserName: $('#addUserName').val(),
             UserEmail: $('#addUserEmail').val(),
             UserPassword: $('#addUserPassword').val(),
-            UserRole: $('#addUserRole').val()
+            UserRole: $('#addUserRole').val(),
+            TeamLeader: $('#addTeamLeader').val()
         }
 
         axios.post(host_url + 'Home/CreateUser', data)        
@@ -306,7 +320,8 @@
             LastName: $('#showLastName').val(),
             UserName: $('#showUserName').val(),
             UserEmail: $('#showUserEmail').val(),
-            UserRole: $('#showUserRole').val()
+            UserRole: $('#showUserRole').val(),
+            TeamLeader: $('#showTeamLeader').val()
         }
         
         axios.post(host_url + 'Home/EditUser', data)        
@@ -314,7 +329,7 @@
             ShowMessage('success', 'Successful!', res.data.message);
         })
         .catch((error) => {
-            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while saving data.');
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while editing the user data.');
         }); 
     }
 
@@ -325,10 +340,25 @@
 
         axios.post(host_url + 'Home/RemoveUser', data)
         .then((res) => {
-            ShowMessage('success', 'Successful!');
+            ShowMessage('success', 'Successful!', res.data.message);
         })
         .catch((error) => {
-            ShowMessage('error', 'Failed!');
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while removing the user data.');
+        });
+    }
+
+    function GetTaskLeaders() {
+        $('#addTeamLeader, #showTeamLeader').empty();
+        $('#addTeamLeader, #showTeamLeader').append(`<option value="">Select an Option</option>`);
+
+        axios.get(host_url + 'Home/GetTaskLeaders')
+        .then((res) => {
+            res.data.forEach((row) => {
+                $('#addTeamLeader, #showTeamLeader').append(`<option value="${row.UserID}">${row.FullName}</option>`);
+            });
+        })
+        .catch((error) => {
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while saving data.');
         });
     }
 

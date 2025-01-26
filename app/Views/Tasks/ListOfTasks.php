@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Task Management System</title>
+    <title>TaskMaker</title>
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
@@ -117,9 +117,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Assign To</label>
-                        <select class="form-select" id="showTaskAssignTo">
-                            <option value="">Select an Option</option>
-                        </select>
+                        <input type="text" class="form-control" id="showTaskAssignTo" disabled>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Task Deadline</label>
@@ -198,7 +196,7 @@
             confirmButtonText: 'OK',
             heightAuto: false
         }).then((result) => {
-            if (result.isConfirmed) {
+            if (result.isConfirmed && icon !== 'error') {
                 window.location.reload();
             }
         });
@@ -245,14 +243,17 @@
     }
 
     function GetTaskUsers() {
+        $('#addTaskAssignTo').empty();
+        $('#addTaskAssignTo').append(`<option value="">Select an Option</option>`);
+
         axios.get(host_url + 'Home/GetTaskUsers')
         .then((res) => {
             res.data.forEach((row) => {
-                $('#addTaskAssignTo, #showTaskAssignTo').append(`<option value="${row.UserID}">${row.FullName}</option>`);
+                $('#addTaskAssignTo').append(`<option value="${row.UserID}">${row.FullName}</option>`);
             });
         })
         .catch((error) => {
-            ShowMessage('error', 'Failed!');
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while getting the task users.');
         });
     }
 
@@ -280,7 +281,7 @@
 
             $('#showTaskName').val(taskDetails.task_name);
             $('#showTaskDescription').val(taskDetails.task_description);
-            $('#showTaskAssignTo').val(taskDetails.assigned_to);
+            $('#showTaskAssignTo').val(taskDetails.AssignedToFname);
             $('#showTaskDeadline').val(taskDetails.task_deadline);
             $('#showTaskStatus').val(taskDetails.task_status);
             $('#showTaskLevel').val(taskDetails.task_level);
@@ -290,7 +291,7 @@
                 $('#titleTaskModal').text('Task');
                 $('#btnSubmitEditTask').hide();
             } else {
-                $('#showTaskName, #showTaskDescription, #showTaskAssignTo, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', false);
+                $('#showTaskName, #showTaskDescription, #showTaskDeadline, #showTaskStatus, #showTaskLevel').prop('disabled', false);
                 $('#titleTaskModal').text('Edit Task');
                 $('#btnSubmitEditTask').show();
                 $('#btnSubmitEditTask').attr('onclick', `EditTask(${taskNo})`);
@@ -352,10 +353,10 @@
 
         axios.post(host_url + 'Home/CreateTask', data)        
         .then((res) => {
-            ShowMessage('success', 'Successful!');
+            ShowMessage('success', 'Successful!', res.data.message);
         })
         .catch((error) => {
-            ShowMessage('error', 'Failed!');
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while creating the task.');
         });
     }
 
@@ -364,7 +365,6 @@
             taskNo: taskNo,
             taskName: $('#showTaskName').val(),
             taskDescription: $('#showTaskDescription').val(),
-            taskAssignTo: $('#showTaskAssignTo').val(),
             taskDeadline: $('#showTaskDeadline').val(),
             taskStatus: $('#showTaskStatus').val(),
             taskLevel: $('#showTaskLevel').val()
@@ -372,10 +372,10 @@
 
         axios.post(host_url + 'Home/EditTask', data)        
         .then((res) => {
-            ShowMessage('success', 'Successful!');
+            ShowMessage('success', 'Successful!', res.data.message);
         })
         .catch((error) => {
-            ShowMessage('error', 'Failed!');
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while editing the task data.');
         });
     }
 
@@ -386,10 +386,10 @@
 
         axios.post(host_url + 'Home/RemoveTask', data)
         .then((res) => {
-            ShowMessage('success', 'Successful!');
+            ShowMessage('success', 'Successful!', res.data.message);
         })
         .catch((error) => {
-            ShowMessage('error', 'Failed!');
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while removing the task data.');
         });
     }
 

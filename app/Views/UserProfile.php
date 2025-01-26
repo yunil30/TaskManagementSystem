@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Task Management System</title>
+    <title>TaskMaker</title>
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
@@ -28,6 +28,7 @@
             font-family: "Poppins", sans-serif;
             font-weight: 400;
             letter-spacing: 1px;
+            border-radius: 1px;
         }
 
         .accHeadingDiv {
@@ -74,19 +75,22 @@
         }
 
         .accSettingDiv1 {
-            /* box-shadow: 0px 1px 5px #00000047; */
+            background-color: #ffffff;
+            border: 1px solid rgb(215, 215, 215);
             grid-area: accSettingDiv1;
             padding: 1rem;
         }
 
         .accSettingDiv2 {
-            /* box-shadow: 0px 1px 5px #00000047; */
+            background-color: #ffffff;
+            border: 1px solid rgb(215, 215, 215);
             grid-area: accSettingDiv2;
             padding: 1rem;
         }
 
         .accSettingDiv3 {
-            /* box-shadow: 0px 1px 5px #00000047; */
+            background-color: #ffffff;
+            border: 1px solid rgb(215, 215, 215);
             grid-area: accSettingDiv3;
             padding: 1rem;
         }

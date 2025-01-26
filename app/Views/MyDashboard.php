@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Task Management System</title>
+    <title>TaskMaker</title>
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
@@ -86,11 +86,11 @@
                 $('#barLabels1').append(`
                     <div>
                         <label class="pending">Pending:</label>
-                        <label class="pending">${row.pending}</label>
+                        <label class="pending">${row.pending || 0}</label>
                     </div>
                     <div>
                         <label class="completed">Completed:</label>
-                        <label class="completed">${row.completed}</label>
+                        <label class="completed">${row.completed || 0}</label>
                     </div>
                 `);
             });
@@ -110,11 +110,11 @@
                 $('#barLabels2').append(`
                     <div>
                         <label class="pending">Pending:</label>
-                        <label class="pending">${row.pending}</label>
+                        <label class="pending">${row.pending || 0}</label>
                     </div>
                     <div>
                         <label class="completed">Completed:</label>
-                        <label class="completed">${row.completed}</label>
+                        <label class="completed">${row.completed || 0}</label>
                     </div>
                 `);
             });
@@ -134,11 +134,11 @@
                 $('#barLabels3').append(`
                     <div>
                         <label class="pending">Pending:</label>
-                        <label class="pending">${row.pending}</label>
+                        <label class="pending">${row.pending || 0}</label>
                     </div>
                     <div>
                         <label class="completed">Completed:</label>
-                        <label class="completed">${row.completed}</label>
+                        <label class="completed">${row.completed || 0}</label>
                     </div>
                 `);
             });

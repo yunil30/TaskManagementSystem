@@ -72,7 +72,14 @@ class Home extends BaseController {
     }
 
     public function GetTaskUsers() {
-        return json_encode($this->HomeModel->GetTaskUsers());
+        $UserID = $this->session->get('session_userno'); 
+        $UserRole = $this->session->get('session_userrole'); 
+
+        return json_encode($this->HomeModel->GetTaskUsers($UserID, $UserRole));
+    }
+
+    public function GetTaskLeaders() {
+        return json_encode($this->HomeModel->GetTaskLeaders());
     }
 
     public function GetTaskList() {
@@ -138,7 +145,6 @@ class Home extends BaseController {
         $data = [
             'task_name'        => $requestJson->taskName,
             'task_description' => $requestJson->taskDescription,
-            'assigned_to'      => $requestJson->taskAssignTo,
             'task_status'      => $requestJson->taskStatus,
             'task_level'       => $requestJson->taskLevel,
             'task_deadline '   => $requestJson->taskDeadline
@@ -210,7 +216,16 @@ class Home extends BaseController {
             'user_role '  => $requestJson->UserRole
         ];
 
-        if ($this->HomeModel->InsertData('tbl_user_access', $data)) {
+        $insertedID = $this->HomeModel->InsertData('tbl_user_access', $data);
+
+        $data2 = [
+            'UserID'      => $insertedID,
+            'full_name'   => $requestJson->FirstName . ' ' . $requestJson->LastName,
+            'user_role'   => $requestJson->UserRole,
+            'team_leader' => $requestJson->TeamLeader
+        ];
+
+        if ($this->HomeModel->InsertData('tbl_task_users', $data2)) {
             return $this->response
                         ->setStatusCode(200)
                         ->setJSON(['message' => 'User access successfully added.']);
@@ -254,10 +269,22 @@ class Home extends BaseController {
             'date_modified' => date('Y-m-d H:i:s')
         ];
 
+        $data2 = [
+            'full_name'   => $requestJson->FirstName . ' ' . $requestJson->LastName,
+            'user_role'   => $requestJson->UserRole,
+            'team_leader' => $requestJson->TeamLeader
+        ];
+
         if ($this->HomeModel->UpdateData($fields, 'tbl_user_access', $data)) {
-            return $this->response
-                        ->setStatusCode(200)
-                        ->setJSON(['message' => 'User access successfully updated.']);
+            if ($this->HomeModel->UpdateData($fields, 'tbl_task_users', $data2)) {
+                return $this->response
+                            ->setStatusCode(200)
+                            ->setJSON(['message' => 'User access and task user successfully updated.']);
+            } else {
+                return $this->response
+                            ->setStatusCode(500)
+                            ->setJSON(['error' => 'User access updated, but task user could not be updated.']);
+            }
         } else {
             return $this->response
                         ->setStatusCode(500)

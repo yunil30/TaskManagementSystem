@@ -108,8 +108,12 @@
                 align-items: center;
                 justify-content: center;
                 background-color: white;
-                padding: 8px 15px 8px 45px;
+                padding: 8px 20px 8px 20px;
                 cursor: pointer;
+
+                #header-pic {
+                    padding-right: 10px;
+                }
 
                 #header-fname {
                     color: #1f2328;
@@ -216,7 +220,6 @@
 
         .main-content {
             background-color: #ffffff;
-            /* border-radius: 5px; */
             border: 1px solid rgb(215, 215, 215);
             height: 100%;
             padding: 1rem;
@@ -229,7 +232,8 @@
 
                 h3 {
                     font-family: "Poppins", sans-serif;
-                    font-weight: 500;
+                    font-size: 24px;
+                    font-weight: 600;
                     letter-spacing: 1px;
                     color: #1f2328;
                 }
@@ -265,6 +269,8 @@
                     letter-spacing: 1px;
 
                     table {
+                        background-color: #ffffff;
+                        /* border: 1px solid rgb(215, 215, 215); */
                         font-weight: 400;
                     }
 
@@ -318,14 +324,23 @@
         left: 50%;
         transform: translate(-50%, -50%);
 
+        .modal-content {
+            border-radius: 3px;
+        }
+
         input,
         textarea, 
         select{
             letter-spacing: 1px;
+            border-radius: 1px;
         }
 
         .modal-header {
             padding: 15px 20px 5px 20px;
+
+            .modal-title {
+                font-weight: 600;
+            }
         }
 
         .modal-body {
@@ -349,19 +364,33 @@
 
         .modal-footer {
             padding: 5px 20px 15px 20px;
+
+            button {
+                font-family: "Poppins", sans-serif;
+                font-weight: 300;
+                letter-spacing: 2px;
+                border-radius: 3px;
+            }
         }
     }
 
     /* Card Dashboard Portion */
     .card {
-        background-color: #f4f4f4;
-        border-radius: 5px;
-        box-shadow: 0px 0px 10px #00000047;
+        font-family: "Poppins", sans-serif;
+        letter-spacing: 1px;
+        background-color: #ffffff;
+        border: 1px solid rgb(215, 215, 215);
+        border-radius: 1px;
         padding: 1rem;
         text-align: center;
 
         .card-icon {
             font-size: 1.3rem;
+        }
+
+        h5 {
+            font-size: 20px;
+            font-weight: 600;
         }
 
         .task-bar {

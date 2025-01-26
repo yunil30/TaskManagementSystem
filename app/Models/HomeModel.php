@@ -11,11 +11,15 @@ class HomeModel extends Model {
     public function __construct() {
         $this->db = \Config\Database::connect();
     }
-    
+
     public function InsertData($table, $data=[]) {
         $builder = $this->db->table($table);
 
-        return $builder->insert($data);
+        $inserted = $builder->insert($data);
+
+        if ($inserted) {
+            return $this->db->insertID();
+        }
     }
 
     public function UpdateData($where=[], $table, $data=[]) {
@@ -24,8 +28,25 @@ class HomeModel extends Model {
         return $builder->where($where)->update($data);
     }
 
-    public function GetTaskUsers() {
-        $str = "SELECT UserID, full_name FullName FROM tbl_task_users";
+    public function GetTaskUsers($UserID, $UserRole) {
+        if ($UserRole == 'admin') { 
+            $str = "SELECT UserID, full_name FullName 
+                        FROM tbl_task_users";
+        }  else {
+            $str = "SELECT UserID, full_name FullName 
+                        FROM tbl_task_users 
+                    WHERE team_leader = ?";
+        }
+        
+        $query = $this->db->query($str, [$UserID]);
+        
+        return $query->getResultArray();
+    }
+
+    public function GetTaskLeaders() {
+        $str = "SELECT UserID, full_name FullName 
+                    FROM tbl_task_users 
+                WHERE user_role = 'admin' OR user_role = 'leader'";
         
         $query = $this->db->query($str);
         
@@ -57,7 +78,9 @@ class HomeModel extends Model {
     }
 
     public function GetTaskDetails($TaskID) {
-        $str = "SELECT * FROM tbl_task_list 
+        $str = "SELECT x.*, y.full_name AssignedToFname
+                    FROM tbl_task_list x
+                LEFT JOIN tbl_task_users y ON y.UserID = x.assigned_to 
                     WHERE TaskID = ?";
 
         $query = $this->db->query($str, [$TaskID]);
@@ -102,7 +125,10 @@ class HomeModel extends Model {
     }
 
     public function GetUserRecord($UserID) {
-        $str = "SELECT * FROM tbl_user_access WHERE UserID = ?";
+        $str = "SELECT x.*, y.team_leader
+                    FROM tbl_user_access x 
+                LEFT JOIN tbl_task_users y ON y.UserID = x.UserID
+                    WHERE x.UserID = ?";
         
         $query = $this->db->query($str, [$UserID]);
 
