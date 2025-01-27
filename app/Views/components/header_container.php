@@ -7,7 +7,7 @@
             <a href="http://localhost:8030/"><i class="fas fa-edit"></i>Task<span>MAKER</span></a>
         </div>
         <div class="header-fname-div">
-            <i class="fas fa-user" id="header-pic"></i><label id="header-fname"></label>
+            <i class="fas fa-user-circle" id="header-pic"></i><label id="header-fname"></label>
         </div>
     </div>
 </header>
