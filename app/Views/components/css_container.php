@@ -67,7 +67,7 @@
                 }
 
                 #menu-icon:hover {
-                    color: #0056b3;
+                    color: #FF5733;
                 }
             }
 
@@ -77,20 +77,24 @@
                 align-items: center;
 
                 a {
+                    color: #1f2328; 
                     font-family: "Poppins", sans-serif;
                     font-size: 20px;
-                    font-weight: 500;
+                    font-weight: 400;
                     letter-spacing: 1px;
                     text-decoration: none; 
-                    color: inherit; 
+                    padding: 0px;
+                    margin: 0px;
 
                     i {
+                        color: #FF5733;
                         font-size: 24px; 
-                        font-weight: 500;
+                        font-weight: 400;
                     }
 
                     span {
-                        font-weight: 600;
+                        color: #FF5733; 
+                        font-weight: 500;
                     }
                 }
 
@@ -270,7 +274,6 @@
 
                     table {
                         background-color: #ffffff;
-                        /* border: 1px solid rgb(215, 215, 215); */
                         font-weight: 400;
                     }
 

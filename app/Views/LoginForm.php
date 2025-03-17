@@ -20,169 +20,169 @@
 
 <style>
     body {
-        background-color: #f3f3f3;
-        font-family: "Poppins", sans-serif;
-        font-weight: 500;
-        letter-spacing: 1px;
-        color: #1f2328;
-    }
+        background-color: #e6e6e6;
+        position: relative;
+        height: 100vh;
+        padding: 0px;
+        margin: 0px;
 
-    input {
-        width: 100%;
-        margin-bottom: 10px;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-    }
+        form {
+            background-color: #ffffff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 0px 5px #00000015;
+            border: 1px solid #00000035;
+            width: 480px;
 
-    label {
-        display: block;
-    }
+            .form-header {
+                padding: 2rem 2rem 0rem 2rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
-    .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
+                h5 {
+                    color: #1f2328; 
+                    font-family: "Poppins", sans-serif;
+                    font-size: 20px;
+                    font-weight: 400;
+                    letter-spacing: 1px;
+                    text-decoration: none; 
+                    padding: 0px;
+                    margin: 0px;
 
-    form {
-        background-color: #ffffff;
-        border-radius: 5px;
-        box-shadow: 0px 0px 3px #00000047;
-        border: 1px solid rgb(215, 215, 215);
-        width: 450px;
-        height: 420px; 
-        padding: 30px;
-        border-radius: 0px;
-    }
+                    i {
+                        color: #FF5733;
+                        font-size: 24px; 
+                        font-weight: 500;
+                        padding-bottom: 0.5rem;
+                    }
 
-    #card-logo {
-        width: 100%;
-        margin-bottom: 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        a {
-            font-family: "Poppins", sans-serif;
-            font-size: 24px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-decoration: none; 
-            color: inherit; 
-
-            span {
-                font-weight: 600;
+                    span {
+                        color: #FF5733; 
+                        font-weight: 500;
+                    }
+                }
             }
 
-            i {
-                font-size: 28px; 
-                font-weight: 500;
-                padding-bottom: 0.5 rem;
+            .form-body {
+                padding: 2rem;
+                
+                h4 {
+                    text-decoration: none;
+                    color: #1f2328;
+                    font-size: 18px;
+                    font-weight: 500;
+                    letter-spacing: 1px;
+                }
+
+                #BtnLogInUser {
+                    background-color: #ff522d;
+                    color: #ffffff;
+                    font-size: 14.4px;
+                    letter-spacing: 1px;
+                    border-radius: 0px;
+                    border: 1px solid #dee2e6;
+                    width: 100%;
+                    padding: 10px 40px;
+                    margin: 0px;
+
+                    &:hover {
+                        background-color: #ff522d;
+                        color: #fff;
+                        cursor: pointer;
+                    }
+
+                    &:active {
+                        background-color: #ff5733;
+                        transform: translateY(2px);
+                    }
+
+                    &:disabled {
+                        background-color: #8c8f92;
+                        cursor: not-allowed;
+                        border: 1px solid #dee2e6;
+                    }
+                }
+
+                .form-group {
+                    margin-bottom: 15px;
+                    padding: 0px;
+                    position: relative;
+
+                    .input-icon {
+                        position: absolute;
+                        top: 59%;
+                        left: 13px;
+                        font-size: 15px;
+                        color: #8c8f92;
+                    }
+
+                    label {
+                        font-size: 14.4px;
+                        letter-spacing: 1px;
+                        text-shadow: 0px 0px 1px rgba(23, 32, 42, 0.8);
+                        margin-bottom: 5px;
+                    }
+
+                    a {
+                        text-decoration-line: none;
+                        color: #ff5733;
+                        font-size: 14.4px;
+                        letter-spacing: 1px;
+                        text-shadow: 0px 0px 1px rgba(23, 32, 42, 0.8);
+                        margin-bottom: 5px;
+
+                        &:hover {
+                            text-decoration-line: underline;
+                            color: #fa4721;
+                            font-size: 14.4px;
+                            letter-spacing: 1px;
+                            text-shadow: 0px 0px 1px rgba(23, 32, 42, 0.8);
+                            margin-bottom: 5px;
+                        }
+                    }
+
+                    input {
+                        background-color: #ffffff;
+                        color: #1f2328;
+                        font-size: 14.4px;
+                        letter-spacing: 1px;
+                        border-radius: 0px;
+                        box-shadow: 0px 0px 15px #00000020;
+                        border: 1px solid #00000035;
+                        padding: 20px 40px;
+
+                        &::placeholder {
+                            font-size: 14.4px;
+                            letter-spacing: 1px;
+                            color: #8c8f92;
+                        }
+
+                        &:focus {
+                            font-size: 14.4px;
+                            letter-spacing: 1px;
+                            color: #1f2328;
+                            outline: none;
+                            box-shadow: 0px 0px 3px rgba(255, 87, 51, 0.8);
+                            border-color: #ff5733;
+                        }
+                    }
+
+                    .toggle-password {
+                        position: absolute;
+                        right: 10px;
+                        top: 50%;
+                        transform: translateY(15%);
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                        font-size: 14.4px;
+                        color: #8c8f92;
+                    }
+                }
             }
-
-        }
-
-        a:hover {
-            text-decoration: none; 
-            color: inherit;   
-        }
-    }
-
-    #div-label {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    #div-label h4{
-        letter-spacing: 0.1rem;
-        font-size: 20px;
-    }
-
-    #div-username {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    #div-username label{
-        letter-spacing: 0.1rem;
-        font-size: 15px;
-    }
-
-    #div-password {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    #div-password label{
-        letter-spacing: 0.1rem;
-        font-size: 15px;
-    }
-
-    #div-button {
-        width: 100%;
-        margin-bottom: 1rem;
-        display: flex;
-        justify-content: center;
-    }
-
-    #username {
-        border-radius: 5px;
-        letter-spacing: 0.1rem;
-        font-size: 15px;
-        color: #1f2328;
-        margin-bottom: 0;
-    }
-
-    #username:hover,
-    #username:focus{
-        border: 0.1rem solid #e74c3c;
-        border-color: #1f2328;
-        letter-spacing: 0.1rem;
-        color: #1f2328;
-        outline: none;
-        box-shadow: 0px 0px 3px rgba(23, 32, 42, 0.8);
-    }
-
-    #password {
-        border-radius: 5px;
-        letter-spacing: 0.1rem;
-        font-size: 15px;
-        color: #1f2328;
-        margin-bottom: 0;
-    }
-
-    #password:hover,
-    #password:focus {
-        border: 0.1rem solid #e74c3c;
-        border-color: #1f2328;
-        letter-spacing: 0.1rem;
-        color: #1f2328;
-        outline: none;
-        box-shadow: 0px 0px 3px rgba(23, 32, 42, 0.8);
-    }
-
-    #BtnLogInUser {
-        background-color: #1f2328;
-        border: none;
-        border-radius: 5px;
-        letter-spacing: 0.1rem;
-        font-size: 15px;
-        color: #d5d8dc;
-        width: 50%;
-        padding: .8rem;
-        transition: all 0.3s ease;
-
-        &:hover {
-            background-color: #34495e;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        &:active {
-            background-color: #1c2833;
-            transform: translateY(2px);
         }
     }
 
@@ -200,32 +200,59 @@
 </style>
 
 <body>
-    <div class="container">
-        <form action="" class="loginForm" id="loginForm" method="POST">
-            <div id="card-logo">
-                <a href="http://localhost:8030/"><i class="fas fa-edit"></i>Task<span>MAKER</span></a>
-            </div>
-            <div id="div-label">
-                <h4>Login</h4>
-            </div>
-            <div id="div-username">
+    <form action="" class="loginForm" id="loginForm" method="POST">
+        <div class="form-header">
+            <h5><i class="fas fa-edit"></i>Task<span>MAKER</span></h5>
+        </div>
+        <div class="form-body">
+            <h4>Login</h4>
+
+            <div class="form-group">
+                <i class="fas fa-envelope input-icon"></i>
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" autocomplete="username">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
             </div>
-            <div id="div-password">
+        
+            <div class="form-group">
+                <i class="fas fa-lock input-icon"></i>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                <button type="button" class="toggle-password" onclick="togglePassword()">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
             </div>
-            <div id="div-button">
+
+            <div class="form-group" style="text-align: end;" >
+                <a href="">Forgot password?</a>
+            </div>
+
+            <div class="form-group">
                 <button id="BtnLogInUser">Login</button>
             </div>
-        </form>
-    </div>
+
+            <div class="form-group" style="text-align: center;" >
+                <label for="">Don't have an account? <a href="">Register now</a></label>
+            </div>
+        </div>
+    </form>
 </body>
 <?= js_container() ?>
 </html>
 <script>
     var host_url = '<?php echo host_url(); ?>';
+
+    function togglePassword() {
+        const $passwordField = $("#password");
+        const $toggleButton = $(".toggle-password i");
+
+        if ($passwordField.attr("type") === "password") {
+            $passwordField.attr("type", "text");
+            $toggleButton.removeClass("fa-eye").addClass("fa-eye-slash");
+        } else {
+            $passwordField.attr("type", "password");
+            $toggleButton.removeClass("fa-eye-slash").addClass("fa-eye");
+        }
+    }
 
     $('#BtnLogInUser').click(function(event) {
         event.preventDefault();
