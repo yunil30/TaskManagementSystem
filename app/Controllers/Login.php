@@ -49,14 +49,11 @@ class Login extends BaseController {
     }
     
     public function Logout() {
-        $this->session->remove('session_userno');
-        $this->session->remove('session_username');
-        $this->session->remove('session_userrole');
-        $this->session->remove('session_password');
-        
+        $this->session->destroy();
+
         $this->response->deleteCookie('uname');
         $this->response->deleteCookie('pword');
-
+    
         return view('LoginForm');
     }
 
@@ -64,5 +61,11 @@ class Login extends BaseController {
         $userRole = $this->session->get('session_userrole'); 
 
         return $this->response->setJSON($this->LoginModel->GetUserMenu($userRole));
+    }
+
+    public function GetMenu() {
+        $menuData = $this->LoginModel->GetMenu();
+    
+        return $this->response->setJSON($menuData);
     }
 }

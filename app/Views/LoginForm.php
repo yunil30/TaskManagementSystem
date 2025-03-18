@@ -28,7 +28,7 @@
 
         form {
             background-color: #ffffff;
-            position: absolute;
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -113,8 +113,8 @@
 
                     .input-icon {
                         position: absolute;
-                        top: 59%;
-                        left: 13px;
+                        top: 61%;
+                        left: 15px;
                         font-size: 15px;
                         color: #8c8f92;
                     }
@@ -165,7 +165,7 @@
                             letter-spacing: 0.5px;
                             color: #1f2328;
                             outline: none;
-                            box-shadow: 0px 0px 3px rgba(255, 87, 51, 0.8);
+                            box-shadow: 0px 0px 3px #ff5733;
                             border-color: #ff5733;
                         }
                     }

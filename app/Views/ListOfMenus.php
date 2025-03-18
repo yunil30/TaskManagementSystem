@@ -22,7 +22,7 @@
 <main class="page-main">
     <div class="main-content">
         <div class="col-md-12 content-header">
-            <h3 style="margin: 0;">Menus</h3>
+            <h3 style="margin: 0;">List of Menus</h3>
             <button type="button" class="btn btn-primary btnHeader" id="btnMapMenus">Map Menus</button>
         </div>
         <div class="col-md-12 content-body">
@@ -69,8 +69,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnSubmitMenuMapping" onclick="SaveMenuMapping()">Submit</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnSubmitMenuMapping" onclick="SaveMenuMapping()">Submit</button>
             </div>
         </div>
     </div>
@@ -105,8 +105,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnEditMenuMapping">Submit</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnEditMenuMapping">Submit</button>
             </div>
         </div>
     </div>

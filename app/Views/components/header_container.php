@@ -6,14 +6,16 @@
         <div class="header-logo-div">
             <a href="http://localhost:8030/"><i class="fas fa-edit"></i>Task<span>MAKER</span></a>
         </div>
-        <div class="header-fname-div">
-            <i class="fas fa-user-circle" id="header-pic"></i><label id="header-fname"></label>
-        </div>
     </div>
 </header>
 
 <aside class="page-sidebar">
     <div class="menu-list"></div>
+    <div class="menu-logout">
+        <div class="menu-item">
+            <a href="javascript:void(0)" class="parent-menu" id="showLogoutModal"><i class="fas fa-arrow-right-from-bracket"></i>Logout<i></i></a>
+        </div>
+    </div>
 </aside>
 
 <!-- Logout user modal -->
@@ -32,8 +34,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnLogOut">Confirm</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnLogOut" onclick="btnLogoutUser()">Confirm</button>
             </div>
         </div>
     </div>
@@ -42,112 +44,102 @@
 <script>
     var host_url = '<?php echo host_url(); ?>';
 
-    $('#menu-icon').click(function() {
-        $('body').toggleClass('sidebar-minimize');
-    });
-
     function GetUserMenu() {
-        axios.get(host_url + 'Login/GetUserMenu').then(function(res) {
-            let menus = {};  // To store parent menus and their children
+        axios.get(host_url + 'Login/GetMenu').then(function(res) {
+            var menus = res.data;
+            // console.table(menus);
 
-            res.data.forEach(function(row) {
-                // Check if parent already exists in the menus object
-                if (!menus[row.parent_id]) {
-                    menus[row.parent_id] = {
-                        parent_menu: row.parent_menu,
-                        parent_page: row.parent_page,
-                        parent_icon: row.parent_icon,
-                        children: []
-                    };
+            let parentMenus = menus.filter(menu => menu.menu_type === 'parent');
+            let childMenus = menus.filter(menu => menu.menu_type === 'child');
+            
+            parentMenus.forEach(parent => {
+                let menuPage = parent.menu_page;
+
+                if (!menuPage.startsWith('http') && !menuPage.startsWith('javascript:void(0)')) {
+                    menuPage = window.location.origin + '/' + menuPage;
                 }
 
-                // If child exists, push it to the parent's children array
-                if (row.child_id) {
-                    menus[row.parent_id].children.push({
-                        child_id: row.child_id,
-                        child_menu: row.child_menu,
-                        child_page: row.child_page,
-                        child_index: row.child_index,
-                        child_icon: row.child_icon
+                let listItem = `<div class="menu-item">
+                                    <a href="${menuPage}" class="parent-menu" data-id="${parent.MenuID}">
+                                        <i class="${parent.menu_icon}"></i>${parent.menu_name}`;
+
+                if (parent.menu_page === 'javascript:void(0)') {
+                    listItem += `<i class="fas fa-chevron-down menu-toggle-icon" style="margin-left: auto;"></i>`;
+                } else {
+                    listItem += `<i></i>`;
+                }
+                listItem += `</a>`;
+
+                let children = childMenus.filter(child => child.parent_menu === parent.MenuID);
+                if (children.length) {
+                    listItem += `<div class="child-menu">`;
+                    children.forEach(child => {
+                        let childMenuPage = child.menu_page;
+
+                        if (!childMenuPage.startsWith('http') && !childMenuPage.startsWith('javascript:void(0)')) {
+                            childMenuPage = window.location.origin + '/' + childMenuPage;
+                        }
+
+                        listItem += `<a href="${childMenuPage}"><i class="${child.menu_icon}"></i>${child.menu_name}</a>`;
                     });
-                }
-            });
-
-            // Now render the menus
-            Object.keys(menus).forEach(function(parentId) {
-                let parent = menus[parentId];
-
-                // Sort the children by `child_index` before rendering
-                parent.children.sort(function(a, b) {
-                    return a.child_index - b.child_index;
-                });
-
-                // Create the parent menu item
-                let parentHtml = `
-                    <ul class="menu-ul" id="menu${parentId}" onclick="BtnShowPage('${parent.parent_page}', ${parentId})"><i class="fas ${parent.parent_icon} menu-icon"></i>${parent.parent_menu}</ul>
-                    <ul class="submenu_ul" id="submenu${parentId}">
-                `;
-    
-                // If there are children, add them
-                if (parent.children.length > 0) {
-                    parentHtml += ``;
-                    parent.children.forEach(function(child) {
-                        parentHtml += `
-                            <li onclick="BtnShowPage('${child.child_page}', ${child.child_id})" id="child-menu${child.child_id}" data-index="${child.child_index}"><i class="fas ${child.child_icon} menu-icon"></i>${child.child_menu}</li>
-                        `;
-                    });
+                    listItem += `</div>`;
                 }
 
-                parentHtml += '</ul>';
-
-                // Append the parent menu to the sidebar
-                $('.menu-list').append(parentHtml);
-            });
-        })
-    }
-
-    function GetMenu() {
-        axios.get(host_url + 'Login/GetUserMenu').then(function(res) {
-            console.table(res);
-        })
-    }
-
-    function BtnShowPage(path, id) {
-        if (path == '#') {
-            $('#submenu' + id).slideToggle(500);
-        }
-
-        if (id == 4) {
-            var $MenuButton = $('#menu4');
-            var $btnLogOut = $('#btnLogOut');
-
-            $MenuButton.attr({
-                'data-toggle': 'modal',
-                'data-target': '#logoutUserModal'
+                listItem += `</div>`;
+                $('.menu-list').append(listItem);
             });
 
-            $btnLogOut.click(function() {
-                axios.post(host_url + 'Login/Logout')
-                .then(() => {
-                    window.location.href = host_url;
-                })
-            });
-        } else {
-            window.location.href = host_url + path;
-        }
-    }
+            $(".parent-menu").on("click", function(e) {
+                if ($(this).attr('href') === 'javascript:void(0)') {
+                    e.preventDefault();
+                    
+                    let parentMenuId = $(this).data('id');
+                    let childMenu = $(this).next('.child-menu');
+                    let icon = $(this).find('.menu-toggle-icon');
 
-    function GetUserName() {
-        axios.get(host_url + 'User/GetUserInfo')
-        .then((res) => {
-            var UserData = res.data[0];
-            $('#header-fname').text(UserData.first_name + ' ' + UserData.last_name);
+                    if (childMenu.is(':visible')) {
+                        childMenu.stop(true, true).slideUp(500);
+                        icon.removeClass('fa-chevron-up').addClass('fa-chevron-down');
+                    } else {
+                        childMenu.stop(true, true).slideDown(500);
+                        icon.removeClass('fa-chevron-down').addClass('fa-chevron-up');
+                    }
+                } else {
+                    window.location.href = $(this).attr('href'); 
+                }
+            });
+        }).catch(function(error) {
+            console.error('Failed to load menus:', error);
         });
     }
 
+    function btnLogoutUser() {
+        axios.post(host_url + 'Login/Logout')
+        .then((res) => {
+            // Handle response
+            console.log('success', 'Successful!', res.data.message);
+            window.location.reload();
+        })
+        .catch((err) => {
+            console.log('error', 'An error occurred.');
+            window.location.reload();
+        });
+    }
+
+    $('#menu-icon').click(function() {
+        $('body').toggleClass(
+            'sidebar-minimize'
+        );
+    });
+
+    $('#showLogoutModal').click(function() {
+        $('#showLogoutModal').attr({
+            'data-toggle': 'modal',
+            'data-target': '#logoutUserModal'
+        });
+    });
+
     $('document').ready(function() {
-        GetUserName();
         GetUserMenu();
-        GetMenu();
     });
 </script>

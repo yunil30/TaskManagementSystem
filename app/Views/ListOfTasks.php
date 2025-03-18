@@ -17,7 +17,7 @@
 <main class="page-main">
     <div class="main-content">
         <div class="col-md-12 content-header">
-            <h3 style="margin: 0;">Tasks</h3>
+            <h3 style="margin: 0;">List of Tasks</h3>
             <button type="button" class="btn btn-primary btnHeader" id="btnAddTask">Create Task</button>
         </div>
         <div class="col-md-12 content-body">
