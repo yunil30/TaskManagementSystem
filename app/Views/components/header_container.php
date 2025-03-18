@@ -13,7 +13,7 @@
 </header>
 
 <aside class="page-sidebar">
-    <!-- <label class="menu-header">Menu</label> -->
+    <div class="menu-list"></div>
 </aside>
 
 <!-- Logout user modal -->
@@ -101,8 +101,14 @@
                 parentHtml += '</ul>';
 
                 // Append the parent menu to the sidebar
-                $('.page-sidebar').append(parentHtml);
+                $('.menu-list').append(parentHtml);
             });
+        })
+    }
+
+    function GetMenu() {
+        axios.get(host_url + 'Login/GetUserMenu').then(function(res) {
+            console.table(res);
         })
     }
 
@@ -142,5 +148,6 @@
     $('document').ready(function() {
         GetUserName();
         GetUserMenu();
+        GetMenu();
     });
 </script>

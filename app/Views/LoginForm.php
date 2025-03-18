@@ -74,14 +74,14 @@
                     color: #1f2328;
                     font-size: 18px;
                     font-weight: 500;
-                    letter-spacing: 1px;
+                    letter-spacing: 0.5px;
                 }
 
                 #BtnLogInUser {
                     background-color: #ff522d;
                     color: #ffffff;
                     font-size: 14.4px;
-                    letter-spacing: 1px;
+                    letter-spacing: 0.5px;
                     border-radius: 0px;
                     border: 1px solid #dee2e6;
                     width: 100%;
@@ -121,7 +121,7 @@
 
                     label {
                         font-size: 14.4px;
-                        letter-spacing: 1px;
+                        letter-spacing: 0.5px;
                         text-shadow: 0px 0px 1px rgba(23, 32, 42, 0.8);
                         margin-bottom: 5px;
                     }
@@ -130,7 +130,7 @@
                         text-decoration-line: none;
                         color: #ff5733;
                         font-size: 14.4px;
-                        letter-spacing: 1px;
+                        letter-spacing: 0.5px;
                         text-shadow: 0px 0px 1px rgba(23, 32, 42, 0.8);
                         margin-bottom: 5px;
 
@@ -138,7 +138,7 @@
                             text-decoration-line: underline;
                             color: #fa4721;
                             font-size: 14.4px;
-                            letter-spacing: 1px;
+                            letter-spacing: 0.5px;
                             text-shadow: 0px 0px 1px rgba(23, 32, 42, 0.8);
                             margin-bottom: 5px;
                         }
@@ -148,7 +148,7 @@
                         background-color: #ffffff;
                         color: #1f2328;
                         font-size: 14.4px;
-                        letter-spacing: 1px;
+                        letter-spacing: 0.5px;
                         border-radius: 0px;
                         box-shadow: 0px 0px 15px #00000020;
                         border: 1px solid #00000035;
@@ -156,13 +156,13 @@
 
                         &::placeholder {
                             font-size: 14.4px;
-                            letter-spacing: 1px;
+                            letter-spacing: 0.5px;
                             color: #8c8f92;
                         }
 
                         &:focus {
                             font-size: 14.4px;
-                            letter-spacing: 1px;
+                            letter-spacing: 0.5px;
                             color: #1f2328;
                             outline: none;
                             box-shadow: 0px 0px 3px rgba(255, 87, 51, 0.8);

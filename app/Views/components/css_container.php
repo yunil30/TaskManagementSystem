@@ -301,7 +301,8 @@
     /* Footer Portion */
     .page-footer {
         grid-area: footer;
-        background-color: #1f2328;
+        box-shadow: 0px 0px 5px #00000047;
+        background-color: #ffffff;
         text-align: center;
         z-index: 10;
 
@@ -310,10 +311,11 @@
 
             p {
                 font-family: "Poppins", sans-serif;
-                font-weight: 400;
-                font-size: 0.9rem;
-                letter-spacing: 1px;
-                color: #ffffff;
+                font-weight: 500;
+                font-size: 13px;
+                letter-spacing: 0.5px;
+                color: #1f2328;
+                padding: 0;
                 margin: 0;
             }
         }
