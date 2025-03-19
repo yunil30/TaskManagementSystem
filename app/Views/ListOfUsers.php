@@ -18,7 +18,7 @@
     <div class="main-content">
         <div class="col-md-12 content-header">
             <h3 style="margin: 0;">List of Users</h3>
-            <button type="button" class="btn btn-primary btnHeader" id="btnAddUser">New User</button>
+            <button type="button" class="btnHeader" id="btnAddUser">New User</button>
         </div>
         <div class="col-md-12 content-body">
             <table class="table table-hover table-bordered" id="userListTable">
@@ -89,8 +89,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnSubmitCreateUser" onclick="CreateUser()">Submit</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnSubmitCreateUser" onclick="CreateUser()">Submit</button>
             </div>
         </div>
     </div>
@@ -98,15 +98,15 @@
 
 <!-- Show user modal -->
 <div class="modal fade" id="showUserModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="max-width: 500px; width: 100%;">
-        <div class="modal-content" style="height: 600px; max-height: 80vh; overflow-y: auto;">
+    <div class="modal-dialog" role="document" style="max-width: 500px;">
+        <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="titleUserModal">User</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hi   dden="true">&times;</span>
                 </button>
             </div>
-            <div class="col-md-12 modal-body" style="max-height: 60vh; overflow-y: auto;">
+            <div class="col-md-12 modal-body" style="max-height: 65vh; overflow-y: auto;">
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>First Name:</label>
@@ -140,7 +140,7 @@
                         <label>User role:</label>
                         <select class="form-control" id="showUserRole">
                             <option value="">Select an Option</option>
-                            <option value="user" selected>User</option>
+                            <option value="user">User</option>
                             <option value="leader">Leader</option>
                             <option value="admin">Admin</option>
                         </select>
@@ -148,8 +148,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnSubmitEditUser">Submit</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnSubmitEditUser">Submit</button>
             </div>
         </div>
     </div>
@@ -171,8 +171,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnConfirmRemoveUser">Confirm</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnConfirmRemoveUser">Confirm</button>
             </div>
         </div>
     </div>
@@ -236,7 +236,7 @@
 
             $('#userListTable').DataTable({
                 searching: true,
-                pageLength: 10,
+                pageLength: 5,
                 lengthChange: false,
                 ordering: true,
                 columnDefs: [

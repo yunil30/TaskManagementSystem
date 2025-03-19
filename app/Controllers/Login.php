@@ -64,7 +64,9 @@ class Login extends BaseController {
     }
 
     public function GetMenu() {
-        $menuData = $this->LoginModel->GetMenu();
+        $userRole = $this->session->get('session_userrole'); 
+
+        $menuData = $this->LoginModel->GetMenu($userRole);
     
         return $this->response->setJSON($menuData);
     }

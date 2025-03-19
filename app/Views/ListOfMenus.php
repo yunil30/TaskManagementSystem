@@ -23,7 +23,7 @@
     <div class="main-content">
         <div class="col-md-12 content-header">
             <h3 style="margin: 0;">List of Menus</h3>
-            <button type="button" class="btn btn-primary btnHeader" id="btnMapMenus">Map Menus</button>
+            <button type="button" class="btnHeader" id="btnMapMenus">Map Menus</button>
         </div>
         <div class="col-md-12 content-body">
             <table class="table table-hover table-bordered" id="menuTable">
@@ -170,7 +170,7 @@
 
             $('#menuTable').DataTable({
                 searching: true,
-                pageLength: 10,
+                pageLength: 5,
                 lengthChange: false,
                 ordering: true
             });

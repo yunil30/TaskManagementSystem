@@ -17,8 +17,8 @@
 <main class="page-main">
     <div class="main-content">
         <div class="col-md-12 content-header">
-            <h3 style="margin: 0;">Tasks</h3>
-            <button type="button" class="btn btn-primary btnHeader" id="btnAddTask">Create Task</button>
+            <h3 style="margin: 0;">List of Tasks</h3>
+            <button type="button" class="btnHeader" id="btnAddTask">Create Task</button>
         </div>
         <div class="col-md-12 content-body">
             <table class="table table-hover table-bordered" id="taskListTable">
@@ -88,8 +88,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnSubmitCreateTask" onclick="CreateTask()">Submit</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnSubmitCreateTask" onclick="CreateTask()">Submit</button>
             </div>
         </div>
     </div>
@@ -143,8 +143,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnSubmitEditTask">Submit</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnSubmitEditTask">Submit</button>
             </div>
         </div>
     </div>
@@ -166,8 +166,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnConfirmRemoveTask">Confirm</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnConfirmRemoveTask">Confirm</button>
             </div>
         </div>
     </div>

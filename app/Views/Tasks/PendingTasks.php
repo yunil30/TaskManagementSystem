@@ -84,8 +84,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" id="btnRespond" data-dismiss="modal" onclick="ShowRepondTaskModal()">Respond</button>
+                    <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                    <button type="button" class="success" id="btnRespond" data-dismiss="modal" onclick="ShowRepondTaskModal()">Respond</button>
                 </div>
             </div>
         </div>
@@ -112,14 +112,14 @@
                             <textarea class="form-control" id="taskResponse" rows="8"></textarea>
                         </div>
                         <div class="col-md-12 mb-3">
-                            <label>Supporting Documents</label>
+                            <label for="taskDocument" class="custom-file-upload">Supporting Documents</label>
                             <input type="file" id="taskDocument" class="form-control">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="btnBack" data-dismiss="modal">Back</button>
-                    <button type="button" class="btn btn-success" id="btnSubmit" onclick="SaveTaskResponse()">Submit</button>
+                    <button type="button" class="danger" id="btnBack" data-dismiss="modal">Back</button>
+                    <button type="button" class="success" id="btnSubmit" onclick="SaveTaskResponse()">Submit</button>
                 </div>
             </div>
         </div>
@@ -171,7 +171,7 @@
 
                 $('#taskListTable').DataTable({
                     searching: true,
-                    pageLength: 10,
+                    pageLength: 5,
                     lengthChange: false,
                     ordering: true,
                     columnDefs: [

@@ -84,8 +84,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnResponse" data-dismiss="modal" onclick="ShowReponseTaskModal()">Response</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnResponse" data-dismiss="modal" onclick="ShowReponseTaskModal()">Response</button>
             </div>
         </div>
     </div>
@@ -113,14 +113,14 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <label>Supporting Documents</label><br>
-                        <a id="DownloadAttachment" href="#" class="btn btn-primary" target="_blank">
+                        <a id="DownloadAttachment" href="#" class="primary" target="_blank">
                             View Document
                         </a>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnBack" data-dismiss="modal">Back</button>
+                <button type="button" class="danger" id="btnBack" data-dismiss="modal">Back</button>
             </div>
         </div>
     </div>
@@ -172,7 +172,7 @@
 
             $('#taskListTable').DataTable({
                 searching: true,
-                pageLength: 10,
+                pageLength: 5,
                 lengthChange: false,
                 ordering: true,
                 columnDefs: [

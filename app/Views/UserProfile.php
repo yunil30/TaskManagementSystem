@@ -12,7 +12,7 @@
 <style>
     .accountSettingDiv {
         font-family: "Poppins", sans-serif;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         margin: 0;
         padding: 0;
         height: 100%;
@@ -24,10 +24,17 @@
             "accSettingDiv3";
         padding-right: 0 !important;
 
+        label {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
         input {
             font-family: "Poppins", sans-serif;
             font-weight: 400;
-            letter-spacing: 1px;
+            font-size: 13px;
+            letter-spacing: 0.5px;
             border-radius: 1px;
         }
 
@@ -37,6 +44,12 @@
             align-items: center;
 
             h5 {
+                color: #1f2328; 
+                font-family: "Poppins", sans-serif;
+                font-size: 18px;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+                text-decoration: none; 
                 margin: 0;
             }
 
@@ -50,7 +63,7 @@
                 border: 1px solid rgb(215, 215, 215);
                 border-radius: 50px;
                 padding: 5px 18px;
-                font-size: 14px;
+                font-size: 13px;
                 font-weight: 500;
                 cursor: pointer;
                 transition: background-color 0.3s, color 0.3s, border-color 0.3s;
@@ -62,15 +75,15 @@
 
             .edit-button:hover {
                 background-color: #f0f8ff;
-                border: 0.1px solid #0056b3;
-                color: #0056b3;
+                border: 0.1px solid #ff5733;
+                color: #ff5733;
             }
         }
 
         .accHeadingDescription {
             color: #1f2328;
             font-weight: 400;
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 2rem;
         }
 
@@ -205,8 +218,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnEditInfo">Submit</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnEditInfo">Submit</button>
             </div>
         </div>
     </div>
@@ -235,8 +248,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnEditContacts">Submit</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnEditContacts">Submit</button>
             </div>
         </div>
     </div>
@@ -265,8 +278,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="btnChangePassword">Submit</button>
+                <button type="button" class="danger" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="success" id="btnChangePassword">Submit</button>
             </div>
         </div>
     </div>
