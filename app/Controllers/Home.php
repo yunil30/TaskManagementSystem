@@ -109,6 +109,24 @@ class Home extends BaseController {
         return json_encode($this->HomeModel->GetTaskStatusCount($requestJson->taskStatus));
     }
 
+    public function GetPendingTaskCount() {
+        $UserID = $this->session->get('session_userno'); 
+
+        return json_encode($this->HomeModel->GetPendingTaskCount($UserID));
+    }
+
+    public function GetCompletedTaskCount() {
+        $UserID = $this->session->get('session_userno'); 
+
+        return json_encode($this->HomeModel->GetCompletedTaskCount($UserID));
+    }
+
+    public function GetCreatedTaskCount() {
+        $UserID = $this->session->get('session_userno'); 
+
+        return json_encode($this->HomeModel->GetCreatedTaskCount($UserID));
+    }
+
     public function CreateTask() {
         $requestJson = $this->postRequest->getJSON();
         $UserID = $this->session->get('session_userno'); 

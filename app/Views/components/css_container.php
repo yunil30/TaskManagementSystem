@@ -378,6 +378,11 @@
                         letter-spacing: 0.5px;
                     }
                 }
+
+                canvas {
+                    font-family: "Poppins", sans-serif; 
+                    letter-spacing: 0.5px;
+                }
             }
         }
     }
@@ -626,7 +631,7 @@
                 background-color: #ffffff;
                 border: 1px solid #ff522d;
                 color: #ff522d;
-                font-size: 14.4px;
+                font-size: 13px;
                 font-weight: 500;
                 letter-spacing: 0.5px;
 
@@ -646,7 +651,7 @@
                 background-color: #ff522d;
                 border: 1px solid #ff522d;
                 color: #ffffff;
-                font-size: 14.4px;
+                font-size: 13px;
                 font-weight: 400;
                 letter-spacing: 0.5px;
                 
@@ -662,66 +667,6 @@
                     border: 1px solid #ff522d;
                     transform: translateY(2px);
                 }
-            }
-        }
-    }
-
-    /* Card Dashboard Portion */
-    .card {
-        font-family: "Poppins", sans-serif;
-        letter-spacing: 1px;
-        background-color: #ffffff;
-        border: 1px solid rgb(215, 215, 215);
-        border-radius: 1px;
-        padding: 1rem;
-        text-align: center;
-
-        .card-icon {
-            font-size: 1.3rem;
-        }
-
-        h5 {
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .task-bar {
-            display: flex;
-            height: 16px;
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 10px 0;
-
-            .task-status {
-                height: 100%;
-                display: inline-block;
-            }
-
-            .task-status.pending {
-                background-color: #e74c3c;
-            }
-
-            .task-status.completed {
-                background-color: #2ecc71;
-            }
-        }
-
-        .task-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-
-            label {
-                font-size: 14px;
-                font-weight: 500;
-            }
-
-            .pending {
-                color: #e74c3c;
-            }
-
-            .completed {
-                color: #2ecc71;
             }
         }
     }

@@ -232,7 +232,7 @@
 
             $('#taskListTable').DataTable({
                 searching: true,
-                pageLength: 10,
+                pageLength: 5,
                 lengthChange: false,
                 ordering: true,
                 columnDefs: [

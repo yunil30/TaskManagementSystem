@@ -169,4 +169,43 @@ class HomeModel extends Model {
 
         return $query->getResultArray();
     }
+
+    public function GetPendingTaskCount($UserID) {
+        $str = "SELECT
+                    SUM(CASE WHEN task_level = 1 THEN 1 ELSE 0 END) AS low,
+                    SUM(CASE WHEN task_level = 2 THEN 1 ELSE 0 END) AS medium,
+                    SUM(CASE WHEN task_level = 3 THEN 1 ELSE 0 END) AS high,
+                    COUNT(*) AS total
+                FROM tbl_task_list WHERE task_status = 1 AND isAvailable = 1 AND assigned_to = ?";
+
+        $query = $this->db->query($str, [$UserID]);
+
+        return $query->getResultArray();
+    }
+
+    public function GetCompletedTaskCount($UserID) {
+        $str = "SELECT
+                    SUM(CASE WHEN task_level = 1 THEN 1 ELSE 0 END) AS low,
+                    SUM(CASE WHEN task_level = 2 THEN 1 ELSE 0 END) AS medium,
+                    SUM(CASE WHEN task_level = 3 THEN 1 ELSE 0 END) AS high,
+                    COUNT(*) AS total
+                FROM tbl_task_list WHERE task_status = 2 AND isAvailable = 1 AND assigned_to = ?";
+
+        $query = $this->db->query($str, [$UserID]);
+
+        return $query->getResultArray();
+    }
+
+    public function GetCreatedTaskCount($UserID) {
+        $str = "SELECT
+                    SUM(CASE WHEN task_level = 1 THEN 1 ELSE 0 END) AS low,
+                    SUM(CASE WHEN task_level = 2 THEN 1 ELSE 0 END) AS medium,
+                    SUM(CASE WHEN task_level = 3 THEN 1 ELSE 0 END) AS high,
+                    COUNT(*) AS total
+                FROM tbl_task_list WHERE task_status = 1 AND isAvailable = 1 AND assigned_by = ?";
+
+        $query = $this->db->query($str, [$UserID]);
+
+        return $query->getResultArray();
+    }
 }

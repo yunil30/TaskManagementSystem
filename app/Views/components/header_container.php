@@ -3,6 +3,7 @@
         <div class="header-icon-div">
             <i class="material-icons" id="menu-icon">menu</i>
         </div>
+
         <div class="header-logo-div">
             <a href="http://localhost:8030/"><i class="fas fa-edit"></i>Task<span>MAKER</span></a>
         </div>

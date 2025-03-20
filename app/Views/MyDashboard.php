@@ -9,6 +9,7 @@
     <!-- Style component -->
     <?= css_container(); ?>
 </head>
+
 <body>
 <!-- Header component -->
 <?= show_header(); ?>
@@ -17,47 +18,25 @@
 <main class="page-main">
     <div class="main-content">
         <div class="col-md-12 content-header">
-            <h3 style="margin: 0;">Home</h3>
+            <h3 style="margin: 0;">Dashboard</h3>
         </div>
         <div class="col-md-12 content-body">
-            <div class="row" id="grid-container">
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Low Priority</h5>
-                        </div>
-                        <div class="task-bar">
-                            <div class="task-status pending" id="pendingBar1"></div>
-                            <div class="task-status completed" id="completedBar1"></div>
-                        </div>
-                        <div class="task-labels" id="barLabels1"></div>
-                    </div>
-                </div>
+            <div class="col-md-12 mt-3" style="display: flex; justify-content: space-between;">
+                <div class="col-md-6 px-4">
+                    <h5 style="text-align: center;">My Created Task</h5>
+                    <canvas id="MyTaskChart"></canvas>
+                </div> 
 
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mid Priority</h5>
-                        </div>
-                        <div class="task-bar">
-                            <div class="task-status pending" id="pendingBar2"></div>
-                            <div class="task-status completed" id="completedBar2"></div>
-                        </div>
-                        <div class="task-labels" id="barLabels2"></div>
-                    </div>
-                </div>
+                <div class="col-md-6 px-4">
+                    <h5 style="text-align: center;">Pending Task Count</h5>
+                    <canvas id="PendingTaskChart"></canvas>
+                </div> 
+            </div>
 
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">High Priority</h5>
-                        </div>
-                        <div class="task-bar">
-                            <div class="task-status pending" id="pendingBar3"></div>
-                            <div class="task-status completed" id="completedBar3"></div>
-                        </div>
-                        <div class="task-labels" id="barLabels3"></div>
-                    </div>
+            <div class="col-md-12 mt-3" style="display: flex; justify-content: center;">
+                <div class="col-md-6 px-4">
+                    <h5 style="text-align: center;">Completed Task Count</h5>
+                    <canvas id="CompletedTaskChart"></canvas>
                 </div>
             </div>
         </div>
@@ -68,94 +47,254 @@
 <?= show_footer(); ?>
 </body>
 </html>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     var host_url = '<?php echo host_url(); ?>';
 
-    function GetLowLevelTasks() {
-        var data = {
-            taskPrioLevel: 1
-        }
-
-        axios.post(host_url + 'Home/GetTaskPrioLevelCount', data)
+    function GetPendingTaskCount() {
+        axios.get(host_url + 'Home/GetPendingTaskCount')
         .then((res) => {
-            console.log(res.data);
+            const data = res.data[0];
+            const high = parseInt(data.high);
+            const medium = parseInt(data.medium);
+            const low = parseInt(data.low);
+
+            const chartData = {
+                labels: ['High Priority', 'Medium Priority', 'Low Priority'], 
+                datasets: [{
+                    label: 'Task Count',
+                    data: [high, medium, low], 
+                    backgroundColor: ['rgb(199, 0, 57, 0.9)', 'rgb(255, 87, 51, 0.9)', 'rgb(255, 195, 0, 0.9)'], 
+                    hoverBackgroundColor: ['rgb(199, 0, 57)', 'rgb(255, 87, 51)', 'rgb(255, 195, 0)'], 
+                }]
+            };
+
+            const ctx = document.getElementById('PendingTaskChart').getContext('2d');
             
-            res.data.forEach((row) => {
-                $('#countPendingTask').text(row.total);
-                updatePriorityBar(1, row.total, row.pending, row.completed);
-                $('#barLabels1').append(`
-                    <div>
-                        <label class="pending">Pending:</label>
-                        <label class="pending">${row.pending || 0}</label>
-                    </div>
-                    <div>
-                        <label class="completed">Completed:</label>
-                        <label class="completed">${row.completed || 0}</label>
-                    </div>
-                `);
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Task Count',
+                            },
+                            grid: {
+                                color: '#1f2328',
+                                lineWidth: 1,
+                            },
+                            ticks: {
+                                color: '#1f2328',
+                                maxTicksLimit: 5,
+                                beginAtZero: true,
+                                stepSize: 1,
+                                font: {
+                                    size: 13,
+                                    weight: 'bold',
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Priority Levels'
+                            },  
+                            grid: {
+                                color: '#1f2328',
+                                lineWidth: 1,
+                            },
+                            ticks: {
+                                color: '#1f2328',
+                                maxTicksLimit: 5,
+                                beginAtZero: true,
+                                stepSize: 1,
+                                font: {
+                                    size: 13,
+                                    weight: 'bold',
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    }
+                }
             });
         });
     }
 
-    function GetMidTasks() {
-        var data = {
-            taskPrioLevel: 2
-        }
-
-        axios.post(host_url + 'Home/GetTaskPrioLevelCount', data)
+    function GetCompletedTaskCount() {
+        axios.get(host_url + 'Home/GetCompletedTaskCount')
         .then((res) => {
-            res.data.forEach((row) => {
-                $('#countOngoingTask').text(row.total);
-                updatePriorityBar(2, row.total, row.pending, row.completed);
-                $('#barLabels2').append(`
-                    <div>
-                        <label class="pending">Pending:</label>
-                        <label class="pending">${row.pending || 0}</label>
-                    </div>
-                    <div>
-                        <label class="completed">Completed:</label>
-                        <label class="completed">${row.completed || 0}</label>
-                    </div>
-                `);
+            const data = res.data[0];
+            const high = parseInt(data.high);
+            const medium = parseInt(data.medium);
+            const low = parseInt(data.low);
+
+            const chartData = {
+                labels: ['High Priority', 'Medium Priority', 'Low Priority'], 
+                datasets: [{
+                    label: 'Task Count',
+                    data: [high, medium, low], 
+                    backgroundColor: ['rgb(199, 0, 57, 0.9)', 'rgb(255, 87, 51, 0.9)', 'rgb(255, 195, 0, 0.9)'], 
+                    hoverBackgroundColor: ['rgb(199, 0, 57)', 'rgb(255, 87, 51)', 'rgb(255, 195, 0)'], 
+                }]
+            };
+
+            const ctx = document.getElementById('CompletedTaskChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Task Count',
+                            },
+                            grid: {
+                                color: '#1f2328',
+                                lineWidth: 1,
+                            },
+                            ticks: {
+                                color: '#1f2328',
+                                maxTicksLimit: 5,
+                                beginAtZero: true,
+                                stepSize: 1,
+                                font: {
+                                    size: 13,
+                                    weight: 'bold',
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Priority Levels'
+                            },  
+                            grid: {
+                                color: '#1f2328',
+                                lineWidth: 1,
+                            },
+                            ticks: {
+                                color: '#1f2328',
+                                maxTicksLimit: 5,
+                                beginAtZero: true,
+                                stepSize: 1,
+                                font: {
+                                    size: 13,
+                                    weight: 'bold',
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    }
+                }
             });
+        })
+        .catch((err) => {
+            console.error('Error fetching task count:', err);
         });
     }
 
-    function GetHighTasks() {
-        var data = {
-            taskPrioLevel: 3
-        }
-
-        axios.post(host_url + 'Home/GetTaskPrioLevelCount', data)
+    function GetCreatedTaskCount() {
+        axios.get(host_url + 'Home/GetCreatedTaskCount')
         .then((res) => {
-            res.data.forEach((row) => {
-                $('#countCompletedTask').text(row.total);
-                updatePriorityBar(3, row.total, row.pending, row.completed);
-                $('#barLabels3').append(`
-                    <div>
-                        <label class="pending">Pending:</label>
-                        <label class="pending">${row.pending || 0}</label>
-                    </div>
-                    <div>
-                        <label class="completed">Completed:</label>
-                        <label class="completed">${row.completed || 0}</label>
-                    </div>
-                `);
+            const data = res.data[0];
+            const high = parseInt(data.high);
+            const medium = parseInt(data.medium);
+            const low = parseInt(data.low);
+
+            const chartData = {
+                labels: ['High Priority', 'Medium Priority', 'Low Priority'], 
+                datasets: [{
+                    label: 'Task Count',
+                    data: [high, medium, low], 
+                    backgroundColor: ['rgb(199, 0, 57, 0.9)', 'rgb(255, 87, 51, 0.9)', 'rgb(255, 195, 0, 0.9)'], 
+                    hoverBackgroundColor: ['rgb(199, 0, 57)', 'rgb(255, 87, 51)', 'rgb(255, 195, 0)'], 
+                }]
+            };
+
+            const ctx = document.getElementById('MyTaskChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Task Count',
+                            },
+                            grid: {
+                                color: '#1f2328',
+                                lineWidth: 1,
+                            },
+                            ticks: {
+                                color: '#1f2328',
+                                maxTicksLimit: 5,
+                                beginAtZero: true,
+                                stepSize: 1,
+                                font: {
+                                    size: 13,
+                                    weight: 'bold',
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Priority Levels'
+                            },  
+                            grid: {
+                                color: '#1f2328',
+                                lineWidth: 1,
+                            },
+                            ticks: {
+                                color: '#1f2328',
+                                maxTicksLimit: 5,
+                                beginAtZero: true,
+                                stepSize: 1,
+                                font: {
+                                    size: 13,
+                                    weight: 'bold',
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    }
+                }
             });
+        })
+        .catch((err) => {
+            console.error('Error fetching task count:', err);
         });
-    }
-
-    function updatePriorityBar(barNo, totalCount, pendingCount, completedCount) {
-        const pendingPercentage = (pendingCount / totalCount) * 100;
-        const completedPercentage = (completedCount / totalCount) * 100;
-
-        $('#pendingBar' + barNo).css('width', `${pendingPercentage}%`);
-        $('#completedBar' + barNo).css('width', `${completedPercentage}%`);
     }
 
     $('document').ready(function() {
-        GetLowLevelTasks();
-        GetMidTasks();
-        GetHighTasks();
+        GetPendingTaskCount();
+        GetCompletedTaskCount();
+        GetCreatedTaskCount();
     });
 </script>
