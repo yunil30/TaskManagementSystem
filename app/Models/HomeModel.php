@@ -30,14 +30,19 @@ class HomeModel extends Model {
 
     public function GetTaskUsers($UserID, $UserRole) {
         if ($UserRole == 'admin') { 
-            $str = "SELECT UserID, full_name FullName 
-                        FROM tbl_task_users";
-        }  else {
-            $str = "SELECT UserID, full_name FullName 
+            $str = "SELECT UserID, full_name AS FullName 
+                        FROM tbl_task_users
+                    WHERE team_leader = ?";
+        } elseif ($UserRole == 'leader') {
+            $str = "SELECT UserID, full_name AS FullName 
                         FROM tbl_task_users 
                     WHERE team_leader = ?";
+        } else {
+            $str = "SELECT UserID, full_name AS FullName 
+                        FROM tbl_task_users 
+                    WHERE user_role = 'user' AND UserId <> ?";
         }
-        
+
         $query = $this->db->query($str, [$UserID]);
         
         return $query->getResultArray();
