@@ -22,7 +22,7 @@
 <main class="page-main">
     <div class="main-content">
         <div class="col-md-12 content-header">
-            <h3 style="margin: 0;">List of Menus</h3>
+            <h3 style="margin: 0;">Menu Mapping</h3>
             <button type="button" class="btnHeader" id="btnMapMenus">Map Menus</button>
         </div>
         <div class="col-md-12 content-body">
@@ -146,23 +146,28 @@
 
     function GetListOfMappedMenu() {
         axios.get(host_url + 'Menu/GetListOfMappedMenu').then(function(res) {
-            if ($.fn.DataTable.isDataTable('#menuTable')) $('#menuTable').DataTable().destroy();
+            // console.log(res.data);
+            
+            if ($.fn.DataTable.isDataTable('#menuTable')) {
+                $('#menuTable').DataTable().destroy();
+            }
 
             $('#loadMenus').empty();
 
-            const groupedData = res.data.reduce((acc, { user_role, menu_name}) => {
-                acc[user_role] = [...(acc[user_role] || []), menu_name];
+            const groupedData = res.data.reduce((acc, { user_role, menu_names }) => {
+                acc[user_role] = [...(acc[user_role] || []), menu_names];
                 return acc;
             }, {});
 
             Object.entries(groupedData).forEach(([role, menus]) => {
-                
                 $('#loadMenus').append(`
                     <tr>
                         <td style="vertical-align: middle;">${role.charAt(0).toUpperCase() + role.slice(1)}</td>
                         <td style="vertical-align: middle;">${menus.join(', ')}</td>
                         <td class="text-center" style="vertical-align: middle;">
-                            <button class="btn btn-transparent" id="btnShowEditMenuMapping${role}" onclick="EditMenuMappingModal('${role}')"><span class="fas fa-pencil"></span></button>
+                            <button class="btn btn-transparent" id="btnShowEditMenuMapping${role}" onclick="EditMenuMappingModal('${role}')">
+                                <span class="fas fa-pencil"></span>
+                            </button>
                         </td>
                     </tr>
                 `);
@@ -191,37 +196,19 @@
     function GetMappedMenuByRole(userRole) {
         var data = {
             userRole: userRole
-        }
+        };
 
         $('#editRoleMenus').empty();
-   
+        
         axios.post(host_url + 'Menu/GetMappedMenuByRole', data)
         .then((res) => {
-            const consolidatedMenu = {
-                RecID: res.data.map(item => item.RecID).join(", "), 
-                MenuID: res.data.map(item => item.MenuID).join(", "), 
-                menu_name: res.data.map(item => item.menu_name).join(", "), 
-                user_role: res.data.find(item => item.user_role).user_role
-            };
+            const consolidatedMenu = res.data[0];
+            const menuIDs = consolidatedMenu.MenuID.split(",");
+            const menuNames = consolidatedMenu.menu_names.split(",");
 
-            const menuIDs = consolidatedMenu.MenuID.split(", ");
             $('#editUserRole').val(consolidatedMenu.user_role);
-            $('#editRoleMenus').val(menuIDs).trigger("chosen:updated");
-        })
-    }
-
-    function EditMenuMapping() {
-        var data = {
-            userRole: $('#editUserRole').val(),
-            roleMenus: $('#editRoleMenus').val().join(',')
-        }
-
-        axios.post(host_url + 'Menu/EditMenuMapping', data)
-        .then((res) => {
-            ShowMessage('success', 'Successful!', res.data.message);
-        })
-        .catch((error) => {
-            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while editing data.');
+            $('#editRoleMenus').val(menuIDs);
+            $('#editRoleMenus').trigger('chosen:updated'); 
         });
     }
 
@@ -237,6 +224,21 @@
         })
         .catch((error) => {
             ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while loading data.');
+        });
+    }
+
+    function EditMenuMapping() {
+        var data = {
+            userRole: $('#editUserRole').val(),
+            roleMenus: $('#editRoleMenus').val().join(',')
+        }
+
+        axios.post(host_url + 'Menu/EditMenuMapping', data)
+        .then((res) => {
+            ShowMessage('success', 'Successful!', res.data.message);
+        })
+        .catch((error) => {
+            ShowMessage('error', 'Failed!', error.response?.data?.error || 'An error occurred while editing data.');
         });
     }
 

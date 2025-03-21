@@ -24,17 +24,18 @@ class MenuModel extends Model {
         return $builder->where($where)->update($data);
     }
 
+    public function DeleteData($where=[], $table) {
+        $builder = $this->db->table($table);
+
+        return $builder->delete($where);
+    }
+
     public function GetListOfMappedMenu() {
-        $str = "SELECT 
-            y.MenuID,
-            y.menu_name,
-            x.user_role
-        FROM 
-            tbl_menu_mapping AS x
-        JOIN 
-            tbl_user_menu AS y 
-        ON 
-            JSON_CONTAINS(CAST(x.MenuID AS JSON), JSON_ARRAY(CAST(y.MenuID AS CHAR)), '$')";
+        $str = "SELECT x.user_role,
+                    GROUP_CONCAT(y.menu_name ORDER BY y.MenuID) AS menu_names
+                        FROM tbl_menu_mapping x
+                    LEFT JOIN tbl_user_menu y ON x.MenuID = y.MenuID
+                GROUP BY x.user_role";
     
         $query = $this->db->query($str);
         
@@ -42,16 +43,11 @@ class MenuModel extends Model {
     }
 
     public function GetMappedMenuByRole($UserRole) {
-        $str = "SELECT 
-                    y.MenuID,
-                    y.menu_name,
-                    x.user_role
-                FROM 
-                    tbl_menu_mapping AS x
-                JOIN 
-                    tbl_user_menu AS y 
-                ON 
-                    JSON_CONTAINS(CAST(x.MenuID AS JSON), JSON_ARRAY(CAST(y.MenuID AS CHAR)), '$')
+        $str = "SELECT x.user_role,
+                    GROUP_CONCAT(y.menu_name ORDER BY y.MenuID) AS menu_names,
+                    GROUP_CONCAT(x.MenuID ORDER BY x.MenuID) AS MenuID
+                FROM tbl_menu_mapping x
+                    LEFT JOIN tbl_user_menu y ON x.MenuID = y.MenuID
                 WHERE x.user_role = ?";
     
         $query = $this->db->query($str, [$UserRole]);
@@ -75,5 +71,21 @@ class MenuModel extends Model {
         $row = $query->getRow();
 
         return $row->existing;
+    }
+
+    public function GetListOfMenus() {
+        $str = "SELECT * FROM tbl_user_menu WHERE menu_status = 1";
+    
+        $query = $this->db->query($str);
+        
+        return $query->getResultArray();
+    }
+
+    public function GetMenuRecord($MenuID) {
+        $str = "SELECT * FROM tbl_user_menu WHERE MenuID = ?";
+    
+        $query = $this->db->query($str, [$MenuID]);
+        
+        return $query->getResultArray();
     }
 }

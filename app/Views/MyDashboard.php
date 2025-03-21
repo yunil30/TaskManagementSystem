@@ -94,7 +94,7 @@
                                 beginAtZero: true,
                                 stepSize: 1,
                                 font: {
-                                    size: 13,
+                                    size: 12,
                                     weight: 'bold',
                                 }
                             }
@@ -114,7 +114,7 @@
                                 beginAtZero: true,
                                 stepSize: 1,
                                 font: {
-                                    size: 13,
+                                    size: 12,
                                     weight: 'bold',
                                 }
                             }
@@ -172,7 +172,7 @@
                                 beginAtZero: true,
                                 stepSize: 1,
                                 font: {
-                                    size: 13,
+                                    size: 12,
                                     weight: 'bold',
                                 }
                             }
@@ -192,7 +192,7 @@
                                 beginAtZero: true,
                                 stepSize: 1,
                                 font: {
-                                    size: 13,
+                                    size: 12,
                                     weight: 'bold',
                                 }
                             }
@@ -253,7 +253,7 @@
                                 beginAtZero: true,
                                 stepSize: 1,
                                 font: {
-                                    size: 13,
+                                    size: 12,
                                     weight: 'bold',
                                 }
                             }
@@ -273,7 +273,7 @@
                                 beginAtZero: true,
                                 stepSize: 1,
                                 font: {
-                                    size: 13,
+                                    size: 12,
                                     weight: 'bold',
                                 }
                             }

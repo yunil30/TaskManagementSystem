@@ -31,7 +31,14 @@ class Home extends BaseController {
 
     public function ListOfUsers() {
         if($this->session->has('session_username')) {
-            return view('ListOfUsers');
+            return view('Maintenance/ListOfUsers');
+        }
+        return view('LoginForm');
+    }
+
+    public function ViewListOfMenus() {
+        if($this->session->has('session_username')) {
+            return view('Maintenance/ListOfMenus');
         }
         return view('LoginForm');
     }
@@ -43,9 +50,9 @@ class Home extends BaseController {
         return view('LoginForm');
     }
 
-    public function ListOfMenus() {
+    public function MenuMapping() {
         if($this->session->has('session_username')) {
-            return view('ListOfMenus');
+            return view('Maintenance/MenuMapping');
         }
         return view('LoginForm');
     }
