@@ -97,4 +97,10 @@ class Task extends BaseController {
 
         return json_encode($this->Taskmodel->GetTaskDetails($requestJson->taskNo));
     }
+
+    public function GetAnsweredTaskList() {
+        $UserID = $this->session->get('session_userno'); 
+        
+        return json_encode($this->Taskmodel->GetAnsweredTaskList($UserID));
+    }
 }

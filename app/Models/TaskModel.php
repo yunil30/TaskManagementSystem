@@ -48,6 +48,17 @@ class TaskModel extends Model {
         return $query->getResultArray();
     }
 
+    public function GetAnsweredTaskList($UserID) {
+        $str = "SELECT x.*, CONCAT(y.first_name, ' ', y.last_name) AS fullname
+                    FROM tbl_task_list x
+                LEFT JOIN tbl_user_access y ON y.UserID = x.assigned_to
+                    WHERE x.isAvailable = 1 AND x.task_status = 2 AND x.assigned_by = ?";
+        
+        $query = $this->db->query($str, [$UserID]);
+        
+        return $query->getResultArray();
+    }
+
     public function GetTaskDetails($TaskID) {
         $str = "SELECT x.*, 
                     y.full_name AS team_leader, 

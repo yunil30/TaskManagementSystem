@@ -78,6 +78,13 @@ class Home extends BaseController {
         return view('LoginForm');
     }
 
+    public function ViewAnsweredTasks() {
+        if($this->session->has('session_username')) {
+            return view('Tasks/AnsweredTasks');
+        }
+        return view('LoginForm');
+    }
+
     public function GetTaskUsers() {
         $UserID = $this->session->get('session_userno'); 
         $UserRole = $this->session->get('session_userrole'); 

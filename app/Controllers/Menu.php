@@ -100,8 +100,8 @@ class Menu extends BaseController {
         $data = [
             'menu_name'   => $requestJson->MenuName,
             'menu_page'   => $requestJson->MenuPage,
-            'parent_menu' => $requestJson->MenuType,
-            'menu_type'   => $requestJson->ParentMenu,
+            'parent_menu' => $requestJson->ParentMenu,
+            'menu_type'   => $requestJson->MenuType,
             'menu_index'  => $requestJson->MenuIndex
         ];
 
