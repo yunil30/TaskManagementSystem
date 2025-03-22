@@ -66,7 +66,7 @@ class HomeModel extends Model {
                 FROM tbl_task_list x
                     LEFT JOIN tbl_task_users y ON y.UserID = x.assigned_to
                     LEFT JOIN tbl_task_users z ON z.UserID = x.assigned_by
-                WHERE x.isAvailable = 1";
+                WHERE x.task_status = 1 AND x.isAvailable = 1";
         } else {
             $str = "SELECT x.*, 
                     y.full_name task_member, 
@@ -74,7 +74,7 @@ class HomeModel extends Model {
                 FROM tbl_task_list x
                     LEFT JOIN tbl_task_users y ON y.UserID = x.assigned_to
                     LEFT JOIN tbl_task_users z ON z.UserID = x.assigned_by
-                WHERE x.isAvailable = 1 AND x.assigned_by = ?";
+                WHERE x.task_status = 1 AND x.isAvailable = 1 AND x.assigned_by = ?";
         }
         
         $query = $this->db->query($str, [$UserID]);

@@ -64,10 +64,10 @@
 
                 #menu-icon {
                     color: #1f2328;
-                }
 
-                #menu-icon:hover {
-                    color: #FF5733;
+                    &:hover {
+                        color: #FF5733;
+                    }
                 }
             }
 
@@ -101,6 +101,78 @@
                 a:hover {
                     text-decoration: none; 
                     color: inherit;   
+                }
+            }
+
+            .header-dropdown-div {
+                position: relative;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                margin-left: auto;
+
+                #usernameToggle {
+                    cursor: pointer;
+                    color: #1f2328;
+                    font-size: 24px;
+                    text-align: right;
+
+                    &:hover {
+                        color: #FF5733;
+                    }
+                }
+
+                .dropdownOptions {
+                    display: none;
+                    position: absolute;
+                    right: 0;
+                    top: 100%;
+                    transform: translateY(5%);
+                    background-color: #ffffff;
+                    border: 1px solid rgb(215, 215, 215);
+                    box-shadow: 0px 1px 5px #00000047;
+                    padding: 0;
+                    width: max-content;
+
+                    #userSettings {
+                        color: #1f2328;
+                        font-size: 13px;
+                        font-weight: 500;
+                        letter-spacing: .5px;
+                        border-bottom: 1.5px solid rgb(215, 215, 215);
+                        padding: 1rem 1.5rem;
+                        width: 100%;
+
+                        i {
+                            margin-right: 15px;
+                        }
+                    }
+
+                    a {
+                        color: #1f2328;
+                        font-size: 13px;
+                        font-weight: 500;
+                        letter-spacing: .5px;
+                        text-decoration: none;
+                        padding: 1rem 1.5rem;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+
+                        &:hover {
+                            border: 1px solid #FF5733;
+                            color: #FF5733;
+                        }
+
+                        &:active {
+                            font-size: 13px;
+                            color: #FF5733;
+                        }
+
+                        i {
+                            margin-right: 15px;
+                        }
+                    }
                 }
             }
         }

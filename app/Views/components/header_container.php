@@ -7,6 +7,15 @@
         <div class="header-logo-div">
             <a href="http://localhost:8030/"><i class="fas fa-edit"></i>Task<span>MAKER</span></a>
         </div>
+
+        <div class="header-dropdown-div">
+            <i class="fa-regular fa-circle-user" class="usernameToggle" id="usernameToggle"></i>
+            <div class="dropdownOptions" id="dropdownMenu" style="width: 12rem;">
+                <label id="userSettings"><i class="fas fa-gear"></i>Settings</label>
+                <a href="http://localhost:8030/Home/UserProfile" id="showHeaderProfile"><i class="fas fa-user"></i>Profile</a>
+                <a href="javascript:void(0)" id="showHeaderLogoutModal"><i class="fas fa-arrow-right-from-bracket"></i>Logout</a>
+            </div>
+        </div>
     </div>
 </header>
 
@@ -117,7 +126,6 @@
     function btnLogoutUser() {
         axios.post(host_url + 'Login/Logout')
         .then((res) => {
-            // Handle response
             console.log('success', 'Successful!', res.data.message);
             window.location.reload();
         })
@@ -138,6 +146,27 @@
             'data-toggle': 'modal',
             'data-target': '#logoutUserModal'
         });
+    });
+
+    $('#showHeaderLogoutModal').click(function() {
+        $('#showHeaderLogoutModal').attr({
+            'data-toggle': 'modal',
+            'data-target': '#logoutUserModal'
+        });
+    });
+
+    $("#usernameToggle").on("click", function() {
+        var dropdownMenu = $("#dropdownMenu");
+        dropdownMenu.toggle();
+    });
+
+    $(document).on("click", function(event) {
+        var dropdownMenu = $("#dropdownMenu");
+        var dropdownToggle = $("#usernameToggle");
+
+        if (!$(event.target).closest(dropdownMenu).length && !$(event.target).is(dropdownToggle)) {
+            dropdownMenu.hide();
+        }
     });
 
     $('document').ready(function() {

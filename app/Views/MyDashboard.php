@@ -39,6 +39,8 @@
                     <canvas id="CompletedTaskChart"></canvas>
                 </div>
             </div>
+
+            
         </div>
     </div>
 </main>
