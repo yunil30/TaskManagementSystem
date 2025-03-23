@@ -34,7 +34,7 @@
             transform: translate(-50%, -50%);
             box-shadow: 0px 0px 5px #00000015;
             border: 1px solid #00000035;
-            width: 480px;
+            width: 420px;
 
             .form-header {
                 padding: 2rem 2rem 0rem 2rem;
