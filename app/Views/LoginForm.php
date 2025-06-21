@@ -150,7 +150,7 @@
                         font-size: 14.4px;
                         letter-spacing: 0.5px;
                         border-radius: 0px;
-                        box-shadow: 0px 0px 15px #00000020;
+                        box-shadow: 0px 0px 1px #00000020;
                         border: 1px solid #00000035;
                         padding: 20px 40px;
 
