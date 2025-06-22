@@ -165,7 +165,6 @@
                             letter-spacing: 0.5px;
                             color: #1f2328;
                             outline: none;
-                            box-shadow: 0px 0px 3px #ff5733;
                             border-color: #ff5733;
                         }
                     }
