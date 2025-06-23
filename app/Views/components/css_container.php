@@ -416,7 +416,6 @@
                         }
 
                         &:focus {
-                            box-shadow: 0px 0px 3px rgba(255, 87, 51, 0.8);
                             border-color: #ff522d;
                             font-size: 13px;
                             letter-spacing: .5px;
