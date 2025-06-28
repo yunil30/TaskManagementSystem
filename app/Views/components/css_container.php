@@ -549,11 +549,11 @@
                 }
 
                 &:focus {
-                    border-color: #ff522d;
                     font-size: 13px;
-                    letter-spacing: .5px;
+                    letter-spacing: 0.5px;
                     color: #1f2328;
                     outline: none;
+                    border-color: #ff5733;
                 }
             }
 
