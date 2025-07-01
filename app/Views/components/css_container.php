@@ -600,11 +600,11 @@
 
                 &:focus {
                     border-color: #ff522d;
-                    box-shadow: 0px 0px 3px #ff522d;
                     font-size: 13px;
                     letter-spacing: .5px;
                     color: #1f2328;
                     outline: none;
+                    box-shadow: 0px 0px 0px #ff522d;
                 }
             }
 
