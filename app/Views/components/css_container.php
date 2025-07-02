@@ -461,7 +461,7 @@
     /* Footer Portion */
     .page-footer {
         grid-area: footer;
-        box-shadow: 0px 0px 5px #00000047;
+        box-shadow: 0px 0px 2px #00000047;
         background-color: #ffffff;
         text-align: center;
         z-index: 10;
